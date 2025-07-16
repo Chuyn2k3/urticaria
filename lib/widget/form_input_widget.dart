@@ -6,6 +6,7 @@ import 'package:urticaria/home/home_page.dart';
 import 'package:urticaria/widget/touchable_opacity.dart';
 
 import '../bottom_nav/bottom_nav_page.dart';
+import '../signup/signup_form_register.dart';
 import '../utils/colors.dart';
 import '../utils/constants.dart';
 import '../utils/icons.dart';
@@ -214,7 +215,13 @@ class _FormInputWidgetState extends State<FormInputWidget> {
                 style: Styles.content.copyWith(
                     color: AppColors.primary, fontWeight: FontWeight.bold),
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SignupForm(),
+                    ));
+              },
             ),
           ],
         ),

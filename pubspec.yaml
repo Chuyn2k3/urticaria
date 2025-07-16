@@ -44,9 +44,10 @@ dependencies:
   freezed: ^2.2.0
   flutter_launcher_icons: ^0.13.1
   flutter_native_splash: ^2.3.10
-
+  pin_code_fields: ^8.0.1
   flutter_bloc: ^9.1.1
   url_launcher: ^6.2.1
+  mask_text_input_formatter: ^2.9.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
