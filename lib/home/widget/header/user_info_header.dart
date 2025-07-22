@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../notification/notification_page.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/icon_tabbar.dart';
 import '../../../utils/styles.dart';
@@ -55,7 +56,13 @@ class UserInfoHeader extends StatelessWidget {
                     width: 16,
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => NotificationScreen(),
+                          ));
+                    },
                     child: SvgPicture.asset(
                       TabIcon.notificationActive,
                       color: AppColors.background,
