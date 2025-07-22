@@ -113,7 +113,7 @@ class FirstShortcutCustomer extends StatelessWidget {
             boxSize: iconSize,
             iconSize: iconSize,
             colorIcon: AppColors.primary,
-            icon: IconEnums.nSos2,
+            icon: IconEnums.iconPhoneCall,
             title: "Liên hệ",
             onTap: () {
               Navigator.push(

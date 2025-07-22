@@ -6,7 +6,8 @@ class AppointmentCallInfoScreen extends StatelessWidget {
   const AppointmentCallInfoScreen({super.key});
 
   void _callNow(BuildContext context) async {
-    final Uri uri = Uri(scheme: 'tel', path: '19001234');
+    final Uri uri = Uri(scheme: 'tel', path: '02432222944');
+    await launchUrl(uri);
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri);
     } else {

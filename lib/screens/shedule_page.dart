@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../utils/colors.dart';
 
 class SchedulePage extends StatefulWidget {
@@ -14,9 +13,7 @@ class _SchedulePageState extends State<SchedulePage>
   late final TabController _tabController;
 
   final List<Tab> _tabs = const [
-    Tab(
-      text: 'Chưa diễn ra',
-    ),
+    Tab(text: 'Chưa diễn ra'),
     Tab(text: 'Đã diễn ra'),
   ];
 
@@ -34,8 +31,6 @@ class _SchedulePageState extends State<SchedulePage>
 
   @override
   Widget build(BuildContext context) {
-    //const themeColor = Color(0xFF0066CC);
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -69,14 +64,14 @@ class ScheduleUpcomingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final upcomingAppointments = [
       {
-        'hospital': 'BV Việt Đức',
-        'doctor': 'BS. Nguyễn Văn A',
+        'type': 'Khám cấp',
+        'doctor': 'BS. Lê Thị Mai',
         'time': 'Thứ 4, 24/07 - 09:00',
         'status': 'Chờ khám',
       },
       {
-        'hospital': 'BV Bạch Mai',
-        'doctor': 'BS. Trần Thị B',
+        'type': 'Khám lại lần 1',
+        'doctor': 'BS. Nguyễn Văn Hùng',
         'time': 'Thứ 6, 26/07 - 14:30',
         'status': 'Chờ khám',
       },
@@ -100,7 +95,7 @@ class ScheduleUpcomingPage extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Icon bệnh viện
+                // Icon khám bệnh
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
@@ -108,7 +103,7 @@ class ScheduleUpcomingPage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Icon(
-                    Icons.local_hospital,
+                    Icons.medical_services,
                     color: AppColors.primary,
                     size: 28,
                   ),
@@ -120,7 +115,7 @@ class ScheduleUpcomingPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        item['hospital'] ?? '',
+                        item['type'] ?? '',
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
@@ -190,14 +185,14 @@ class ScheduleCompletedPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final completedAppointments = [
       {
-        'hospital': 'BV Việt Đức',
-        'doctor': 'BS. Lê Văn C',
+        'type': 'Tái khám lần 2',
+        'doctor': 'BS. Nguyễn Hữu Phước',
         'time': 'Thứ 2, 15/07 - 10:00',
         'status': 'Đã khám',
       },
       {
-        'hospital': 'BV 108',
-        'doctor': 'BS. Phạm Thị D',
+        'type': 'Khám lại lần 1',
+        'doctor': 'BS. Trần Thị Hương',
         'time': 'Thứ 3, 16/07 - 16:00',
         'status': 'Đã khám',
       },
@@ -221,15 +216,15 @@ class ScheduleCompletedPage extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Icon bên trái
+                // Icon khám bệnh
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF0066CC).withOpacity(0.1),
+                    color: AppColors.primary.withOpacity(0.1),
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(Icons.local_hospital,
-                      color: Color(0xFF0066CC), size: 28),
+                  child: const Icon(Icons.medical_services,
+                      color: AppColors.primary, size: 28),
                 ),
                 const SizedBox(width: 12),
 
@@ -239,11 +234,11 @@ class ScheduleCompletedPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        item['hospital']!,
+                        item['type']!,
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
-                          color: Color(0xFF0066CC),
+                          color: AppColors.primary,
                         ),
                       ),
                       const SizedBox(height: 6),

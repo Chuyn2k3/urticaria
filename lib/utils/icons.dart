@@ -190,4 +190,5 @@ class IconEnums {
   static const String iconPerformMedicine = 'assets/images/pills.png';
 
   static const String iconHeathScreen = 'assets/images/health-screening.png';
+  static const String iconPhoneCall = 'assets/images/phone.png';
 }
