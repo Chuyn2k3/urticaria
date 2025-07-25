@@ -8,7 +8,15 @@ class PatientProfileCubit extends Cubit<PatientProfileState> {
     required String name,
     required String birthday,
     required String address,
+    required String phone,
+    required String email,
   }) {
-    emit(PatientProfileState(name: name, birthday: birthday, address: address));
+    emit(PatientProfileState(
+      name: name,
+      birthday: birthday,
+      address: address,
+      phone: phone,
+      email: email,
+    ));
   }
 }

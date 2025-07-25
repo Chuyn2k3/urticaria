@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:urticaria/home/home_page.dart';
 import 'package:urticaria/widget/touchable_opacity.dart';
@@ -27,8 +26,33 @@ class FormInputWidget extends StatefulWidget {
   State<FormInputWidget> createState() => _FormInputWidgetState();
 }
 
-class _FormInputWidgetState extends State<FormInputWidget> {
+class _FormInputWidgetState extends State<FormInputWidget>
+    with TickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
+  late AnimationController _buttonAnimationController;
+  late Animation<double> _buttonScaleAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _buttonAnimationController = AnimationController(
+      duration: const Duration(milliseconds: 150),
+      vsync: this,
+    );
+    _buttonScaleAnimation = Tween<double>(
+      begin: 1.0,
+      end: 0.95,
+    ).animate(CurvedAnimation(
+      parent: _buttonAnimationController,
+      curve: Curves.easeInOut,
+    ));
+  }
+
+  @override
+  void dispose() {
+    _buttonAnimationController.dispose();
+    super.dispose();
+  }
 
   void _showDialogForgot(BuildContext context) async {
     await showDialog<bool>(
@@ -55,184 +79,222 @@ class _FormInputWidgetState extends State<FormInputWidget> {
           key: _formKey,
           child: Column(
             children: [
-              InkWell(
-                focusColor: AppColors.transparent,
-                onTap: () async {},
+              // Phone input với design mới
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.05),
+                      blurRadius: 10,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
                 child: Row(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 16.0, left: 8.0),
+                    Container(
+                      padding: const EdgeInsets.all(16),
                       child: SvgPicture.asset(
                         IconEnums.phone,
                         height: 24,
+                        color: const Color(0xFF0066CC),
                       ),
                     ),
                     Expanded(
-                      child: IgnorePointer(
-                        ignoring: false,
-                        child: AppInput(
-                          controller: widget.phoneController,
-                          validator: (phoneNumber) {
-                            if (phoneNumber == null ||
-                                phoneNumber.trim().isEmpty) {
-                              return "";
-                            }
-                            if (!Reges.regIsPhone
-                                .hasMatch(phoneNumber.trim())) {
-                              return "";
-                            }
-                            return null;
-                          },
-                          enabled: true,
-                          hintText: "",
-                          onTapIconRight: () async {
-                            widget.phoneController.clear();
-                          },
-                          iconRight: IconEnums.close,
-                          onChangeValue: (value) {},
-                          keyboardType: TextInputType.phone,
-                        ),
+                      child: AppInput(
+                        controller: widget.phoneController,
+                        validator: (phoneNumber) {
+                          if (phoneNumber == null ||
+                              phoneNumber.trim().isEmpty) {
+                            return "Vui lòng nhập số điện thoại";
+                          }
+                          if (!Reges.regIsPhone.hasMatch(phoneNumber.trim())) {
+                            return "Số điện thoại không hợp lệ";
+                          }
+                          return null;
+                        },
+                        enabled: true,
+                        hintText: "Số điện thoại",
+                        onTapIconRight: () async {
+                          widget.phoneController.clear();
+                        },
+                        iconRight: IconEnums.close,
+                        onChangeValue: (value) {},
+                        keyboardType: TextInputType.phone,
+                        fillColor: Colors.transparent,
+                        // enabledBorder: InputBorder.none,
+                        // focusedBorder: InputBorder.none,
                       ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 16.0,
-              ),
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 16.0, left: 8.0),
-                    child: SvgPicture.asset(
-                      IconEnums.lock,
-                      height: 24,
+
+              const SizedBox(height: 16),
+
+              // Password input với design mới
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.05),
+                      blurRadius: 10,
+                      offset: const Offset(0, 4),
                     ),
-                  ),
-                  Expanded(
-                    child: AppInput(
-                      controller: widget.passwordController,
-                      maxLine: 1,
-                      // validator: (password) {
-                      //   if (password == null || password.isEmpty) {
-                      //     return l10n(context)!.validate_empty;
-                      //   }
-                      //   if (password.length < 8) {
-                      //     return "Tối thiểu 8 ký tự";
-                      //   }
-                      //   if (!Reges.regIsPassword.hasMatch(password)) {
-                      //     return "Cần chứa ký tự đặc biệt";
-                      //   }
-                      //   return null;
-                      // },
-                      hintText: "",
-                      obscureText: true,
-                      onChangeValue: (value) {},
+                  ],
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      child: SvgPicture.asset(
+                        IconEnums.lock,
+                        height: 24,
+                        color: const Color(0xFF0066CC),
+                      ),
                     ),
-                  ),
-                ],
+                    Expanded(
+                      child: AppInput(
+                        controller: widget.passwordController,
+                        maxLine: 1,
+                        hintText: "Mật khẩu",
+                        obscureText: true,
+                        onChangeValue: (value) {},
+                        fillColor: Colors.transparent,
+                        // enabledBorder: InputBorder.none,
+                        // focusedBorder: InputBorder.none,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              const SizedBox(
-                height: 16.0,
-              ),
+
+              const SizedBox(height: 16),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  InkWell(
+                  TouchableOpacity(
+                    onTap: () => _showDialogForgot(context),
                     child: Text(
-                      "Quên mật khẩu",
-                      style: Styles.content.copyWith(color: AppColors.primary),
+                      "Quên mật khẩu?",
+                      style: TextStyle(
+                        color: const Color(0xFF0066CC),
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
-                    onTap: () {},
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 16.0,
-              ),
+
+              const SizedBox(height: 32),
             ],
           ),
         ),
-        ButtonLoginWidget(
-          onLogin: () async {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => BottomNavPage(),
-                ));
-          },
-          onBiometric: () async {
-            // _settingStore.isActiveFinger = await SessionPrefs.getActiveFinger();
-            // print('${_settingStore.isActiveFinger}');
-            // if (_settingStore.isActiveFinger) {
-            //   await _loginStore.biometricAuth(context);
-            //   return;
-            // }
-            // showDialog(
-            //     context: context,
-            //     builder: (_) {
-            //       return CupertinoAlertDialog(
-            //         title: const Text("Lỗi đăng nhập"),
-            //         content: const Text(
-            //             "Bạn chưa cài đặt Touch ID/Face ID để sử dụng chức năng này. Vui lòng sử dụng mật khẩu để đăng nhập."),
-            //         actions: <Widget>[
-            //           CupertinoDialogAction(
-            //             child: const Text("Ok"),
-            //             onPressed: () {
-            //               Navigator.pop(context, false);
-            //             },
-            //           ),
-            //         ],
-            //       );
-            //     });
-          },
+
+        // Login button với animation
+        ScaleTransition(
+          scale: _buttonScaleAnimation,
+          child: Container(
+            width: double.infinity,
+            height: 56,
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [Color(0xFF0066CC), Color(0xFF004499)],
+              ),
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: const Color(0xFF0066CC).withOpacity(0.3),
+                  blurRadius: 15,
+                  offset: const Offset(0, 8),
+                ),
+              ],
+            ),
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(16),
+                onTapDown: (_) => _buttonAnimationController.forward(),
+                onTapUp: (_) => _buttonAnimationController.reverse(),
+                onTapCancel: () => _buttonAnimationController.reverse(),
+                onTap: () async {
+                  Navigator.pushReplacement(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          const BottomNavPage(),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        return FadeTransition(opacity: animation, child: child);
+                      },
+                      transitionDuration: const Duration(milliseconds: 500),
+                    ),
+                  );
+                },
+                child: const Center(
+                  child: Text(
+                    "Đăng nhập",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
         ),
-        // if (Platform.isIOS)
-        //   Padding(
-        //     padding: const EdgeInsets.only(top: 4.0),
-        //     child: SignInWithAppleButton(
-        //         borderRadius: BorderRadius.circular(22),
-        //         style: SignInWithAppleButtonStyle.white,
-        //         onPressed: () {
-        //           _loginStore.loginApple();
-        //         }),
-        //   ),
-        // const Spacer(),
-        const SizedBox(
-          height: 16.0,
-        ),
-        // const Spacer(),
+
+        const SizedBox(height: 32),
+
+        // Sign up link
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               'Bạn chưa có tài khoản? ',
-              style: Styles.content,
+              style: TextStyle(
+                color: Color(0xFF6B7280),
+                fontSize: 16,
+              ),
             ),
             TouchableOpacity(
               child: Text(
                 'Đăng ký',
-                style: Styles.content.copyWith(
-                    color: AppColors.primary, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  color: const Color(0xFF0066CC),
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               onTap: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SignupForm(),
-                    ));
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation, secondaryAnimation) =>
+                        SignupForm(),
+                    transitionsBuilder:
+                        (context, animation, secondaryAnimation, child) {
+                      return SlideTransition(
+                        position: Tween<Offset>(
+                          begin: const Offset(1.0, 0.0),
+                          end: Offset.zero,
+                        ).animate(animation),
+                        child: child,
+                      );
+                    },
+                  ),
+                );
               },
             ),
           ],
         ),
-        // AppButton(
-        //   title: 'Facebook',
-        //   onPressed: () async{
-        //     await _loginStore.loginFacebook();
-        //   },
-        //   iconLeft: IconEnums.facebookLogo,
-        //   iconRightColor: AppColors.background,
-        // )
       ],
     );
   }

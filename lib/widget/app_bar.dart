@@ -16,6 +16,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Widget? flexibleSpaceImage;
   final Widget? leading;
   final double? titleSpacing;
+  final List<Widget>? actions;
   @override
   final Size preferredSize;
 
@@ -33,6 +34,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     //leading active when [is back = false]
     this.leading,
     this.titleSpacing,
+    this.actions,
   })  : preferredSize = const Size.fromHeight(50.0),
         super(key: key);
 
@@ -62,26 +64,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             )
           : leading ?? const SizedBox(),
-      actions: actionFunc != null
-          ? <Widget>[
-              actionIcon != null
-                  ? IconButton(icon: actionIcon!, onPressed: actionFunc)
-                  : Container(
-                      alignment: Alignment.center,
-                      padding: const EdgeInsets.all(8.0),
-                      child: TouchableOpacity(
-                          child: Text(
-                            "",
-                            style: Styles.heading5.copyWith(
-                                foreground: Styles.defaultGradientPaint),
-                          ),
-                          onTap: () {
-                            if (actionFunc == null) return;
-                            actionFunc!();
-                          }),
-                    ),
-            ]
-          : null,
+      actions: actions,
       bottom: PreferredSize(
         preferredSize: const Size.fromHeight(1.0),
         child: Container(

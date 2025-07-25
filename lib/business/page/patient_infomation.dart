@@ -4,8 +4,15 @@ import 'package:intl/intl.dart';
 import '../../utils/colors.dart';
 import '../../utils/styles.dart';
 
-class PatientInformation extends StatelessWidget {
-  PatientInformation({Key? key}) : super(key: key);
+class PatientInformation extends StatefulWidget {
+  const PatientInformation({Key? key}) : super(key: key);
+
+  @override
+  State<PatientInformation> createState() => _PatientInformationState();
+}
+
+class _PatientInformationState extends State<PatientInformation> {
+  bool _isExpanded = true;
 
   @override
   Widget build(BuildContext context) {
@@ -22,22 +29,36 @@ class PatientInformation extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Tiêu đề + nút thu gọn
           Row(
             children: [
               Expanded(
                 child: Text('I. Thông tin người bệnh', style: Styles.titleItem),
               ),
+              IconButton(
+                icon: Icon(
+                  _isExpanded
+                      ? Icons.keyboard_arrow_up
+                      : Icons.keyboard_arrow_down,
+                  color: AppColors.primary,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _isExpanded = !_isExpanded;
+                  });
+                },
+              )
             ],
           ),
-          const Divider(
-            color: AppColors.primary,
-          ),
-          _renderValueInformation("Họ và tên: ", 'Phạm Viết Chuyên', context),
-          _renderValueInformation("Mã: ", '19001011', context),
-          _renderValueInformation(
-              "Ngày sinh: ", formatDateSafe("2025-05-07T17:07:33"), context),
-          _renderValueInformation("Điện thoại: ", '111111111', context),
-          _renderValueInformation("Địa chỉ: ", 'HN', context),
+          const Divider(color: AppColors.primary),
+          if (_isExpanded) ...[
+            _renderValueInformation("Họ và tên: ", 'Phạm Viết Chuyên', context),
+            _renderValueInformation("Mã: ", '19001011', context),
+            _renderValueInformation(
+                "Ngày sinh: ", formatDateSafe("2025-05-07T17:07:33"), context),
+            _renderValueInformation("Điện thoại: ", '111111111', context),
+            _renderValueInformation("Địa chỉ: ", 'HN', context),
+          ]
         ],
       ),
     );
@@ -56,23 +77,25 @@ class PatientInformation extends StatelessWidget {
   Widget _renderValueInformation(
       String title, String value, BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 4.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-              constraints: BoxConstraints(
-                  minWidth: MediaQuery.of(context).size.width / 3),
-              child: Text(title, style: Styles.content),
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            constraints: BoxConstraints(
+              minWidth: MediaQuery.of(context).size.width / 3,
             ),
-            Flexible(
-              child: Text(
-                value,
-                textAlign: TextAlign.end,
-                style: Styles.titleItem,
-              ),
-            )
-          ],
-        ));
+            child: Text(title, style: Styles.content),
+          ),
+          Flexible(
+            child: Text(
+              value,
+              textAlign: TextAlign.end,
+              style: Styles.titleItem,
+            ),
+          )
+        ],
+      ),
+    );
   }
 }

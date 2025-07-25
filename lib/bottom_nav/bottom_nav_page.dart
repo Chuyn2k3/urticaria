@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,21 +20,32 @@ class BottomNavPage extends StatefulWidget {
   State<BottomNavPage> createState() => _BottomNavPageState();
 }
 
-class _BottomNavPageState extends State<BottomNavPage> {
-  int currentIndex = 0; // Home
+class _BottomNavPageState extends State<BottomNavPage>
+    with TickerProviderStateMixin {
+  int currentIndex = 0;
   bool isMainPage = true;
   bool isLogin = false;
+  late AnimationController _animationController;
 
   @override
   void initState() {
     super.initState();
+    _animationController = AnimationController(
+      duration: const Duration(milliseconds: 300),
+      vsync: this,
+    );
     checkLogin();
   }
 
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
   Future<void> checkLogin() async {
-    // TODO: Check login logic
     setState(() {
-      isLogin = true; // tạm set true để test
+      isLogin = true;
     });
   }
 
@@ -43,43 +53,62 @@ class _BottomNavPageState extends State<BottomNavPage> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => PatientProfileCubit(),
-      child: WillPopScope(
-        onWillPop: () async {
-          await _showExitDialog();
-          return false;
+      child: PopScope(
+        canPop: false,
+        onPopInvoked: (didPop) async {
+          if (!didPop) {
+            await _showExitDialog();
+          }
         },
         child: Scaffold(
-          body: [
-            // DetailHospitalTest(),
-            // CommunityPageModule(),
-            // ScheduleModule(),
-            // ProfileModule(),
-            const HomePage(),
-            CommunityScreen(),
-            SchedulePage(),
-            ProfileScreen(),
-            //const NotificationPage(),
-          ][currentIndex],
-          bottomNavigationBar: FABBottomAppBar(
-            currentIndex: currentIndex,
-            onTabSelected: (id) {
-              setState(() {
-                currentIndex = id;
-              });
-            },
-            items: [
-              FABBottomAppBarItem(
-                  text: 'Thông tin', assets: TabIcon.medicalUnit),
-              FABBottomAppBarItem(
-                  text: 'Cộng đồng', assets: TabIcon.communityActive),
-              FABBottomAppBarItem(
-                  text: 'Lịch khám', assets: TabIcon.calendarInactive),
-              FABBottomAppBarItem(
-                  text: 'Cá nhân', assets: TabIcon.userInactive),
-            ],
-            notchedShape: const CircularNotchedRectangle(),
-            color: AppColors.gray500,
-            selectedColor: AppColors.primary,
+          body: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 300),
+            child: [
+              const HomePage(),
+              CommunityScreen(),
+              SchedulePage(),
+              ProfileScreen(),
+            ][currentIndex],
+          ),
+          bottomNavigationBar: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(24),
+                topRight: Radius.circular(24),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 20,
+                  offset: const Offset(0, -5),
+                ),
+              ],
+            ),
+            child: FABBottomAppBar(
+              currentIndex: currentIndex,
+              onTabSelected: (id) {
+                setState(() {
+                  currentIndex = id;
+                });
+                _animationController.forward().then((_) {
+                  _animationController.reset();
+                });
+              },
+              items: [
+                FABBottomAppBarItem(
+                    text: 'Thông tin', assets: TabIcon.medicalUnit),
+                FABBottomAppBarItem(
+                    text: 'Cộng đồng', assets: TabIcon.communityActive),
+                FABBottomAppBarItem(
+                    text: 'Lịch khám', assets: TabIcon.calendarInactive),
+                FABBottomAppBarItem(
+                    text: 'Cá nhân', assets: TabIcon.userInactive),
+              ],
+              notchedShape: const CircularNotchedRectangle(),
+              color: AppColors.gray500,
+              selectedColor: AppColors.primary,
+            ),
           ),
         ),
       ),
@@ -158,16 +187,25 @@ class _FABBottomAppBarState extends State<FABBottomAppBar> {
       );
     });
 
-    // Chèn khoảng giữa để FloatingActionButton nhô lên
-    //  items.insert(items.length ~/ 2, _buildMiddleTabItem());
-
-    return BottomAppBar(
-      shape: widget.notchedShape,
-      notchMargin: 10.0,
-      color: widget.backgroundColor ?? Colors.white,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: items,
+    return ClipRRect(
+      borderRadius: const BorderRadius.only(
+        topLeft: Radius.circular(24),
+        topRight: Radius.circular(24),
+      ),
+      child: BottomAppBar(
+        shape: widget.notchedShape,
+        notchMargin: 10.0,
+        color: widget.backgroundColor ?? Colors.white,
+        elevation: 0,
+        height: 80, // Đặt chiều cao cố định
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: items,
+          ),
+        ),
       ),
     );
   }
@@ -178,54 +216,59 @@ class _FABBottomAppBarState extends State<FABBottomAppBar> {
     required bool isSelected,
     required ValueChanged<int> onPressed,
   }) {
-    final Color iconColor = isSelected ? Color(0xFF0066CC) : Colors.grey;
+    final Color iconColor = isSelected ? const Color(0xFF0066CC) : Colors.grey;
 
     return Expanded(
-      child: SizedBox(
-        height: widget.height ?? 60,
-        child: Material(
-          type: MaterialType.transparency,
-          child: InkWell(
-            onTap: () => onPressed(index),
+      child: Material(
+        type: MaterialType.transparency,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(12),
+          onTap: () => onPressed(index),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 2),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: isSelected
+                  ? const Color(0xFF0066CC).withOpacity(0.1)
+                  : Colors.transparent,
+            ),
             child: Column(
+              mainAxisSize: MainAxisSize.min, // Quan trọng: giới hạn kích thước
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SvgPicture.asset(
-                  item.assets,
-                  color: iconColor,
-                  width: widget.iconSize ?? 20,
-                  height: widget.iconSize ?? 20,
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  item.text,
-                  style: TextStyle(
+                AnimatedScale(
+                  scale: isSelected ? 1.1 : 1.0,
+                  duration: const Duration(milliseconds: 200),
+                  child: SvgPicture.asset(
+                    item.assets,
                     color: iconColor,
-                    fontSize: 12,
+                    width: widget.iconSize ?? 22, // Giảm kích thước icon
+                    height: widget.iconSize ?? 22,
+                  ),
+                ),
+                const SizedBox(height: 2), // Giảm khoảng cách
+                Flexible(
+                  // Thêm Flexible để tránh overflow
+                  child: AnimatedDefaultTextStyle(
+                    duration: const Duration(milliseconds: 200),
+                    style: TextStyle(
+                      color: iconColor,
+                      fontSize: isSelected ? 11 : 10, // Giảm font size
+                      fontWeight:
+                          isSelected ? FontWeight.w600 : FontWeight.normal,
+                    ),
+                    child: Text(
+                      item.text,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ),
               ],
             ),
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildMiddleTabItem() {
-    return Expanded(
-      child: SizedBox(
-        height: widget.height ?? 60,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(height: widget.iconSize ?? 20),
-            if (widget.centerItemText != null)
-              Text(
-                widget.centerItemText!,
-                style: TextStyle(color: widget.color ?? Colors.grey),
-              ),
-          ],
         ),
       ),
     );
