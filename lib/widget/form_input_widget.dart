@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:urticaria/home/home_page.dart';
+import 'package:urticaria/feature/home/home_page.dart';
 import 'package:urticaria/widget/touchable_opacity.dart';
 
-import '../bottom_nav/bottom_nav_page.dart';
-import '../signup/signup_form_register.dart';
+import '../feature/bottom_nav/bottom_nav_page.dart';
+import '../feature/signup/signup_form_register.dart';
 import '../utils/colors.dart';
 import '../utils/constants.dart';
 import '../utils/icons.dart';

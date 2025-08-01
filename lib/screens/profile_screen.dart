@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:urticaria/medical_record/patient/patient_cubit.dart';
-import 'package:urticaria/medical_record/update_patient_info.dart';
+import 'package:get_it/get_it.dart';
+import 'package:urticaria/cubit/auth/auth_cubit.dart';
+import 'package:urticaria/feature/medical_record/patient/patient_cubit.dart';
 
 import 'login_page.dart';
 
@@ -188,11 +189,7 @@ class ProfileScreen extends StatelessWidget {
                   child: InkWell(
                     borderRadius: BorderRadius.circular(16),
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => LoginPage(),
-                          ));
+                      GetIt.instance<AuthCubit>().logout();
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
