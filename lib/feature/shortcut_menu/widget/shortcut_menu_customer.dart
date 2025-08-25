@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:urticaria/feature/booking/screens/booking_screen.dart';
 import 'package:urticaria/feature/medical_record/appointment_call_info_screen.dart';
+import 'package:urticaria/feature/medical_record_v2/screens/urticaria_form_selector_screen.dart';
+import 'package:urticaria/feature/uas7/uas7_followup_screen.dart';
 import 'package:urticaria/gen/assets.gen.dart';
 
 import '../../business/business_page.dart';
@@ -57,25 +60,25 @@ class FirstShortcutCustomer extends StatelessWidget {
         // ),
         //if (controller.isLogin) ...[
         const Expanded(child: SizedBox.shrink()),
-        Expanded(
-          flex: 2,
-          child: CircleWithIcon(
-            boxSize: iconSize,
-            iconSize: iconSize,
-            icon: Assets.icons.folderDocumentIcon,
-            colorIcon: AppColors.primary,
-            title: 'Hồ sơ sức khoẻ',
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const BusinessPage(),
-                  ));
-            },
-          ),
-        ),
-        //],
-        const Expanded(child: SizedBox.shrink()),
+        // Expanded(
+        //   flex: 2,
+        //   child: CircleWithIcon(
+        //     boxSize: iconSize,
+        //     iconSize: iconSize,
+        //     icon: Assets.icons.folderDocumentIcon,
+        //     colorIcon: AppColors.primary,
+        //     title: 'Hồ sơ sức khoẻ',
+        //     onTap: () {
+        //       Navigator.push(
+        //           context,
+        //           MaterialPageRoute(
+        //             builder: (context) => const BusinessPage(),
+        //           ));
+        //     },
+        //   ),
+        // ),
+        // //],
+        // const Expanded(child: SizedBox.shrink()),
         Expanded(
           flex: 2,
           child: CircleWithIcon(
@@ -88,7 +91,27 @@ class FirstShortcutCustomer extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => const CreateRecordIntroScreen(),
+                  builder: (_) => const UrticariaFormSelectorScreen(),
+                ),
+              );
+            },
+          ),
+        ),
+        const Expanded(child: SizedBox.shrink()),
+
+        Expanded(
+          flex: 2,
+          child: CircleWithIcon(
+            boxSize: iconSize,
+            iconSize: iconSize,
+            icon: Assets.images.monitoring.path,
+            title: 'Chấm điểm điều trị',
+            colorIcon: AppColors.primary,
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const Uas7FollowupScreen(),
                 ),
               );
             },

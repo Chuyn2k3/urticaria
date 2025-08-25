@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:urticaria/constant/config.dart';
 import 'package:urticaria/cubit/auth/auth_cubit.dart';
 import 'package:urticaria/cubit/login/login_cubit.dart';
+import 'package:urticaria/cubit/profile/profile_cubit.dart';
 import 'package:urticaria/feature/signup/signup_form_register.dart';
 import 'package:urticaria/router/go_router_name_enum.dart';
 import 'package:urticaria/utils/shared_preferences_manager.dart';
@@ -32,6 +33,7 @@ class LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   late Animation<Offset> _slideAnimation;
   final _formKey = GlobalKey<FormState>();
   final sharedPreferences = GetIt.instance<SharedPreferencesManager>();
+  final _cubitLogin = LoginCubit();
   @override
   void initState() {
     _phoneController = TextEditingController();
@@ -59,7 +61,20 @@ class LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
     ));
 
     _animationController.forward();
+    checkAutoLogin();
     super.initState();
+  }
+
+  void checkAutoLogin() async {
+    final isTokenExpired = await context.read<AuthCubit>().isTokenExpired();
+    if (isTokenExpired) {
+      final sp = GetIt.instance.get<SharedPreferencesManager>();
+      final user = sp.getString(AppConfig.SL_USERNAME);
+      final pass = sp.getString(AppConfig.SL_PASSWORD);
+      if (user != null && pass != null) {
+        _cubitLogin.handleLogin(phone: user, password: pass);
+      }
+    }
   }
 
   @override
@@ -78,7 +93,7 @@ class LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (_) => LoginCubit(),
+          create: (_) => _cubitLogin,
         ),
       ],
       child: GestureDetector(
@@ -92,6 +107,7 @@ class LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                 sharedPreferences.putString(
                     AppConfig.SL_USERNAME, _phoneController.text);
                 context.read<AuthCubit>().login();
+                context.read<ProfileUserCubit>().getProfile();
               } else if (state is LoginErrorState) {
                 context.showSnackBarFail(text: state.error);
               }
@@ -299,15 +315,13 @@ class LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                                                 if (_formKey.currentState
                                                         ?.validate() ??
                                                     false) {
-                                                  context
-                                                      .read<LoginCubit>()
-                                                      .handleLogin(
-                                                        phone: _phoneController
+                                                  _cubitLogin.handleLogin(
+                                                    phone:
+                                                        _phoneController.text,
+                                                    password:
+                                                        _passwordController
                                                             .text,
-                                                        password:
-                                                            _passwordController
-                                                                .text,
-                                                      );
+                                                  );
                                                 }
                                               },
                                         style: ElevatedButton.styleFrom(

@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:urticaria/constant/config.dart';
 import 'package:urticaria/core/base/base_response.dart';
 import 'package:urticaria/core/services/user_service.dart';
+import 'package:urticaria/feature/profile/model/user_info_model.dart';
 import 'package:urticaria/models/register_request.dart';
 import 'package:urticaria/models/user/credential_model.dart';
 import 'package:urticaria/utils/shared_preferences_manager.dart';
@@ -10,6 +11,7 @@ abstract class UserRepository {
   Future<BaseResponse<CredentialModel>> login(String phone, String password);
   Future<BaseResponse<CredentialModel>> registerAccount(
       RegisterRequest registerRequest);
+  Future<BaseResponse<UserInfoModel>> getProfile();
 }
 
 class UserRepositoryImpl implements UserRepository {
@@ -40,6 +42,16 @@ class UserRepositoryImpl implements UserRepository {
       RegisterRequest registerRequest) async {
     try {
       final result = await userServices.registerAccount(registerRequest);
+      return result;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<BaseResponse<UserInfoModel>> getProfile() async {
+    try {
+      final result = await userServices.getProfile();
       return result;
     } catch (e) {
       rethrow;

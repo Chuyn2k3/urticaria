@@ -679,6 +679,10 @@ class $AssetsImagesGen {
   AssetGenImage get medicalUnit =>
       const AssetGenImage('assets/images/medical_unit.jpg');
 
+  /// File path: assets/images/monitoring.png
+  AssetGenImage get monitoring =>
+      const AssetGenImage('assets/images/monitoring.png');
+
   /// File path: assets/images/package_icon.jpg
   AssetGenImage get packageIcon =>
       const AssetGenImage('assets/images/package_icon.jpg');
@@ -745,6 +749,7 @@ class $AssetsImagesGen {
         maleImage,
         meday,
         medicalUnit,
+        monitoring,
         packageIcon,
         phone,
         phuTayChan,

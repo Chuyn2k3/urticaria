@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:urticaria/core/base/base_response.dart';
+import 'package:urticaria/feature/profile/model/user_info_model.dart';
 import 'package:urticaria/models/register_request.dart';
 import 'package:urticaria/models/user/credential_model.dart';
 
@@ -16,4 +17,7 @@ abstract class UserServices {
   @POST("/api/v1/auth/patient/register")
   Future<BaseResponse<CredentialModel>> registerAccount(
       @Body() RegisterRequest registerRequest);
+
+  @GET("/api/v1/patients/owner/me")
+  Future<BaseResponse<UserInfoModel>> getProfile();
 }

@@ -29,10 +29,7 @@ class UserStack extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
-                child: UserInfoHeader(
-                  userName: "",
-                  avatarUri: "",
-                ),
+                child: UserInfoHeader(),
               )
             ],
           ),
