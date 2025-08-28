@@ -39,7 +39,7 @@ class CommunityScreen extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         backgroundColor: themeColor,
-        foregroundColor: Colors.white,
+        foregroundColor: AppColors.whiteColor,
         elevation: 0,
         actions: [
           IconButton(
@@ -71,7 +71,7 @@ class CommunityScreen extends StatelessWidget {
             opacity: value,
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: AppColors.whiteColor,
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(

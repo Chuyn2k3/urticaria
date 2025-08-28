@@ -13,6 +13,7 @@ import 'package:urticaria/utils/shared_preferences_manager.dart';
 import 'package:urticaria/utils/snack_bar.dart';
 import 'package:urticaria/utils/validator.dart';
 import 'package:urticaria/widget/text_field/glass_input_field.dart';
+import '../constant/color.dart';
 import '../feature/bottom_nav/bottom_nav_page.dart';
 import '../widget/form_input_widget.dart';
 
@@ -149,12 +150,12 @@ class LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight,
                                   colors: [
-                                    Colors.white.withOpacity(0.3),
-                                    Colors.white.withOpacity(0.1),
+                                    AppColors.whiteColor.withOpacity(0.3),
+                                    AppColors.whiteColor.withOpacity(0.1),
                                   ],
                                 ),
                                 border: Border.all(
-                                  color: Colors.white.withOpacity(0.2),
+                                  color: AppColors.whiteColor.withOpacity(0.2),
                                   width: 1.5,
                                 ),
                                 boxShadow: [
@@ -168,7 +169,7 @@ class LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                               child: const Icon(
                                 Icons.local_hospital_rounded,
                                 size: 50,
-                                color: Colors.white,
+                                color: AppColors.whiteColor,
                               ),
                             ),
 
@@ -179,7 +180,7 @@ class LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                               'Bệnh viện Da liễu TW',
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                color: Colors.white,
+                                color: AppColors.whiteColor,
                                 fontSize: 32,
                                 fontWeight: FontWeight.w300,
                                 letterSpacing: 1.2,
@@ -191,7 +192,7 @@ class LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                             Text(
                               'Chăm sóc sức khỏe da của bạn',
                               style: TextStyle(
-                                color: Colors.white.withOpacity(0.8),
+                                color: AppColors.whiteColor.withOpacity(0.8),
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400,
                                 letterSpacing: 0.5,
@@ -216,13 +217,13 @@ class LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
                                 colors: [
-                                  Colors.white.withOpacity(0.25),
-                                  Colors.white.withOpacity(0.1),
+                                  AppColors.whiteColor.withOpacity(0.25),
+                                  AppColors.whiteColor.withOpacity(0.1),
                                 ],
                               ),
                               borderRadius: BorderRadius.circular(30),
                               border: Border.all(
-                                color: Colors.white.withOpacity(0.2),
+                                color: AppColors.whiteColor.withOpacity(0.2),
                                 width: 1.5,
                               ),
                               boxShadow: [
@@ -240,7 +241,7 @@ class LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                                 const Text(
                                   'Chào mừng trở lại',
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: AppColors.whiteColor,
                                     fontSize: 28,
                                     fontWeight: FontWeight.w600,
                                     letterSpacing: 0.5,
@@ -252,7 +253,8 @@ class LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                                 Text(
                                   'Đăng nhập để tiếp tục',
                                   style: TextStyle(
-                                    color: Colors.white.withOpacity(0.7),
+                                    color:
+                                        AppColors.whiteColor.withOpacity(0.7),
                                     fontSize: 16,
                                     fontWeight: FontWeight.w400,
                                   ),
@@ -297,12 +299,12 @@ class LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                                       width: double.infinity,
                                       height: 56,
                                       decoration: BoxDecoration(
-                                        color: Colors.white,
+                                        color: AppColors.whiteColor,
                                         borderRadius: BorderRadius.circular(28),
                                         boxShadow: [
                                           BoxShadow(
-                                            color:
-                                                Colors.white.withOpacity(0.3),
+                                            color: AppColors.whiteColor
+                                                .withOpacity(0.3),
                                             blurRadius: 20,
                                             offset: const Offset(0, 10),
                                           ),
@@ -325,7 +327,7 @@ class LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                                                 }
                                               },
                                         style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.white,
+                                          backgroundColor: AppColors.whiteColor,
                                           shadowColor: Colors.transparent,
                                           shape: RoundedRectangleBorder(
                                             borderRadius:
@@ -360,13 +362,14 @@ class LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                                       begin: Alignment.topLeft,
                                       end: Alignment.bottomRight,
                                       colors: [
-                                        Colors.white.withOpacity(0.2),
-                                        Colors.white.withOpacity(0.1),
+                                        AppColors.whiteColor.withOpacity(0.2),
+                                        AppColors.whiteColor.withOpacity(0.1),
                                       ],
                                     ),
                                     borderRadius: BorderRadius.circular(28),
                                     border: Border.all(
-                                      color: Colors.white.withOpacity(0.3),
+                                      color:
+                                          AppColors.whiteColor.withOpacity(0.3),
                                       width: 1.5,
                                     ),
                                   ),
@@ -385,7 +388,7 @@ class LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                                     child: const Text(
                                       'Đăng ký',
                                       style: TextStyle(
-                                        color: Colors.white,
+                                        color: AppColors.whiteColor,
                                         fontSize: 18,
                                         fontWeight: FontWeight.w600,
                                         letterSpacing: 0.5,
@@ -405,7 +408,8 @@ class LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                                     child: Text(
                                       'Quên mật khẩu?',
                                       style: TextStyle(
-                                        color: Colors.white.withOpacity(0.8),
+                                        color: AppColors.whiteColor
+                                            .withOpacity(0.8),
                                         fontSize: 16,
                                         fontWeight: FontWeight.w500,
                                       ),
@@ -424,7 +428,7 @@ class LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                       Text(
                         '© 2024 Bệnh viện Da liễu TW',
                         style: TextStyle(
-                          color: Colors.white.withOpacity(0.6),
+                          color: AppColors.whiteColor.withOpacity(0.6),
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
                         ),

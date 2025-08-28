@@ -142,9 +142,9 @@ class SignUpProcess extends StatelessWidget {
               Container(
                 width: 24,
                 height: 24,
-                child: const Icon(
+                child: Icon(
                   Icons.check,
-                  color: Colors.white,
+                  color: AppColors.background,
                   size: 15,
                 ),
                 decoration: BoxDecoration(
@@ -193,7 +193,7 @@ class SignUpProcess extends StatelessWidget {
                 decoration: BoxDecoration(
                   border: Border.all(color: outlineColor, width: 2),
                   //shape: BoxShape.circle,
-                  color: Colors.white,
+                  color: AppColors.background,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Container(

@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:urticaria/core/repositories/appointment_repository.dart';
 import 'package:urticaria/feature/medical_record_v2/screens/medical_form_screen.dart';
 import 'package:urticaria/models/appointment/appointment_request.dart';
+import 'package:urticaria/utils/snack_bar.dart';
+
+import '../../../constant/color.dart';
+import '../../../cubit/appointment/appointment_cubit.dart';
+import '../../../utils/validator.dart';
+import '../../../widget/appbar/custom_app_bar.dart';
+import '../../../widget/button/primary_button.dart';
+import '../../../widget/custom_progress_indicator.dart';
+import '../../../widget/text_field/input_text_field.dart';
 
 /// Lưu câu trả lời 3 câu hỏi
 class ClassificationAnswers {
@@ -46,26 +56,34 @@ int classifyTemplateId(ClassificationAnswers answers) {
   return 16;
 }
 
-class ClassificationScreen extends StatefulWidget {
+class ClassificationScreen extends StatelessWidget {
   const ClassificationScreen({super.key});
 
   @override
-  State<ClassificationScreen> createState() => _ClassificationScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => AppointmentCubit(),
+      child: const ClassificationView(),
+    );
+  }
 }
 
-class _ClassificationScreenState extends State<ClassificationScreen> {
-  // Form controllers
+class ClassificationView extends StatefulWidget {
+  const ClassificationView({super.key});
+
+  @override
+  State<ClassificationView> createState() => _ClassificationViewState();
+}
+
+class _ClassificationViewState extends State<ClassificationView> {
   final _formKey = GlobalKey<FormState>();
   final _nameCtrl = TextEditingController();
   final _phoneCtrl = TextEditingController();
   final _reasonCtrl = TextEditingController();
 
-  // Phân loại câu trả lời
   bool? everVisited;
   bool? hasContinuousAttack;
   bool? isFirstTimeOver6Weeks;
-
-  bool _loading = false;
 
   @override
   void dispose() {
@@ -76,26 +94,22 @@ class _ClassificationScreenState extends State<ClassificationScreen> {
   }
 
   int classifyTemplateId() {
-    // Cấp tính = 16, Mạn tính lần 1 = 17, Mạn tính tái khám = 18
-    if (everVisited == false && hasContinuousAttack == false) {
-      return 16; // Cấp tính
-    }
+    if (everVisited == false && hasContinuousAttack == false) return 16;
     if ((everVisited == false && hasContinuousAttack == true) ||
         (everVisited == true &&
             hasContinuousAttack == true &&
             isFirstTimeOver6Weeks == true)) {
-      return 17; // Mạn tính lần 1
+      return 17;
     }
     if (everVisited == true &&
         hasContinuousAttack == true &&
         isFirstTimeOver6Weeks == false) {
-      return 18; // Mạn tính tái khám
+      return 18;
     }
-    // Default fallback
     return 16;
   }
 
-  Future<void> _submit() async {
+  void _submit(BuildContext context) {
     if (!_formKey.currentState!.validate()) return;
     if (everVisited == null ||
         hasContinuousAttack == null ||
@@ -106,13 +120,10 @@ class _ClassificationScreenState extends State<ClassificationScreen> {
       return;
     }
 
-    final templateId = classifyTemplateId();
-    final appointmentRepo = context.read<AppointmentRepository>();
-
     final request = AppointmentRequest(
       reason: _reasonCtrl.text.trim(),
       appointmentDate: DateTime.now().toIso8601String(),
-      status: "scheduled",
+      status: "PENDING",
       fullName: _nameCtrl.text.trim(),
       phone: _phoneCtrl.text.trim(),
       notes: "Phân loại từ câu hỏi",
@@ -123,121 +134,192 @@ class _ClassificationScreenState extends State<ClassificationScreen> {
       },
     );
 
-    setState(() => _loading = true);
+    context.read<AppointmentCubit>().createAppointment(request);
+  }
 
-    try {
-      final response = await appointmentRepo.createAppointment(request);
-      final appointmentId = response.data?.id;
-      if (appointmentId == null) throw Exception("Không tạo được appointment");
-
-      if (!mounted) return;
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (_) => MedicalFormScreen(
-            templateId: templateId,
-            appointmentId: appointmentId,
-          ),
+  Widget _buildQuestion({
+    required String title,
+    required bool? groupValue,
+    required Function(bool?) onChanged,
+  }) {
+    return Card(
+      color: AppColors.whiteColor,
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      elevation: 2,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(title,
+                style:
+                    const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+            Row(
+              children: [
+                Expanded(
+                  child: RadioListTile<bool>(
+                    title: const Text("Có"),
+                    value: true,
+                    activeColor: Colors.blue,
+                    groupValue: groupValue,
+                    onChanged: onChanged,
+                  ),
+                ),
+                Expanded(
+                  child: RadioListTile<bool>(
+                    title: const Text("Không"),
+                    value: false,
+                    activeColor: Colors.blue,
+                    groupValue: groupValue,
+                    onChanged: onChanged,
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
-      );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("❌ Lỗi: $e")),
-      );
-    } finally {
-      if (mounted) setState(() => _loading = false);
-    }
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Phân loại bệnh án")),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              /// ================== PHẦN 3 CÂU HỎI ==================
-              const Text("Câu hỏi phân loại",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-
-              const SizedBox(height: 8),
-              const Text(
-                  "1. Bạn đã từng khám ở phòng khám mày đay bệnh viện da liễu TW hay chưa?"),
-              SwitchListTile(
-                title: Text(
-                    everVisited == true ? "Đã từng khám" : "Chưa từng khám"),
-                value: everVisited ?? false,
-                onChanged: (val) => setState(() => everVisited = val),
+    return BlocConsumer<AppointmentCubit, AppointmentState>(
+      listener: (context, state) {
+        if (state is AppointmentFailure) {
+          context.showSnackBarFail(
+            text: "❌ Lỗi khi tạo hẹn khám",
+            positionTop: true,
+          );
+        }
+        if (state is AppointmentSuccess) {
+          final templateId = classifyTemplateId();
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => MedicalFormScreen(
+                templateId: templateId,
+                appointmentId: state.appointment.id,
               ),
-
-              const SizedBox(height: 8),
-              const Text(
-                  "2. Bạn đã có đợt nào bị liên tục >= 6 tuần chưa (Liên tục = ≥ 2 lần/tuần)?"),
-              SwitchListTile(
-                title: Text(hasContinuousAttack == true ? "Có" : "Chưa"),
-                value: hasContinuousAttack ?? false,
-                onChanged: (val) => setState(() => hasContinuousAttack = val),
-              ),
-
-              const SizedBox(height: 8),
-              const Text(
-                  "3. Đây có phải lần đầu bạn bị liên tục lớn > 6 tuần không?"),
-              SwitchListTile(
-                title: Text(isFirstTimeOver6Weeks == true
-                    ? "Lần đầu"
-                    : "Không phải lần đầu"),
-                value: isFirstTimeOver6Weeks ?? false,
-                onChanged: (val) => setState(() => isFirstTimeOver6Weeks = val),
-              ),
-
-              const Divider(height: 32),
-
-              /// ================== THÔNG TIN APPOINTMENT ==================
-              const Text("Thông tin đặt lịch",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-
-              TextFormField(
-                controller: _nameCtrl,
-                decoration: const InputDecoration(labelText: "Họ tên"),
-                validator: (val) =>
-                    val == null || val.isEmpty ? "Bắt buộc" : null,
-              ),
-              TextFormField(
-                controller: _phoneCtrl,
-                decoration: const InputDecoration(labelText: "Số điện thoại"),
-                validator: (val) =>
-                    val == null || val.isEmpty ? "Bắt buộc" : null,
-              ),
-              TextFormField(
-                controller: _reasonCtrl,
-                decoration: const InputDecoration(labelText: "Lý do khám"),
-                validator: (val) =>
-                    val == null || val.isEmpty ? "Bắt buộc" : null,
-              ),
-
-              const SizedBox(height: 24),
-
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton.icon(
-                  onPressed: _loading ? null : _submit,
-                  icon: _loading
-                      ? const SizedBox(
-                          width: 20,
-                          height: 20,
-                          child: CircularProgressIndicator(strokeWidth: 2))
-                      : const Icon(Icons.check),
-                  label: Text(_loading ? "Đang xử lý..." : "Xác nhận"),
-                ),
-              ),
-            ],
+            ),
+          );
+        }
+      },
+      builder: (context, state) {
+        final isLoading = state is AppointmentLoading;
+        // return CustomProgressIndicator();
+        return Scaffold(
+          backgroundColor: Colors.grey[50],
+          appBar: CustomAppbar.basic(
+            onTap: () => Navigator.pop(context),
+            widgetTitle: const Text(
+              'Phân loại bệnh án',
+              style: TextStyle(
+                  color: AppColors.whiteColor, fontWeight: FontWeight.bold),
+            ),
+            backgroundColor: AppColors.primaryColor,
+            // elevation: 0,
+            // iconTheme: const IconThemeData(color: AppColors.whiteColor),
           ),
-        ),
-      ),
+          body: SingleChildScrollView(
+            padding: const EdgeInsets.all(16),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text("Câu hỏi phân loại",
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue)),
+                  _buildQuestion(
+                    title:
+                        "1. Bạn đã từng khám ở phòng khám mày đay BV da liễu TW chưa?",
+                    groupValue: everVisited,
+                    onChanged: (val) => setState(() => everVisited = val),
+                  ),
+                  _buildQuestion(
+                    title:
+                        "2. Bạn đã có đợt nào bị liên tục ≥ 6 tuần chưa (≥ 2 lần/tuần)?",
+                    groupValue: hasContinuousAttack,
+                    onChanged: (val) =>
+                        setState(() => hasContinuousAttack = val),
+                  ),
+                  _buildQuestion(
+                    title:
+                        "3. Đây có phải lần đầu bạn bị liên tục > 6 tuần không?",
+                    groupValue: isFirstTimeOver6Weeks,
+                    onChanged: (val) =>
+                        setState(() => isFirstTimeOver6Weeks = val),
+                  ),
+                  const SizedBox(height: 16),
+                  const Divider(),
+                  const Text("Thông tin đặt lịch",
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue)),
+                  const SizedBox(height: 8),
+
+                  /// Họ tên
+                  InputTextField(
+                    label: "Họ tên",
+                    textController: _nameCtrl,
+                    validator: (val) => Validator.validateString(
+                      str: val ?? "",
+                      name: "Họ tên",
+                      minLength: 0,
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
+                  const SizedBox(height: 12),
+
+                  /// Số điện thoại
+                  InputTextField(
+                    label: "Số điện thoại",
+                    textController: _phoneCtrl,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    maxLength: 10,
+                    validator: (val) =>
+                        Validator.validatePhoneNumber(val ?? ""),
+                    textAlign: TextAlign.left,
+                  ),
+                  const SizedBox(height: 12),
+
+                  /// Lý do khám
+                  InputTextField(
+                    label: "Lý do khám",
+                    textController: _reasonCtrl,
+                    minLine: 3,
+                    maxLine: 5,
+                    validator: (val) => Validator.validateString(
+                      str: val ?? "",
+                      name: "Lý do khám",
+                      minLength: 3,
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
+
+                  const SizedBox(height: 24),
+
+                  /// Nút xác nhận
+                  Center(
+                    child: PrimaryButton.icon(
+                      label: isLoading ? "Đang xử lý..." : "Xác nhận",
+                      iconData: isLoading ? null : Icons.check,
+                      isLoading: isLoading,
+                      onPressed: isLoading ? null : () => _submit(context),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

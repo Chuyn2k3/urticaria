@@ -3,6 +3,8 @@ import 'package:urticaria/feature/medical_record_v2/screens/medical_records_list
 import 'package:urticaria/widget/appbar/custom_app_bar.dart';
 import 'package:urticaria/widget/base_scaffold.dart';
 
+import '../../../constant/color.dart';
+
 class MedicalRecordDetailScreen extends StatelessWidget {
   final MedicalRecordItem record;
 
@@ -118,16 +120,16 @@ class MedicalRecordDetailScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(typeInfo['icon'], color: Colors.white, size: 32),
+              Icon(typeInfo['icon'], color: AppColors.whiteColor, size: 32),
               const SizedBox(width: 12),
-              Icon(statusInfo['icon'], color: Colors.white, size: 32),
+              Icon(statusInfo['icon'], color: AppColors.whiteColor, size: 32),
             ],
           ),
           const SizedBox(height: 12),
           Text(
             '${typeInfo['label']} - ${statusInfo['label']}',
             style: const TextStyle(
-              color: Colors.white,
+              color: AppColors.whiteColor,
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
@@ -136,7 +138,7 @@ class MedicalRecordDetailScreen extends StatelessWidget {
           Text(
             'Cập nhật: ${_formatDateTime(record.createdDate)}',
             style: const TextStyle(
-              color: Colors.white70,
+              color: AppColors.whiteColor,
               fontSize: 14,
             ),
           ),
@@ -155,7 +157,7 @@ class MedicalRecordDetailScreen extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(

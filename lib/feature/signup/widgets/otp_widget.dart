@@ -2,6 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
+import '../../../constant/color.dart';
+
 class TestOTPWidget extends StatefulWidget {
   const TestOTPWidget({
     Key? key,
@@ -118,9 +120,9 @@ class _TestOTPWidgetState extends State<TestOTPWidget> {
               activeColor: Colors.blue,
               inactiveColor: Colors.grey,
               selectedColor: Colors.blueAccent,
-              activeFillColor: Colors.white,
+              activeFillColor: AppColors.whiteColor,
               inactiveFillColor: Colors.grey[200],
-              selectedFillColor: Colors.white,
+              selectedFillColor: AppColors.whiteColor,
             ),
             animationDuration: const Duration(milliseconds: 300),
             enableActiveFill: true,

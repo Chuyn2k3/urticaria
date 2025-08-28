@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../constant/color.dart';
+
 class ImageUploadWidget extends StatefulWidget {
   final List<String> imageUrls;
   final Function(List<String>) onImagesChanged;
@@ -208,7 +210,7 @@ class _ImageUploadWidgetState extends State<ImageUploadWidget> {
       child: Container(
         height: 120,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.whiteColor,
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
             color: Colors.grey.shade300,
@@ -320,7 +322,7 @@ class _ImageUploadWidgetState extends State<ImageUploadWidget> {
               ),
               child: const Icon(
                 Icons.close,
-                color: Colors.white,
+                color: AppColors.whiteColor,
                 size: 16,
               ),
             ),
@@ -335,7 +337,7 @@ class _ImageUploadWidgetState extends State<ImageUploadWidget> {
       onTap: _showImageSourceDialog,
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.whiteColor,
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
             color: const Color(0xFF0066CC).withOpacity(0.3),

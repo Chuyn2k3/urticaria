@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:urticaria/feature/health_records/models/health_record_model.dart';
 import 'package:urticaria/models/business_model.dart';
-import '../../../../utils/colors.dart';
+import '../../../constant/color.dart';
 import '../widget/booking_history_item.dart';
 import 'patient_infomation.dart';
 
@@ -96,18 +96,18 @@ class _BusinessListBookingState extends State<BusinessListBooking>
         children: [
           // Patient Information
           Container(
-            color: Colors.white,
+            color: AppColors.whiteColor,
             child: PatientInformation(),
           ),
 
           // Tab Bar
           Container(
-            color: Colors.white,
+            color: AppColors.whiteColor,
             child: TabBar(
               controller: _tabController,
-              indicatorColor: AppColors.primary,
+              indicatorColor: AppColors.primaryColor,
               indicatorWeight: 3,
-              labelColor: AppColors.primary,
+              labelColor: AppColors.primaryColor,
               unselectedLabelColor: Colors.grey.shade600,
               onTap: (index) {
                 setState(() {
@@ -138,7 +138,7 @@ class _BusinessListBookingState extends State<BusinessListBooking>
 
           // Date Filter Section
           Container(
-            color: Colors.white,
+            color: AppColors.whiteColor,
             padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -146,14 +146,14 @@ class _BusinessListBookingState extends State<BusinessListBooking>
                 Row(
                   children: const [
                     Icon(Icons.calendar_month,
-                        color: AppColors.primary, size: 20),
+                        color: AppColors.primaryColor, size: 20),
                     SizedBox(width: 8),
                     Text(
                       'LỊCH SỬ KHÁM, CHỮA BỆNH',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
-                        color: AppColors.primary,
+                        color: AppColors.primaryColor,
                       ),
                     ),
                   ],
@@ -178,7 +178,7 @@ class _BusinessListBookingState extends State<BusinessListBooking>
                               return Theme(
                                 data: Theme.of(context).copyWith(
                                   colorScheme: const ColorScheme.light(
-                                    primary: AppColors.primary,
+                                    primary: AppColors.primaryColor,
                                   ),
                                 ),
                                 child: child!,
@@ -305,7 +305,7 @@ class _BusinessListBookingState extends State<BusinessListBooking>
             margin: const EdgeInsets.all(16),
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: AppColors.whiteColor,
               borderRadius: BorderRadius.circular(12),
               boxShadow: [
                 BoxShadow(
@@ -322,7 +322,7 @@ class _BusinessListBookingState extends State<BusinessListBooking>
                     'Tổng số',
                     _businessList.length.toString(),
                     Icons.folder_outlined,
-                    AppColors.primary,
+                    AppColors.primaryColor,
                   ),
                 ),
                 Container(

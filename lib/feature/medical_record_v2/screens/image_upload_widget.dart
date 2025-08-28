@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
+import '../../../constant/color.dart';
+
 class ImageUploadWidget extends StatefulWidget {
   final String label;
   final List<String> imagePaths;
@@ -110,7 +112,7 @@ class _ImageUploadWidgetState extends State<ImageUploadWidget> {
             decoration: BoxDecoration(
               border: Border.all(color: Colors.grey[300]!),
               borderRadius: BorderRadius.circular(8),
-              color: widget.enabled ? Colors.white : Colors.grey[50],
+              color: widget.enabled ? AppColors.whiteColor : Colors.grey[50],
             ),
             child: Column(
               children: [
@@ -151,7 +153,7 @@ class _ImageUploadWidgetState extends State<ImageUploadWidget> {
                                   ),
                                   child: const Icon(
                                     Icons.close,
-                                    color: Colors.white,
+                                    color: AppColors.whiteColor,
                                     size: 16,
                                   ),
                                 ),
@@ -173,7 +175,7 @@ class _ImageUploadWidgetState extends State<ImageUploadWidget> {
                     ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
+                      foregroundColor: AppColors.whiteColor,
                       minimumSize: const Size(double.infinity, 48),
                     ),
                   ),

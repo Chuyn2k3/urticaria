@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../utils/colors.dart';
+
+import '../constant/color.dart';
 
 class SchedulePage extends StatefulWidget {
   const SchedulePage({Key? key}) : super(key: key);
@@ -39,16 +40,16 @@ class _SchedulePageState extends State<SchedulePage>
           'Lịch khám',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
+        backgroundColor: AppColors.primaryColor,
+        foregroundColor: AppColors.whiteColor,
         elevation: 0,
         bottom: TabBar(
           controller: _tabController,
           tabs: _tabs,
-          indicatorColor: Colors.white,
+          indicatorColor: AppColors.whiteColor,
           indicatorWeight: 3,
-          labelColor: Colors.white,
-          unselectedLabelColor: Colors.white70,
+          labelColor: AppColors.whiteColor,
+          unselectedLabelColor: AppColors.whiteColor,
           labelStyle: const TextStyle(
             fontWeight: FontWeight.w600,
             fontSize: 16,
@@ -105,7 +106,7 @@ class ScheduleUpcomingPage extends StatelessWidget {
                 child: Container(
                   margin: const EdgeInsets.only(bottom: 16),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: AppColors.whiteColor,
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
@@ -133,9 +134,9 @@ class ScheduleUpcomingPage extends StatelessWidget {
                                 ),
                                 borderRadius: BorderRadius.circular(16),
                               ),
-                              child: const Icon(
+                              child: Icon(
                                 Icons.medical_services,
-                                color: Colors.white,
+                                color: AppColors.whiteColor,
                                 size: 24,
                               ),
                             ),
@@ -286,7 +287,7 @@ class ScheduleCompletedPage extends StatelessWidget {
                 child: Container(
                   margin: const EdgeInsets.only(bottom: 16),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: AppColors.whiteColor,
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(

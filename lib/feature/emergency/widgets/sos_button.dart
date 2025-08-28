@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:urticaria/feature/emergency/cubit/emergency_cubit.dart';
 import 'package:urticaria/feature/emergency/screens/emergency_screen.dart';
-import 'package:urticaria/utils/colors.dart';
+
+import '../../../constant/color.dart';
 
 class SOSButton extends StatefulWidget {
   const SOSButton({super.key});
@@ -72,9 +73,9 @@ class _SOSButtonState extends State<SOSButton> with TickerProviderStateMixin {
                     ),
                   ],
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.emergency,
-                  color: Colors.white,
+                  color: AppColors.whiteColor,
                   size: 28,
                 ),
               ),
@@ -91,7 +92,7 @@ class _SOSButtonState extends State<SOSButton> with TickerProviderStateMixin {
       backgroundColor: Colors.transparent,
       builder: (context) => Container(
         decoration: const BoxDecoration(
-          color: Colors.white,
+          color: AppColors.whiteColor,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(24),
             topRight: Radius.circular(24),
@@ -191,7 +192,7 @@ class _SOSButtonState extends State<SOSButton> with TickerProviderStateMixin {
               ),
               child: Icon(
                 icon,
-                color: Colors.white,
+                color: AppColors.whiteColor,
                 size: 24,
               ),
             ),

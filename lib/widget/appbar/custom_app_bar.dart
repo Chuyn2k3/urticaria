@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:urticaria/utils/common_app.dart';
 
+import '../../constant/color.dart';
+
 class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppbar(
       {super.key,
@@ -12,7 +14,8 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
       this.widgetTitle,
       this.leading,
       this.leadingWidth,
-      this.styleTitle});
+      this.styleTitle,
+      this.backgroundColor = Colors.transparent});
   final String? title;
   final List<Widget>? actions;
   final Widget? flexibleSpace;
@@ -21,7 +24,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   final Widget? leading;
   final double? leadingWidth;
   final TextStyle? styleTitle;
-
+  final Color backgroundColor;
   CustomAppbar.basic({
     super.key,
     this.title,
@@ -33,6 +36,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
     this.styleTitle,
     VoidCallback? onTap,
     bool isLeading = true,
+    this.backgroundColor = Colors.transparent,
   }) : leading = isLeading ? _previousButton(onTap) : const SizedBox();
 
   @override
@@ -43,7 +47,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                 style: styleTitle ??
                     textTheme.t20B.copyWith(color: colorApp.labelPrimary)),
         centerTitle: true,
-        backgroundColor: Colors.transparent,
+        backgroundColor: backgroundColor,
         elevation: 0.0,
         actions: actions,
         flexibleSpace: flexibleSpace,
@@ -67,7 +71,7 @@ Widget _previousButton(VoidCallback? onTap) {
       padding: const EdgeInsets.all(8.0),
       margin: const EdgeInsets.all(12.0),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(99),
       ),
       child: const Icon(

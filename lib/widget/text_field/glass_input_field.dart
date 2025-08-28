@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../constant/color.dart';
+
 class GlassInputField extends StatelessWidget {
   final TextEditingController controller;
   final String hint;
@@ -29,13 +31,13 @@ class GlassInputField extends StatelessWidget {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                Colors.white.withOpacity(0.2),
-                Colors.white.withOpacity(0.1),
+                AppColors.whiteColor.withOpacity(0.2),
+                AppColors.whiteColor.withOpacity(0.1),
               ],
             ),
             borderRadius: BorderRadius.circular(20),
             border: Border.all(
-              color: Colors.white.withOpacity(0.2),
+              color: AppColors.whiteColor.withOpacity(0.2),
               width: 1,
             ),
           ),
@@ -45,20 +47,20 @@ class GlassInputField extends StatelessWidget {
             keyboardType: keyboardType,
             validator: validator,
             style: const TextStyle(
-              color: Colors.white,
+              color: AppColors.whiteColor,
               fontSize: 16,
               fontWeight: FontWeight.w500,
             ),
             decoration: InputDecoration(
               hintText: hint,
               hintStyle: TextStyle(
-                color: Colors.white.withOpacity(0.6),
+                color: AppColors.whiteColor.withOpacity(0.6),
                 fontSize: 16,
                 fontWeight: FontWeight.w400,
               ),
               prefixIcon: Icon(
                 icon,
-                color: Colors.white.withOpacity(0.7),
+                color: AppColors.whiteColor.withOpacity(0.7),
                 size: 22,
               ),
               border: InputBorder.none,

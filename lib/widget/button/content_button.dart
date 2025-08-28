@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../constant/color.dart';
+
 class ContentButton extends StatelessWidget {
   final bool isHasIcon;
   final Widget iconWidget;
@@ -66,7 +68,7 @@ class ContentButton extends StatelessWidget {
       alignment: Alignment.center,
       child: const CircularProgressIndicator(
         backgroundColor: Colors.grey,
-        color: Colors.white,
+        color: AppColors.whiteColor,
         strokeWidth: 2,
       ),
     );

@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:urticaria/feature/health_records/models/health_record_model.dart';
 import 'package:urticaria/models/business_detail_model.dart';
 import 'package:urticaria/models/user_business_model.dart';
-import '../../../../utils/colors.dart';
+import '../../../constant/color.dart';
 import '../../../widget/appbar/app_bar.dart';
 
 class BusinessDetailScreen extends StatefulWidget {
@@ -43,14 +43,14 @@ class _BusinessDetailScreenState extends State<BusinessDetailScreen> {
         isBack: true,
         actions: [
           IconButton(
-            icon: const Icon(Icons.share, color: Colors.white),
+            icon: Icon(Icons.share, color: AppColors.whiteColor),
             onPressed: () {
               // Share functionality
               _showShareDialog();
             },
           ),
           IconButton(
-            icon: const Icon(Icons.print, color: Colors.white),
+            icon: Icon(Icons.print, color: AppColors.whiteColor),
             onPressed: () {
               // Print functionality
               _showPrintDialog();
@@ -155,12 +155,12 @@ class _BusinessDetailScreenState extends State<BusinessDetailScreen> {
       ),
       child: Column(
         children: [
-          Icon(statusIcon, color: Colors.white, size: 48),
+          Icon(statusIcon, color: AppColors.whiteColor, size: 48),
           const SizedBox(height: 12),
           Text(
             statusText,
             style: const TextStyle(
-              color: Colors.white,
+              color: AppColors.whiteColor,
               fontSize: 24,
               fontWeight: FontWeight.bold,
             ),
@@ -169,7 +169,7 @@ class _BusinessDetailScreenState extends State<BusinessDetailScreen> {
           Text(
             'Mã bệnh án: ${healthRecord.id}',
             style: const TextStyle(
-              color: Colors.white70,
+              color: AppColors.whiteColor,
               fontSize: 14,
             ),
           ),
@@ -177,7 +177,7 @@ class _BusinessDetailScreenState extends State<BusinessDetailScreen> {
           Text(
             'Cập nhật: ${_formatDateTime(healthRecord.updatedDate ?? healthRecord.createdDate)}',
             style: const TextStyle(
-              color: Colors.white70,
+              color: AppColors.whiteColor,
               fontSize: 14,
             ),
           ),
@@ -191,14 +191,14 @@ class _BusinessDetailScreenState extends State<BusinessDetailScreen> {
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: AppColors.primary,
+        color: AppColors.primaryColor,
         borderRadius: BorderRadius.circular(8),
       ),
       width: double.infinity,
       child: Text(
         title,
         style: const TextStyle(
-          color: Colors.white,
+          color: AppColors.whiteColor,
           fontSize: 16,
           fontWeight: FontWeight.bold,
         ),
@@ -210,7 +210,7 @@ class _BusinessDetailScreenState extends State<BusinessDetailScreen> {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
@@ -245,7 +245,7 @@ class _BusinessDetailScreenState extends State<BusinessDetailScreen> {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
@@ -289,7 +289,7 @@ class _BusinessDetailScreenState extends State<BusinessDetailScreen> {
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
-                color: AppColors.primary,
+                color: AppColors.primaryColor,
               ),
             ),
             const SizedBox(height: 8),
@@ -315,7 +315,7 @@ class _BusinessDetailScreenState extends State<BusinessDetailScreen> {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
@@ -330,14 +330,14 @@ class _BusinessDetailScreenState extends State<BusinessDetailScreen> {
         children: [
           Row(
             children: [
-              const Icon(Icons.photo_library, color: AppColors.primary),
+              Icon(Icons.photo_library, color: AppColors.primaryColor),
               const SizedBox(width: 8),
               Text(
                 'Hình ảnh triệu chứng (${healthRecord.imageUrls.length})',
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.primary,
+                  color: AppColors.primaryColor,
                 ),
               ),
             ],
@@ -377,12 +377,12 @@ class _BusinessDetailScreenState extends State<BusinessDetailScreen> {
                         child: Container(
                           padding: const EdgeInsets.all(2),
                           decoration: const BoxDecoration(
-                            color: AppColors.primary,
+                            color: AppColors.primaryColor,
                             shape: BoxShape.circle,
                           ),
                           child: const Icon(
                             Icons.zoom_in,
-                            color: Colors.white,
+                            color: AppColors.whiteColor,
                             size: 12,
                           ),
                         ),
@@ -402,7 +402,7 @@ class _BusinessDetailScreenState extends State<BusinessDetailScreen> {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
@@ -417,14 +417,14 @@ class _BusinessDetailScreenState extends State<BusinessDetailScreen> {
         children: [
           const Row(
             children: [
-              Icon(Icons.science, color: AppColors.primary),
+              Icon(Icons.science, color: AppColors.primaryColor),
               SizedBox(width: 8),
               Text(
                 'Kết quả xét nghiệm',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.primary,
+                  color: AppColors.primaryColor,
                 ),
               ),
             ],
@@ -495,7 +495,7 @@ class _BusinessDetailScreenState extends State<BusinessDetailScreen> {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
@@ -510,14 +510,14 @@ class _BusinessDetailScreenState extends State<BusinessDetailScreen> {
         children: [
           const Row(
             children: [
-              Icon(Icons.medication, color: AppColors.primary),
+              Icon(Icons.medication, color: AppColors.primaryColor),
               SizedBox(width: 8),
               Text(
                 'Điều trị và toa thuốc',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.primary,
+                  color: AppColors.primaryColor,
                 ),
               ),
             ],
@@ -611,7 +611,7 @@ class _BusinessDetailScreenState extends State<BusinessDetailScreen> {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
@@ -626,14 +626,14 @@ class _BusinessDetailScreenState extends State<BusinessDetailScreen> {
         children: [
           const Row(
             children: [
-              Icon(Icons.note_alt, color: AppColors.primary),
+              Icon(Icons.note_alt, color: AppColors.primaryColor),
               SizedBox(width: 8),
               Text(
                 'Ghi chú và theo dõi',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.primary,
+                  color: AppColors.primaryColor,
                 ),
               ),
             ],
@@ -673,8 +673,8 @@ class _BusinessDetailScreenState extends State<BusinessDetailScreen> {
             icon: const Icon(Icons.calendar_today),
             label: const Text('Đặt lịch tái khám'),
             style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.primary,
-              foregroundColor: Colors.white,
+              backgroundColor: AppColors.primaryColor,
+              foregroundColor: AppColors.whiteColor,
               padding: const EdgeInsets.symmetric(vertical: 12),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
@@ -692,8 +692,8 @@ class _BusinessDetailScreenState extends State<BusinessDetailScreen> {
             icon: const Icon(Icons.phone),
             label: const Text('Liên hệ bác sĩ'),
             style: OutlinedButton.styleFrom(
-              foregroundColor: AppColors.primary,
-              side: const BorderSide(color: AppColors.primary),
+              foregroundColor: AppColors.primaryColor,
+              side: const BorderSide(color: AppColors.primaryColor),
               padding: const EdgeInsets.symmetric(vertical: 12),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
@@ -715,7 +715,7 @@ class _BusinessDetailScreenState extends State<BusinessDetailScreen> {
             style: const TextStyle(
               fontWeight: FontWeight.w600,
               fontSize: 14,
-              color: AppColors.primary,
+              color: AppColors.primaryColor,
             ),
           ),
           const SizedBox(height: 4),
@@ -749,7 +749,7 @@ class _BusinessDetailScreenState extends State<BusinessDetailScreen> {
             style: const TextStyle(
               fontWeight: FontWeight.w600,
               fontSize: 13,
-              color: AppColors.primary,
+              color: AppColors.primaryColor,
             ),
           ),
           const SizedBox(height: 4),
@@ -848,7 +848,7 @@ class _BusinessDetailScreenState extends State<BusinessDetailScreen> {
                   ),
                   child: const Icon(
                     Icons.close,
-                    color: Colors.white,
+                    color: AppColors.whiteColor,
                     size: 20,
                   ),
                 ),

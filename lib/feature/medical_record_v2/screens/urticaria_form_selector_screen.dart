@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:urticaria/widget/appbar/custom_app_bar.dart';
+import '../../../constant/color.dart';
 import 'acute_urticaria_form_screen.dart';
 import 'chronic_urticaria_initial_form_screen.dart';
 import 'chronic_urticaria_followup_form_screen.dart';
@@ -62,7 +63,7 @@ class _UrticariaFormSelectorScreenState
         padding: const EdgeInsets.all(8.0),
         margin: const EdgeInsets.all(12.0),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.whiteColor,
           borderRadius: BorderRadius.circular(99),
         ),
         child: const Icon(
@@ -107,7 +108,7 @@ class _UrticariaFormSelectorScreenState
                           const Icon(
                             Icons.local_hospital,
                             size: 64,
-                            color: Colors.white,
+                            color: AppColors.whiteColor,
                           ),
                           const SizedBox(height: 16),
                           const Text(
@@ -115,7 +116,7 @@ class _UrticariaFormSelectorScreenState
                             style: TextStyle(
                               fontSize: 28,
                               fontWeight: FontWeight.bold,
-                              color: Colors.white,
+                              color: AppColors.whiteColor,
                             ),
                           ),
                           const SizedBox(height: 8),
@@ -123,7 +124,7 @@ class _UrticariaFormSelectorScreenState
                             'Hệ thống bệnh án điện tử',
                             style: TextStyle(
                               fontSize: 16,
-                              color: Colors.white70,
+                              color: AppColors.whiteColor,
                             ),
                           ),
                         ],
@@ -134,7 +135,7 @@ class _UrticariaFormSelectorScreenState
                       child: Container(
                         margin: const EdgeInsets.only(top: 24),
                         decoration: const BoxDecoration(
-                          color: Colors.white,
+                          color: AppColors.whiteColor,
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(32),
                             topRight: Radius.circular(32),
@@ -207,7 +208,7 @@ class _UrticariaFormSelectorScreenState
               onPressed: _nextStep,
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue,
-                foregroundColor: Colors.white,
+                foregroundColor: AppColors.whiteColor,
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -292,7 +293,7 @@ class _UrticariaFormSelectorScreenState
                   onPressed: _duration != null ? _nextStep : null,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,
-                    foregroundColor: Colors.white,
+                    foregroundColor: AppColors.whiteColor,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
@@ -392,7 +393,7 @@ class _UrticariaFormSelectorScreenState
                       : null,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,
-                    foregroundColor: Colors.white,
+                    foregroundColor: AppColors.whiteColor,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
@@ -516,7 +517,7 @@ class _UrticariaFormSelectorScreenState
                   onPressed: _navigateToForm,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: formColor,
-                    foregroundColor: Colors.white,
+                    foregroundColor: AppColors.whiteColor,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
@@ -545,7 +546,7 @@ class _UrticariaFormSelectorScreenState
       child: Container(
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: isSelected ? color.withOpacity(0.1) : Colors.white,
+          color: isSelected ? color.withOpacity(0.1) : AppColors.whiteColor,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
             color: isSelected ? color : Colors.grey[300]!,

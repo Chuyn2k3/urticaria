@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:urticaria/feature/chatbot/cubit/chatbot_cubit.dart';
 import 'package:urticaria/feature/chatbot/models/chat_model.dart';
-import 'package:urticaria/utils/colors.dart';
+
+import '../../../constant/color.dart';
 
 class ChatbotWidget extends StatefulWidget {
   const ChatbotWidget({super.key});
@@ -79,11 +80,11 @@ class _ChatbotWidgetState extends State<ChatbotWidget>
         width: _isExpanded ? 60 : 60,
         height: _isExpanded ? 60 : 60,
         decoration: BoxDecoration(
-          color: AppColors.primary,
+          color: AppColors.primaryColor,
           shape: BoxShape.circle,
           boxShadow: [
             BoxShadow(
-              color: AppColors.primary.withOpacity(0.3),
+              color: AppColors.primaryColor.withOpacity(0.3),
               blurRadius: 15,
               offset: const Offset(0, 5),
             ),
@@ -94,7 +95,7 @@ class _ChatbotWidgetState extends State<ChatbotWidget>
           child: Icon(
             _isExpanded ? Icons.close : Icons.chat_bubble_outline,
             key: ValueKey(_isExpanded),
-            color: Colors.white,
+            color: AppColors.whiteColor,
             size: 28,
           ),
         ),
@@ -118,7 +119,7 @@ class _ChatbotWidgetState extends State<ChatbotWidget>
                 width: MediaQuery.of(context).size.width * 0.9,
                 height: MediaQuery.of(context).size.height * 0.6,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: AppColors.whiteColor,
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
@@ -147,7 +148,7 @@ class _ChatbotWidgetState extends State<ChatbotWidget>
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.primary,
+        color: AppColors.primaryColor,
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(20),
           topRight: Radius.circular(20),
@@ -159,12 +160,12 @@ class _ChatbotWidgetState extends State<ChatbotWidget>
             width: 40,
             height: 40,
             decoration: const BoxDecoration(
-              color: Colors.white,
+              color: AppColors.whiteColor,
               shape: BoxShape.circle,
             ),
             child: const Icon(
               Icons.support_agent,
-              color: AppColors.primary,
+              color: AppColors.primaryColor,
               size: 24,
             ),
           ),
@@ -176,7 +177,7 @@ class _ChatbotWidgetState extends State<ChatbotWidget>
                 Text(
                   'Trợ lý ảo',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: AppColors.whiteColor,
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
@@ -184,7 +185,7 @@ class _ChatbotWidgetState extends State<ChatbotWidget>
                 Text(
                   'Luôn sẵn sàng hỗ trợ bạn',
                   style: TextStyle(
-                    color: Colors.white70,
+                    color: AppColors.whiteColor,
                     fontSize: 12,
                   ),
                 ),
@@ -201,13 +202,13 @@ class _ChatbotWidgetState extends State<ChatbotWidget>
                     padding:
                         const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.2),
+                      color: AppColors.whiteColor.withOpacity(0.2),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: const Text(
                       'Kết nối nhân viên',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: AppColors.whiteColor,
                         fontSize: 10,
                       ),
                     ),
@@ -223,7 +224,7 @@ class _ChatbotWidgetState extends State<ChatbotWidget>
                 child: const Text(
                   'Nhân viên hỗ trợ',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: AppColors.whiteColor,
                     fontSize: 10,
                   ),
                 ),
@@ -296,12 +297,12 @@ class _ChatbotWidgetState extends State<ChatbotWidget>
                   width: 32,
                   height: 32,
                   decoration: const BoxDecoration(
-                    color: AppColors.primary,
+                    color: AppColors.primaryColor,
                     shape: BoxShape.circle,
                   ),
                   child: const Icon(
                     Icons.support_agent,
-                    color: Colors.white,
+                    color: AppColors.whiteColor,
                     size: 18,
                   ),
                 ),
@@ -311,7 +312,8 @@ class _ChatbotWidgetState extends State<ChatbotWidget>
                 child: Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: isUser ? AppColors.primary : Colors.grey.shade100,
+                    color:
+                        isUser ? AppColors.primaryColor : Colors.grey.shade100,
                     borderRadius: BorderRadius.only(
                       topLeft: const Radius.circular(16),
                       topRight: const Radius.circular(16),
@@ -322,7 +324,7 @@ class _ChatbotWidgetState extends State<ChatbotWidget>
                   child: Text(
                     message.message,
                     style: TextStyle(
-                      color: isUser ? Colors.white : Colors.black87,
+                      color: isUser ? AppColors.whiteColor : Colors.black87,
                       fontSize: 14,
                     ),
                   ),
@@ -367,14 +369,15 @@ class _ChatbotWidgetState extends State<ChatbotWidget>
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: AppColors.primary.withOpacity(0.1),
+                color: AppColors.primaryColor.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: AppColors.primary.withOpacity(0.3)),
+                border:
+                    Border.all(color: AppColors.primaryColor.withOpacity(0.3)),
               ),
               child: Text(
                 reply.text,
                 style: const TextStyle(
-                  color: AppColors.primary,
+                  color: AppColors.primaryColor,
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
                 ),
@@ -408,7 +411,7 @@ class _ChatbotWidgetState extends State<ChatbotWidget>
                   borderSide: BorderSide.none,
                 ),
                 filled: true,
-                fillColor: Colors.white,
+                fillColor: AppColors.whiteColor,
                 contentPadding: const EdgeInsets.symmetric(
                   horizontal: 16,
                   vertical: 8,
@@ -424,12 +427,12 @@ class _ChatbotWidgetState extends State<ChatbotWidget>
               width: 40,
               height: 40,
               decoration: const BoxDecoration(
-                color: AppColors.primary,
+                color: AppColors.primaryColor,
                 shape: BoxShape.circle,
               ),
               child: const Icon(
                 Icons.send,
-                color: Colors.white,
+                color: AppColors.whiteColor,
                 size: 20,
               ),
             ),

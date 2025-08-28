@@ -115,7 +115,7 @@ class _CircleWithIconState extends State<CircleWithIcon>
                     ? SvgPicture.asset(
                         widget.icon,
                         color: _isPressed
-                            ? Colors.white
+                            ? AppColors.whiteColor
                             : (widget.colorIcon ?? const Color(0xFF0066CC)),
                         width: widget.iconSize * 0.6,
                         height: widget.iconSize * 0.6,
@@ -123,7 +123,7 @@ class _CircleWithIconState extends State<CircleWithIcon>
                     : ColorFiltered(
                         colorFilter: ColorFilter.mode(
                             _isPressed
-                                ? Colors.white
+                                ? AppColors.whiteColor
                                 : (widget.colorIcon ?? const Color(0xFF0066CC)),
                             BlendMode.srcIn),
                         child: Image.asset(

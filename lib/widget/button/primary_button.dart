@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:urticaria/widget/button/content_button.dart';
 
+import '../../constant/color.dart';
+
 class PrimaryButton extends StatelessWidget {
   final String label;
   final Widget? customLeadingIcon;
@@ -100,7 +102,7 @@ class PrimaryButton extends StatelessWidget {
         : disableBackgroundColor;
     Color borderColor = Colors.transparent;
     Color tmpTextColor =
-        isEnable ? (textColor ?? Colors.white) : disableTextColor;
+        isEnable ? (textColor ?? AppColors.whiteColor) : disableTextColor;
 
     Widget iconWidget = customLeadingIcon ?? const SizedBox();
     final isHasIcon =

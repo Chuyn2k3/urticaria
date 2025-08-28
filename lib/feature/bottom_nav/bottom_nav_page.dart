@@ -7,11 +7,11 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:urticaria/cubit/auth/auth_cubit.dart';
 import 'package:urticaria/feature/medical_record/patient/patient_cubit.dart';
+import '../../constant/color.dart';
 import '../home/home_page.dart';
 import '../../screens/community_screen.dart';
 import '../../screens/profile_screen.dart';
 import '../../screens/shedule_page.dart';
-import '../../utils/colors.dart';
 import '../../utils/icon_tabbar.dart';
 import '../../widget/app_dialog_confirm.dart';
 
@@ -72,7 +72,7 @@ class _BottomNavPageState extends State<BottomNavPage>
           ),
           bottomNavigationBar: Container(
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: AppColors.whiteColor,
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(24),
                 topRight: Radius.circular(24),
@@ -106,8 +106,8 @@ class _BottomNavPageState extends State<BottomNavPage>
                     text: 'Cá nhân', assets: TabIcon.userInactive),
               ],
               notchedShape: const CircularNotchedRectangle(),
-              color: AppColors.gray500,
-              selectedColor: AppColors.primary,
+              color: AppColors.grayColor,
+              selectedColor: AppColors.primaryColor,
             ),
           ),
         ),
@@ -204,7 +204,7 @@ class _FABBottomAppBarState extends State<FABBottomAppBar> {
       child: BottomAppBar(
         shape: widget.notchedShape,
         notchMargin: 10.0,
-        color: widget.backgroundColor ?? Colors.white,
+        color: widget.backgroundColor ?? AppColors.whiteColor,
         elevation: 0,
         height: 80, // Đặt chiều cao cố định
         child: Padding(

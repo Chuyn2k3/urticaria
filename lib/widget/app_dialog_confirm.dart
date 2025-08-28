@@ -28,7 +28,7 @@ class DialogConfirm extends StatelessWidget {
         width: widthConvert(context, 375),
         margin: const EdgeInsets.symmetric(horizontal: 20),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.whiteColor,
           borderRadius: BorderRadius.circular(8),
           boxShadow: const [
             BoxShadow(

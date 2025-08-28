@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../constant/color.dart';
 import '../../../widget/button.dart';
 import '../common_admin_info_form.dart';
 import '../patient/patient_cubit.dart';
@@ -104,7 +105,7 @@ class _FormManTinhTaiKhamState extends State<FormManTinhTaiKham> {
       SnackBar(
         content: Row(
           children: [
-            const Icon(Icons.error_outline, color: Colors.white),
+            const Icon(Icons.error_outline, color: AppColors.whiteColor),
             const SizedBox(width: 8),
             Expanded(child: Text(message)),
           ],
@@ -174,7 +175,7 @@ class _FormManTinhTaiKhamState extends State<FormManTinhTaiKham> {
                 child: const Text(
                   'Hoàn thành',
                   style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.w600),
+                      color: AppColors.whiteColor, fontWeight: FontWeight.w600),
                 ),
               ),
             ),
@@ -196,7 +197,7 @@ class _FormManTinhTaiKhamState extends State<FormManTinhTaiKham> {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         backgroundColor: themeColor,
-        foregroundColor: Colors.white,
+        foregroundColor: AppColors.whiteColor,
         elevation: 0,
         centerTitle: true,
       ),
@@ -294,12 +295,12 @@ class _FormManTinhTaiKhamState extends State<FormManTinhTaiKham> {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.2),
+              color: AppColors.whiteColor.withOpacity(0.2),
               shape: BoxShape.circle,
             ),
             child: const Icon(
               Icons.refresh,
-              color: Colors.white,
+              color: AppColors.whiteColor,
               size: 32,
             ),
           ),
@@ -309,7 +310,7 @@ class _FormManTinhTaiKhamState extends State<FormManTinhTaiKham> {
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: Colors.white,
+              color: AppColors.whiteColor,
             ),
           ),
           const SizedBox(height: 8),
@@ -317,7 +318,7 @@ class _FormManTinhTaiKhamState extends State<FormManTinhTaiKham> {
             'Theo dõi tiến triển và đánh giá\nhiệu quả điều trị',
             style: TextStyle(
               fontSize: 14,
-              color: Colors.white.withOpacity(0.9),
+              color: AppColors.whiteColor.withOpacity(0.9),
             ),
             textAlign: TextAlign.center,
           ),
@@ -330,7 +331,7 @@ class _FormManTinhTaiKhamState extends State<FormManTinhTaiKham> {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -387,7 +388,7 @@ class _FormManTinhTaiKhamState extends State<FormManTinhTaiKham> {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -476,7 +477,7 @@ class _FormManTinhTaiKhamState extends State<FormManTinhTaiKham> {
                       child: isSelected
                           ? const Icon(
                               Icons.check,
-                              color: Colors.white,
+                              color: AppColors.whiteColor,
                               size: 14,
                             )
                           : null,
@@ -530,7 +531,7 @@ class _FormManTinhTaiKhamState extends State<FormManTinhTaiKham> {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -593,7 +594,7 @@ class _FormManTinhTaiKhamState extends State<FormManTinhTaiKham> {
                   child: Text(
                     severity,
                     style: TextStyle(
-                      color: isSelected ? Colors.white : Colors.black87,
+                      color: isSelected ? AppColors.whiteColor : Colors.black87,
                       fontWeight:
                           isSelected ? FontWeight.w600 : FontWeight.normal,
                     ),
@@ -627,7 +628,7 @@ class _FormManTinhTaiKhamState extends State<FormManTinhTaiKham> {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -712,7 +713,7 @@ class _FormManTinhTaiKhamState extends State<FormManTinhTaiKham> {
                       if (isSelected) ...[
                         const Icon(
                           Icons.check_circle,
-                          color: Colors.white,
+                          color: AppColors.whiteColor,
                           size: 16,
                         ),
                         const SizedBox(width: 6),
@@ -720,7 +721,9 @@ class _FormManTinhTaiKhamState extends State<FormManTinhTaiKham> {
                       Text(
                         symptom,
                         style: TextStyle(
-                          color: isSelected ? Colors.white : Colors.black87,
+                          color: isSelected
+                              ? AppColors.whiteColor
+                              : Colors.black87,
                           fontWeight:
                               isSelected ? FontWeight.w600 : FontWeight.normal,
                           fontSize: 14,
@@ -762,7 +765,7 @@ class _FormManTinhTaiKhamState extends State<FormManTinhTaiKham> {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -830,7 +833,7 @@ class _FormManTinhTaiKhamState extends State<FormManTinhTaiKham> {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -908,7 +911,7 @@ class _FormManTinhTaiKhamState extends State<FormManTinhTaiKham> {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -1030,7 +1033,7 @@ class _FormManTinhTaiKhamState extends State<FormManTinhTaiKham> {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -1091,7 +1094,7 @@ class _FormManTinhTaiKhamState extends State<FormManTinhTaiKham> {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -1188,14 +1191,14 @@ class _FormManTinhTaiKhamState extends State<FormManTinhTaiKham> {
           children: [
             Icon(
               Icons.update,
-              color: Colors.white,
+              color: AppColors.whiteColor,
               size: 20,
             ),
             SizedBox(width: 8),
             Text(
               'Cập nhật bệnh án tái khám',
               style: TextStyle(
-                color: Colors.white,
+                color: AppColors.whiteColor,
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),

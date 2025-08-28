@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../constant/color.dart';
+
 class SectionHeader extends StatelessWidget {
   final String title;
   final IconData icon;
@@ -44,7 +46,7 @@ class SectionHeader extends StatelessWidget {
             ),
             child: Icon(
               icon,
-              color: Colors.white,
+              color: AppColors.whiteColor,
               size: 24,
             ),
           ),

@@ -107,11 +107,11 @@ class _AcuteUrticariaFormScreenState extends State<AcuteUrticariaFormScreen> {
         title: Text(
           'Bệnh án cấp tính - ${_stepTitles[_currentStep]}',
           style:
-              const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              const TextStyle(color: AppColors.whiteColor, fontWeight: FontWeight.bold),
         ),
         backgroundColor: AppColors.primaryColor,
         elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: AppColors.whiteColor),
       ),
       body: BlocListener<AcuteUrticariaCubit, AcuteUrticariaState>(
         listener: (context, state) async {
@@ -138,7 +138,7 @@ class _AcuteUrticariaFormScreenState extends State<AcuteUrticariaFormScreen> {
             // Progress indicator
             Container(
               padding: const EdgeInsets.all(16),
-              color: Colors.white,
+              color: AppColors.whiteColor,
               child: Column(
                 children: [
                   Row(
@@ -194,7 +194,7 @@ class _AcuteUrticariaFormScreenState extends State<AcuteUrticariaFormScreen> {
 
                 return Container(
                   padding: const EdgeInsets.all(16),
-                  color: Colors.white,
+                  color: AppColors.whiteColor,
                   child: Row(
                     children: [
                       if (_currentStep > 0)
@@ -219,7 +219,7 @@ class _AcuteUrticariaFormScreenState extends State<AcuteUrticariaFormScreen> {
                                   : _nextStep),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.primaryColor,
-                            foregroundColor: Colors.white,
+                            foregroundColor: AppColors.whiteColor,
                             padding: const EdgeInsets.symmetric(vertical: 12),
                           ),
                           child: isSubmitting
@@ -229,7 +229,7 @@ class _AcuteUrticariaFormScreenState extends State<AcuteUrticariaFormScreen> {
                                   child: CircularProgressIndicator(
                                     strokeWidth: 2,
                                     valueColor: AlwaysStoppedAnimation<Color>(
-                                        Colors.white),
+                                        AppColors.whiteColor),
                                   ),
                                 )
                               : Text(_currentStep == _totalSteps - 1

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../utils/colors.dart';
+import '../../constant/color.dart';
 
 class SignupSuccess extends StatelessWidget {
   const SignupSuccess({Key? key}) : super(key: key);
@@ -17,7 +17,7 @@ class SignupSuccess extends StatelessWidget {
     return WillPopScope(
       onWillPop: () async => false, // Ngăn nút back
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.whiteColor,
         body: Container(
           child: Center(
             child: Padding(
@@ -26,13 +26,13 @@ class SignupSuccess extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Icon(Icons.check_circle,
-                      size: 120, color: AppColors.primary),
+                      size: 120, color: AppColors.primaryColor),
                   const SizedBox(height: 40),
                   const Text(
                     "Đăng ký thành công!",
                     style: TextStyle(
                         fontSize: 24,
-                        color: AppColors.primary,
+                        color: AppColors.primaryColor,
                         fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
                   ),
@@ -52,7 +52,7 @@ class SignupSuccess extends StatelessWidget {
                               left: 16, top: 8, bottom: 8, right: 20),
                           margin: const EdgeInsets.only(left: 44, top: 12),
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: AppColors.whiteColor,
                             borderRadius: const BorderRadius.only(
                               topRight: Radius.circular(4),
                               bottomRight: Radius.circular(4),
@@ -69,7 +69,7 @@ class SignupSuccess extends StatelessWidget {
                             'QUAY LẠI TRANG CHỦ',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: AppColors.primary,
+                              color: AppColors.primaryColor,
                             ),
                           ),
                         ),
@@ -77,7 +77,7 @@ class SignupSuccess extends StatelessWidget {
                           height: 50,
                           width: 50,
                           decoration: const BoxDecoration(
-                            color: Colors.white,
+                            color: AppColors.whiteColor,
                             shape: BoxShape.circle,
                             boxShadow: [
                               BoxShadow(
@@ -89,12 +89,12 @@ class SignupSuccess extends StatelessWidget {
                           child: Container(
                             margin: const EdgeInsets.all(6),
                             decoration: const BoxDecoration(
-                              color: AppColors.primary,
+                              color: AppColors.primaryColor,
                               shape: BoxShape.circle,
                             ),
                             child: Center(
                               child: const Icon(Icons.arrow_back_ios,
-                                  size: 16, color: Colors.white),
+                                  size: 16, color: AppColors.whiteColor),
                             ),
                           ),
                         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:urticaria/feature/home/widget/header/user_stack.dart';
+import '../../../../constant/color.dart';
 import '../../../../utils/images.dart';
 import '../../../../widget/medical_unit_widget.dart';
 
@@ -20,7 +21,7 @@ class AppBarHomePageWidget extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: AppColors.whiteColor,
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
@@ -52,7 +53,7 @@ class AppBarHomePageWidget extends StatelessWidget {
                       Text(
                         'Chăm sóc sức khỏe da chuyên nghiệp',
                         style: TextStyle(
-                          color: Colors.white.withOpacity(0.8),
+                          color: AppColors.whiteColor.withOpacity(0.8),
                           fontSize: 12,
                         ),
                       ),

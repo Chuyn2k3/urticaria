@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:urticaria/feature/emergency/cubit/emergency_cubit.dart';
-import 'package:urticaria/utils/colors.dart';
+
+import '../../../constant/color.dart';
 
 class EmergencyScreen extends StatefulWidget {
   const EmergencyScreen({super.key});
@@ -44,7 +45,7 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.red,
-        foregroundColor: Colors.white,
+        foregroundColor: AppColors.whiteColor,
         elevation: 0,
       ),
       body: BlocConsumer<EmergencyCubit, EmergencyState>(
@@ -143,7 +144,7 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -273,7 +274,7 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -328,7 +329,9 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
                   child: Text(
                     symptom,
                     style: TextStyle(
-                      color: isSelected ? Colors.white : Colors.grey.shade700,
+                      color: isSelected
+                          ? AppColors.whiteColor
+                          : Colors.grey.shade700,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -345,7 +348,7 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -414,7 +417,7 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
         child: const Text(
           'Gửi báo cáo khẩn cấp',
           style: TextStyle(
-            color: Colors.white,
+            color: AppColors.whiteColor,
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),
@@ -440,7 +443,7 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
               ),
               child: const Icon(
                 Icons.check,
-                color: Colors.white,
+                color: AppColors.whiteColor,
                 size: 32,
               ),
             ),
@@ -477,7 +480,7 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
                 ),
                 child: const Text(
                   'Đóng',
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: AppColors.whiteColor),
                 ),
               ),
             ),
@@ -504,7 +507,7 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
               ),
               child: const Icon(
                 Icons.warning,
-                color: Colors.white,
+                color: AppColors.whiteColor,
                 size: 32,
               ),
             ),
@@ -543,7 +546,7 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
                     ),
                     child: const Text(
                       'Gọi 115',
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(color: AppColors.whiteColor),
                     ),
                   ),
                 ),

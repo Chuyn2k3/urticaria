@@ -1,8 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:urticaria/feature/home/widget/section_health_new/section_item.dart';
-
-import '../../../../utils/colors.dart';
+import '../../../../constant/color.dart';
 import '../../../../utils/images.dart';
 import '../section_title.dart';
 
@@ -122,7 +121,7 @@ class _SectionHealthNewState extends State<SectionHealthNew> {
                           height: 200,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: Colors.white.withOpacity(0.1),
+                            color: AppColors.whiteColor.withOpacity(0.1),
                           ),
                         ),
                       ),
@@ -134,8 +133,8 @@ class _SectionHealthNewState extends State<SectionHealthNew> {
                           children: [
                             Text(
                               tip['title'] ?? '',
-                              style: const TextStyle(
-                                color: Colors.white,
+                              style: TextStyle(
+                                color: AppColors.whiteColor,
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -144,7 +143,7 @@ class _SectionHealthNewState extends State<SectionHealthNew> {
                             Text(
                               tip['description'] ?? '',
                               style: TextStyle(
-                                color: Colors.white.withOpacity(0.9),
+                                color: AppColors.whiteColor.withOpacity(0.9),
                                 fontSize: 16,
                               ),
                             ),
@@ -155,13 +154,13 @@ class _SectionHealthNewState extends State<SectionHealthNew> {
                                 vertical: 8,
                               ),
                               decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.2),
+                                color: AppColors.whiteColor.withOpacity(0.2),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: const Text(
                                 'Đọc thêm',
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: AppColors.whiteColor,
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),

@@ -194,7 +194,7 @@ class _AppInputState extends State<AppInput> {
             decoration: InputDecoration(
               labelText: widget.hintText,
               counterText: "",
-              fillColor: widget.fillColor ?? Colors.white,
+              fillColor: widget.fillColor ?? AppColors.background,
               border: InputBorder.none,
               isDense: widget.isDense,
               filled: true,

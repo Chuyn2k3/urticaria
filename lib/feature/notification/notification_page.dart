@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../constant/color.dart';
+
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({super.key});
 
@@ -14,11 +16,11 @@ class NotificationScreen extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Thông báo'),
           backgroundColor: primaryBlue,
-          foregroundColor: Colors.white,
+          foregroundColor: AppColors.whiteColor,
           bottom: const TabBar(
-            labelColor: Colors.white,
-            unselectedLabelColor: Colors.white70,
-            indicatorColor: Colors.white,
+            labelColor: AppColors.whiteColor,
+            unselectedLabelColor: AppColors.whiteColor,
+            indicatorColor: AppColors.whiteColor,
             tabs: [
               Tab(text: 'Cơ sở y tế'),
               Tab(text: 'Hệ thống'),

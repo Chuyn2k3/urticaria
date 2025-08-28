@@ -111,12 +111,12 @@ class _ChronicUrticariaInitialFormScreenState
       appBar: AppBar(
         title: Text(
           'Bệnh án mãn tính lần 1 - ${_stepTitles[_currentStep]}',
-          style:
-              const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          style: const TextStyle(
+              color: AppColors.whiteColor, fontWeight: FontWeight.bold),
         ),
         backgroundColor: AppColors.primaryColor,
         elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: AppColors.whiteColor),
       ),
       body: BlocListener<ChronicInitialCubit, ChronicInitialState>(
         listener: (context, state) async {
@@ -138,7 +138,7 @@ class _ChronicUrticariaInitialFormScreenState
             // Progress indicator
             Container(
               padding: const EdgeInsets.all(16),
-              color: Colors.white,
+              color: AppColors.whiteColor,
               child: Column(
                 children: [
                   Row(
@@ -199,7 +199,7 @@ class _ChronicUrticariaInitialFormScreenState
 
                 return Container(
                   padding: const EdgeInsets.all(16),
-                  color: Colors.white,
+                  color: AppColors.whiteColor,
                   child: Row(
                     children: [
                       if (_currentStep > 0)
@@ -224,7 +224,7 @@ class _ChronicUrticariaInitialFormScreenState
                                   : _nextStep),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.primaryColor,
-                            foregroundColor: Colors.white,
+                            foregroundColor: AppColors.whiteColor,
                             padding: const EdgeInsets.symmetric(vertical: 12),
                           ),
                           child: isSubmitting
@@ -234,7 +234,7 @@ class _ChronicUrticariaInitialFormScreenState
                                   child: CircularProgressIndicator(
                                     strokeWidth: 2,
                                     valueColor: AlwaysStoppedAnimation<Color>(
-                                        Colors.white),
+                                        AppColors.whiteColor),
                                   ),
                                 )
                               : Text(_currentStep == _totalSteps - 1

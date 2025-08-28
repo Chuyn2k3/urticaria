@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../constant/color.dart';
 import '../models/health_record_model.dart';
 
 class HealthRecordDetailScreen extends StatelessWidget {
@@ -21,7 +22,7 @@ class HealthRecordDetailScreen extends StatelessWidget {
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         backgroundColor: themeColor,
-        foregroundColor: Colors.white,
+        foregroundColor: AppColors.whiteColor,
         elevation: 0,
         actions: [
           IconButton(
@@ -174,12 +175,12 @@ class HealthRecordDetailScreen extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Icon(statusIcon, color: Colors.white, size: 48),
+          Icon(statusIcon, color: AppColors.whiteColor, size: 48),
           const SizedBox(height: 12),
           Text(
             statusText,
             style: const TextStyle(
-              color: Colors.white,
+              color: AppColors.whiteColor,
               fontSize: 24,
               fontWeight: FontWeight.bold,
             ),
@@ -188,7 +189,7 @@ class HealthRecordDetailScreen extends StatelessWidget {
           Text(
             'Cập nhật lần cuối: ${_formatDate(record.createdDate)}',
             style: const TextStyle(
-              color: Colors.white70,
+              color: AppColors.whiteColor,
               fontSize: 14,
             ),
           ),
@@ -207,7 +208,7 @@ class HealthRecordDetailScreen extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -297,7 +298,7 @@ class HealthRecordDetailScreen extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -401,7 +402,7 @@ class HealthRecordDetailScreen extends StatelessWidget {
                   ),
                   child: const Icon(
                     Icons.close,
-                    color: Colors.white,
+                    color: AppColors.whiteColor,
                     size: 20,
                   ),
                 ),

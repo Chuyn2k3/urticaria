@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:urticaria/models/business_model.dart';
-import '../../../../utils/colors.dart';
+import '../../../constant/color.dart';
 import '../page/business_detail_screen.dart';
 
 class BookingHistoryItem extends StatelessWidget {
@@ -32,7 +32,7 @@ class BookingHistoryItem extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       child: Material(
-        color: Colors.white,
+        color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(16),
         elevation: 2,
         shadowColor: Colors.black.withOpacity(0.1),
@@ -59,13 +59,13 @@ class BookingHistoryItem extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 10, vertical: 4),
                       decoration: BoxDecoration(
-                        color: AppColors.primary.withOpacity(0.1),
+                        color: AppColors.primaryColor.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Text(
                         business.key ?? 'Không xác định',
                         style: const TextStyle(
-                          color: AppColors.primary,
+                          color: AppColors.primaryColor,
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
                         ),
@@ -159,12 +159,12 @@ class BookingHistoryItem extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w600,
-                            color: AppColors.primary,
+                            color: AppColors.primaryColor,
                           ),
                         ),
                         const SizedBox(width: 2),
                         Icon(Icons.chevron_right,
-                            size: 14, color: AppColors.primary),
+                            size: 14, color: AppColors.primaryColor),
                       ],
                     ),
                   ],

@@ -4,9 +4,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:urticaria/feature/home/home_page.dart';
 import 'package:urticaria/widget/touchable_opacity.dart';
 
+import '../constant/color.dart';
 import '../feature/bottom_nav/bottom_nav_page.dart';
 import '../feature/signup/signup_form_register.dart';
-import '../utils/colors.dart';
 import '../utils/constants.dart';
 import '../utils/icons.dart';
 import '../utils/styles.dart';
@@ -82,7 +82,7 @@ class _FormInputWidgetState extends State<FormInputWidget>
               // Phone input với design mới
               Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: AppColors.whiteColor,
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
@@ -137,7 +137,7 @@ class _FormInputWidgetState extends State<FormInputWidget>
               // Password input với design mới
               Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: AppColors.whiteColor,
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
@@ -236,11 +236,11 @@ class _FormInputWidgetState extends State<FormInputWidget>
                     ),
                   );
                 },
-                child: const Center(
+                child: Center(
                   child: Text(
                     "Đăng nhập",
                     style: TextStyle(
-                      color: Colors.white,
+                      color: AppColors.whiteColor,
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),

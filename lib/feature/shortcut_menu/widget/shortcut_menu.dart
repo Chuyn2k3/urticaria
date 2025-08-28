@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:urticaria/feature/shortcut_menu/widget/shortcut_menu_customer.dart';
 
-import '../../../utils/colors.dart';
+import '../../../constant/color.dart';
 
 class ShortcutMenuWidget extends StatefulWidget {
   ShortcutMenuWidget({Key? key}) : super(key: key);
@@ -46,7 +46,7 @@ class _ShortcutMenuWidgetState extends State<ShortcutMenuWidget>
         padding: const EdgeInsets.all(20),
         margin: const EdgeInsets.symmetric(horizontal: 16),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.whiteColor,
           borderRadius: BorderRadius.circular(24),
           boxShadow: [
             BoxShadow(

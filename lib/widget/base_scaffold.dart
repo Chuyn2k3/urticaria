@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../constant/color.dart';
+
 class BaseScaffold extends StatelessWidget {
   const BaseScaffold({
     super.key,
@@ -51,7 +53,7 @@ class BaseScaffold extends StatelessWidget {
 
   Widget _defaultBackgroundV2(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: AppColors.whiteColor,
       child: Container(
         width: double.maxFinite,
         height: double.maxFinite,

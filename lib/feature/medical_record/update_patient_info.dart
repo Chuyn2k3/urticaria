@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:urticaria/feature/medical_record/patient/patient_cubit.dart';
+import '../../constant/color.dart';
 import '../../enum/record_type.dart';
 import 'create_record_form_screen.dart';
 
@@ -116,7 +117,7 @@ class _CreateRecordIntroScreenState extends State<CreateRecordIntroScreen>
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           backgroundColor: themeColor,
-          foregroundColor: Colors.white,
+          foregroundColor: AppColors.whiteColor,
           elevation: 0,
         ),
         body: AnimatedBuilder(
@@ -177,7 +178,7 @@ class _CreateRecordIntroScreenState extends State<CreateRecordIntroScreen>
                   hintText: 'Ví dụ: 2, 5, 10',
                   prefixIcon: Icon(Icons.access_time, color: themeColor),
                   filled: true,
-                  fillColor: Colors.white,
+                  fillColor: AppColors.whiteColor,
                 ),
               ),
               const SizedBox(height: 24),
@@ -315,7 +316,7 @@ class _CreateRecordIntroScreenState extends State<CreateRecordIntroScreen>
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -352,7 +353,7 @@ class _CreateRecordIntroScreenState extends State<CreateRecordIntroScreen>
         child: Text(
           stepNumber.toString(),
           style: TextStyle(
-            color: isActive ? Colors.white : Colors.grey.shade600,
+            color: isActive ? AppColors.whiteColor : Colors.grey.shade600,
             fontWeight: FontWeight.bold,
             fontSize: 16,
           ),
@@ -370,7 +371,7 @@ class _CreateRecordIntroScreenState extends State<CreateRecordIntroScreen>
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
@@ -444,7 +445,7 @@ class _CreateRecordIntroScreenState extends State<CreateRecordIntroScreen>
                   ? const Icon(
                       Icons.check,
                       size: 14,
-                      color: Colors.white,
+                      color: AppColors.whiteColor,
                     )
                   : null,
             ),
@@ -498,7 +499,7 @@ class _CreateRecordIntroScreenState extends State<CreateRecordIntroScreen>
         child: Text(
           text,
           style: const TextStyle(
-            color: Colors.white,
+            color: AppColors.whiteColor,
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),

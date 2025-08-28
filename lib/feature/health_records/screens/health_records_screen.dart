@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../constant/color.dart';
 import '../models/health_record_model.dart';
 import 'health_record_detail_screen.dart';
 
@@ -94,14 +95,14 @@ class _HealthRecordsScreenState extends State<HealthRecordsScreen>
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         backgroundColor: themeColor,
-        foregroundColor: Colors.white,
+        foregroundColor: AppColors.whiteColor,
         elevation: 0,
         bottom: TabBar(
           controller: _tabController,
-          indicatorColor: Colors.white,
+          indicatorColor: AppColors.whiteColor,
           indicatorWeight: 3,
-          labelColor: Colors.white,
-          unselectedLabelColor: Colors.white70,
+          labelColor: AppColors.whiteColor,
+          unselectedLabelColor: AppColors.whiteColor,
           onTap: (index) {
             setState(() {
               switch (index) {
@@ -182,7 +183,7 @@ class _HealthRecordsScreenState extends State<HealthRecordsScreen>
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
@@ -254,7 +255,7 @@ class _HealthRecordsScreenState extends State<HealthRecordsScreen>
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       child: Material(
-        color: Colors.white,
+        color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(16),
         elevation: 2,
         shadowColor: Colors.black.withOpacity(0.1),

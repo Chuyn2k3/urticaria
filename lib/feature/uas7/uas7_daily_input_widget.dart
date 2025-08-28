@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:urticaria/cubit/uas7/uas7_cubit.dart';
 import 'package:urticaria/models/uas7_daily_record.dart';
-import 'package:urticaria/utils/colors.dart';
+
+import '../../constant/color.dart';
 
 class Uas7DailyInputWidget extends StatefulWidget {
   const Uas7DailyInputWidget({super.key});
@@ -67,9 +68,9 @@ class _Uas7DailyInputWidgetState extends State<Uas7DailyInputWidget> {
     final theme = Theme.of(context);
 
     return Container(
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(12)),
-        color: Colors.white,
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(Radius.circular(12)),
+        color: AppColors.whiteColor,
       ),
       margin: const EdgeInsets.symmetric(vertical: 12),
       child: Padding(
@@ -134,10 +135,11 @@ class _Uas7DailyInputWidgetState extends State<Uas7DailyInputWidget> {
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12)),
-                  backgroundColor: AppColors.primary,
+                  backgroundColor: AppColors.primaryColor,
                 ),
                 child: const Text('Lưu',
-                    style: TextStyle(fontSize: 16, color: Colors.white)),
+                    style:
+                        TextStyle(fontSize: 16, color: AppColors.whiteColor)),
               ),
             ),
           ],
@@ -156,7 +158,7 @@ class _Uas7DailyInputWidgetState extends State<Uas7DailyInputWidget> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: Colors.grey.shade400),
-        color: Colors.white,
+        color: AppColors.whiteColor,
       ),
       child: DropdownButton<T>(
         value: value,

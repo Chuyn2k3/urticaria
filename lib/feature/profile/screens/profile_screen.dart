@@ -52,7 +52,7 @@
 //       margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
 //       padding: const EdgeInsets.all(20),
 //       decoration: BoxDecoration(
-//         color: Colors.white,
+//         color: AppColors.whiteColor,
 //         borderRadius: BorderRadius.circular(20),
 //         boxShadow: [
 //           BoxShadow(
@@ -83,7 +83,7 @@
 //                   errorBuilder: (_, __, ___) => const Icon(
 //                     Icons.person,
 //                     size: 28,
-//                     color: Colors.white,
+//                     color: AppColors.whiteColor,
 //                   ),
 //                 ),
 //               ),
@@ -139,7 +139,7 @@
 //   Widget _buildListConfig(BuildContext context) {
 //     return Container(
 //       decoration: BoxDecoration(
-//         color: Colors.white,
+//         color: AppColors.whiteColor,
 //         borderRadius: BorderRadius.circular(20),
 //         boxShadow: [
 //           BoxShadow(
@@ -167,7 +167,7 @@
 //       width: double.infinity,
 //       height: 56,
 //       decoration: BoxDecoration(
-//         color: Colors.white,
+//         color: AppColors.whiteColor,
 //         borderRadius: BorderRadius.circular(16),
 //         border: Border.all(color: Colors.red.shade200),
 //         boxShadow: [

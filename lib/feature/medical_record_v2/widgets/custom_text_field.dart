@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../constant/color.dart';
+
 class CustomTextField extends StatelessWidget {
   final String label;
   final String? value;
@@ -73,7 +75,7 @@ class CustomTextField extends StatelessWidget {
                 borderSide: BorderSide(color: Colors.grey[200]!),
               ),
               filled: true,
-              fillColor: enabled ? Colors.white : Colors.grey[50],
+              fillColor: enabled ? AppColors.whiteColor : Colors.grey[50],
               contentPadding: const EdgeInsets.symmetric(
                 horizontal: 16,
                 vertical: 12,

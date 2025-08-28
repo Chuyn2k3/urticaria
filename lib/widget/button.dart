@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../constant/color.dart';
+
 class SaveButton extends StatelessWidget {
   final String title;
   final VoidCallback onPressed;
@@ -27,7 +29,7 @@ class SaveButton extends StatelessWidget {
         ),
         child: Text(
           title,
-          style: const TextStyle(color: Colors.white),
+          style: const TextStyle(color: AppColors.whiteColor),
         ),
       ),
     );

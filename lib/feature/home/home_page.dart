@@ -7,6 +7,7 @@ import 'package:urticaria/feature/home/widget/section_health_new/section_health_
 import 'package:urticaria/feature/medical_record/create_record_intro_screen.dart';
 import 'package:urticaria/feature/medical_record_v2/screens/urticaria_form_selector_screen.dart';
 
+import '../../constant/color.dart';
 import '../shortcut_menu/widget/shortcut_menu.dart';
 import '../../utils/constants.dart';
 
@@ -130,7 +131,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       margin: const EdgeInsets.symmetric(horizontal: 16),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
@@ -217,7 +218,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               ),
               child: Icon(
                 icon,
-                color: Colors.white,
+                color: AppColors.whiteColor,
                 size: 20,
               ),
             ),

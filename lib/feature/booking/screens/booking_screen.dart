@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:urticaria/feature/booking/cubit/booking_cubit.dart';
-import 'package:urticaria/utils/colors.dart';
+//import 'package:urticaria/utils/colors.dart';
 
+import '../../../constant/color.dart';
 import '../model/doctor_model.dart';
 
 class BookingScreen extends StatefulWidget {
@@ -35,8 +36,8 @@ class _BookingScreenState extends State<BookingScreen> {
           'Đặt lịch khám',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
+        backgroundColor: AppColors.primaryColor,
+        foregroundColor: AppColors.whiteColor,
         elevation: 0,
       ),
       body: BlocConsumer<BookingCubit, BookingState>(
@@ -86,7 +87,7 @@ class _BookingScreenState extends State<BookingScreen> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -116,17 +117,20 @@ class _BookingScreenState extends State<BookingScreen> {
             width: 32,
             height: 32,
             decoration: BoxDecoration(
-              color: isCompleted ? AppColors.primary : Colors.grey.shade300,
+              color:
+                  isCompleted ? AppColors.primaryColor : Colors.grey.shade300,
               shape: BoxShape.circle,
             ),
             child: Center(
               child: isCompleted
-                  ? const Icon(Icons.check, color: Colors.white, size: 18)
+                  ? const Icon(Icons.check,
+                      color: AppColors.whiteColor, size: 18)
                   : Text(
                       step.toString(),
                       style: TextStyle(
-                        color:
-                            isCompleted ? Colors.white : Colors.grey.shade600,
+                        color: isCompleted
+                            ? AppColors.whiteColor
+                            : Colors.grey.shade600,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -137,7 +141,8 @@ class _BookingScreenState extends State<BookingScreen> {
             title,
             style: TextStyle(
               fontSize: 12,
-              color: isCompleted ? AppColors.primary : Colors.grey.shade600,
+              color:
+                  isCompleted ? AppColors.primaryColor : Colors.grey.shade600,
               fontWeight: isCompleted ? FontWeight.w600 : FontWeight.normal,
             ),
           ),
@@ -150,7 +155,7 @@ class _BookingScreenState extends State<BookingScreen> {
     return Container(
       width: 40,
       height: 2,
-      color: isActive ? AppColors.primary : Colors.grey.shade300,
+      color: isActive ? AppColors.primaryColor : Colors.grey.shade300,
       margin: const EdgeInsets.only(bottom: 24),
     );
   }
@@ -159,7 +164,7 @@ class _BookingScreenState extends State<BookingScreen> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -205,11 +210,11 @@ class _BookingScreenState extends State<BookingScreen> {
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: isSelected
-              ? AppColors.primary.withOpacity(0.1)
+              ? AppColors.primaryColor.withOpacity(0.1)
               : Colors.grey.shade50,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: isSelected ? AppColors.primary : Colors.transparent,
+            color: isSelected ? AppColors.primaryColor : Colors.transparent,
             width: 2,
           ),
         ),
@@ -271,7 +276,7 @@ class _BookingScreenState extends State<BookingScreen> {
             if (isSelected)
               const Icon(
                 Icons.check_circle,
-                color: AppColors.primary,
+                color: AppColors.primaryColor,
                 size: 24,
               ),
           ],
@@ -284,7 +289,7 @@ class _BookingScreenState extends State<BookingScreen> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -317,14 +322,17 @@ class _BookingScreenState extends State<BookingScreen> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   decoration: BoxDecoration(
-                    color:
-                        isSelected ? AppColors.primary : Colors.grey.shade100,
+                    color: isSelected
+                        ? AppColors.primaryColor
+                        : Colors.grey.shade100,
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(
                     type,
                     style: TextStyle(
-                      color: isSelected ? Colors.white : Colors.grey.shade700,
+                      color: isSelected
+                          ? AppColors.whiteColor
+                          : Colors.grey.shade700,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -341,7 +349,7 @@ class _BookingScreenState extends State<BookingScreen> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -381,11 +389,11 @@ class _BookingScreenState extends State<BookingScreen> {
             calendarStyle: CalendarStyle(
               outsideDaysVisible: false,
               selectedDecoration: const BoxDecoration(
-                color: AppColors.primary,
+                color: AppColors.primaryColor,
                 shape: BoxShape.circle,
               ),
               todayDecoration: BoxDecoration(
-                color: AppColors.primary.withOpacity(0.3),
+                color: AppColors.primaryColor.withOpacity(0.3),
                 shape: BoxShape.circle,
               ),
             ),
@@ -403,7 +411,7 @@ class _BookingScreenState extends State<BookingScreen> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -482,11 +490,11 @@ class _BookingScreenState extends State<BookingScreen> {
               color: isBooked
                   ? Colors.grey.shade200
                   : isSelected
-                      ? AppColors.primary
+                      ? AppColors.primaryColor
                       : Colors.grey.shade100,
               borderRadius: BorderRadius.circular(8),
               border: Border.all(
-                color: isSelected ? AppColors.primary : Colors.transparent,
+                color: isSelected ? AppColors.primaryColor : Colors.transparent,
               ),
             ),
             child: Center(
@@ -496,7 +504,7 @@ class _BookingScreenState extends State<BookingScreen> {
                   color: isBooked
                       ? Colors.grey.shade500
                       : isSelected
-                          ? Colors.white
+                          ? AppColors.whiteColor
                           : Colors.grey.shade700,
                   fontWeight: FontWeight.w600,
                 ),
@@ -512,7 +520,7 @@ class _BookingScreenState extends State<BookingScreen> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -556,7 +564,7 @@ class _BookingScreenState extends State<BookingScreen> {
                     );
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primary,
+                backgroundColor: AppColors.primaryColor,
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -565,7 +573,7 @@ class _BookingScreenState extends State<BookingScreen> {
               child: const Text(
                 'Xác nhận đặt lịch',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: AppColors.whiteColor,
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
@@ -626,7 +634,7 @@ class _BookingScreenState extends State<BookingScreen> {
               ),
               child: const Icon(
                 Icons.check,
-                color: Colors.white,
+                color: AppColors.whiteColor,
                 size: 32,
               ),
             ),
@@ -656,14 +664,14 @@ class _BookingScreenState extends State<BookingScreen> {
                   Navigator.of(context).pop();
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
+                  backgroundColor: AppColors.primaryColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
                 child: const Text(
                   'Đóng',
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: AppColors.whiteColor),
                 ),
               ),
             ),

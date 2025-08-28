@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../constant/color.dart';
 import '../../../../utils/styles.dart';
 
 class SectionHealthItems extends StatelessWidget {
@@ -86,7 +87,8 @@ class TextContent extends StatelessWidget {
           alignment: Alignment.center,
           child: Text(
             text ?? '',
-            style: style ?? Styles.content.copyWith(color: Colors.white),
+            style:
+                style ?? Styles.content.copyWith(color: AppColors.whiteColor),
           ),
         ),
       ],

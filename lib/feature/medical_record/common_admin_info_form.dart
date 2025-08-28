@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../constant/color.dart';
+
 class CommonAdministrativeInfoForm extends StatelessWidget {
   final TextEditingController nameController;
   final TextEditingController birthdayController;
@@ -28,7 +30,7 @@ class CommonAdministrativeInfoForm extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(

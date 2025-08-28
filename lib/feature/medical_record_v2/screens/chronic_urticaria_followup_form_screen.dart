@@ -4,6 +4,7 @@ import 'package:urticaria/feature/bottom_nav/bottom_nav_page.dart';
 import 'package:urticaria/feature/medical_record_v2/cubits/chronic_followup/chronic_followup_cubit.dart';
 import 'package:urticaria/feature/medical_record_v2/cubits/chronic_followup/chronic_followup_state.dart';
 import 'package:urticaria/utils/snack_bar.dart';
+import '../../../constant/color.dart';
 import '../models/chronic_urticaria_followup_record.dart';
 import '../widgets/custom_text_field.dart';
 import '../widgets/custom_radio_group.dart';
@@ -81,12 +82,12 @@ class _ChronicUrticariaFollowupFormScreenState
       appBar: AppBar(
         title: Text(
           'Bệnh án tái khám - ${_stepTitles[_currentStep]}',
-          style:
-              const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          style: const TextStyle(
+              color: AppColors.whiteColor, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.orange,
         elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: AppColors.whiteColor),
       ),
       body: BlocListener<ChronicFollowupCubit, ChronicFollowupState>(
         listener: (context, state) async {
@@ -108,7 +109,7 @@ class _ChronicUrticariaFollowupFormScreenState
             // Progress indicator
             Container(
               padding: const EdgeInsets.all(16),
-              color: Colors.white,
+              color: AppColors.whiteColor,
               child: Column(
                 children: [
                   Row(
@@ -164,7 +165,7 @@ class _ChronicUrticariaFollowupFormScreenState
 
                 return Container(
                   padding: const EdgeInsets.all(16),
-                  color: Colors.white,
+                  color: AppColors.whiteColor,
                   child: Row(
                     children: [
                       if (_currentStep > 0)
@@ -189,7 +190,7 @@ class _ChronicUrticariaFollowupFormScreenState
                                   : _nextStep),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.orange,
-                            foregroundColor: Colors.white,
+                            foregroundColor: AppColors.whiteColor,
                             padding: const EdgeInsets.symmetric(vertical: 12),
                           ),
                           child: isSubmitting
@@ -199,7 +200,7 @@ class _ChronicUrticariaFollowupFormScreenState
                                   child: CircularProgressIndicator(
                                     strokeWidth: 2,
                                     valueColor: AlwaysStoppedAnimation<Color>(
-                                        Colors.white),
+                                        AppColors.whiteColor),
                                   ),
                                 )
                               : Text(_currentStep == _totalSteps - 1

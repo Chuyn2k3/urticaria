@@ -63,7 +63,7 @@ class InputTextField extends StatelessWidget {
       maxLines: maxLine,
       minLines: minLine,
       enabled: enabled,
-      textAlign: textAlign ?? TextAlign.center,
+      textAlign: textAlign ?? TextAlign.start,
       validator: validator,
       maxLength: maxLength,
       onSaved: onSaved,
@@ -74,7 +74,7 @@ class InputTextField extends StatelessWidget {
               contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
               hintText: hintText,
               filled: true,
-              fillColor: Colors.white,
+              fillColor: AppColors.whiteColor,
               hintStyle:
                   textTheme.t16R.copyWith(color: colorApp.labelSecondary),
               prefixIcon: prefixIcon,

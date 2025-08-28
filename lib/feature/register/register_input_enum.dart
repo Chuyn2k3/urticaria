@@ -3,6 +3,7 @@ import 'package:urticaria/utils/common_app.dart';
 import 'package:urticaria/utils/validator.dart';
 import 'package:urticaria/widget/text_field/input_text_field.dart';
 
+import '../../constant/color.dart';
 import 'password_input.dart';
 
 enum RegisternputEnum {
@@ -196,7 +197,7 @@ class RegisternputEnumConfig {
             child: InputDecorator(
               decoration: InputDecoration(
                 filled: true,
-                fillColor: Colors.white,
+                fillColor: AppColors.whiteColor,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                   borderSide: BorderSide.none,
@@ -244,7 +245,7 @@ class RegisternputEnumConfig {
             //validator: type.validator,
             decoration: InputDecoration(
               filled: true,
-              fillColor: Colors.white,
+              fillColor: AppColors.whiteColor,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
                 borderSide: BorderSide.none,

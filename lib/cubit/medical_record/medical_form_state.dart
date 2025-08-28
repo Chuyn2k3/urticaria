@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
-import 'package:urticaria/models/vital_group/vital_group.dart';
-import 'package:urticaria/core/base/base_response.dart';
+
+import '../../core/base/base_response.dart';
+import '../../models/vital_group/vital_group.dart';
 
 abstract class MedicalFormState extends Equatable {
   const MedicalFormState();
@@ -53,10 +54,16 @@ class MedicalFormSubmittedSuccess extends MedicalFormLoaded {
   List<Object?> get props => [groups, answers, response];
 }
 
-class MedicalFormError extends MedicalFormState {
+// ✨ Sửa MedicalFormError để giữ lại dữ liệu form
+class MedicalFormError extends MedicalFormLoaded {
   final String message;
-  const MedicalFormError(this.message);
+
+  const MedicalFormError({
+    required this.message,
+    required super.groups,
+    required super.answers,
+  });
 
   @override
-  List<Object?> get props => [message];
+  List<Object?> get props => [message, groups, answers];
 }

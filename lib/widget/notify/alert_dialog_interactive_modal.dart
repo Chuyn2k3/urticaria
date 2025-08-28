@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:urticaria/utils/common_app.dart';
 import 'package:urticaria/widget/button/primary_button.dart';
 
+import '../../constant/color.dart';
 import 'interactive_modal.dart';
 
 class AlertDialogInteractiveModal implements InteractiveModal {
@@ -84,7 +85,7 @@ class AlertDialogInteractiveModal implements InteractiveModal {
       insetPadding: const EdgeInsets.all(20),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.whiteColor,
           borderRadius: BorderRadius.circular(20),
         ),
         padding: const EdgeInsets.all(16),

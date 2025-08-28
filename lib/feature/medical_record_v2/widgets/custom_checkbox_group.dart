@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../constant/color.dart';
+
 class CustomCheckboxGroup extends StatelessWidget {
   final String label;
   final List<String> selectedValues;
@@ -48,7 +50,7 @@ class CustomCheckboxGroup extends StatelessWidget {
             decoration: BoxDecoration(
               border: Border.all(color: Colors.grey[300]!),
               borderRadius: BorderRadius.circular(8),
-              color: enabled ? Colors.white : Colors.grey[50],
+              color: enabled ? AppColors.whiteColor : Colors.grey[50],
             ),
             child: Column(
               children: options.map((option) {

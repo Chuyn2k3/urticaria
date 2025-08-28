@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:urticaria/cubit/uas7/uas7_cubit.dart';
 import 'package:urticaria/cubit/uas7/uas7_state.dart';
 
+import '../../constant/color.dart';
+
 class Uas7SummaryWidget extends StatelessWidget {
   const Uas7SummaryWidget({super.key});
 
@@ -14,7 +16,7 @@ class Uas7SummaryWidget extends StatelessWidget {
           margin: const EdgeInsets.symmetric(vertical: 16),
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(12)),
-            color: Colors.white,
+            color: AppColors.whiteColor,
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 16),

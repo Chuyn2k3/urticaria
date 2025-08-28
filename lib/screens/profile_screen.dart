@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:urticaria/cubit/auth/auth_cubit.dart';
 import 'package:urticaria/feature/medical_record/patient/patient_cubit.dart';
 
+import '../constant/color.dart';
 import 'login_page.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -56,7 +57,7 @@ class ProfileScreen extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.all(4),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: AppColors.whiteColor,
                         shape: BoxShape.circle,
                         boxShadow: [
                           BoxShadow(
@@ -86,7 +87,7 @@ class ProfileScreen extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
-                              color: Colors.white,
+                              color: AppColors.whiteColor,
                             ),
                           ),
                           SizedBox(height: 4),
@@ -94,7 +95,7 @@ class ProfileScreen extends StatelessWidget {
                             "Thành viên từ 2024",
                             style: TextStyle(
                               fontSize: 14,
-                              color: Colors.white70,
+                              color: AppColors.whiteColor,
                             ),
                           ),
                         ],
@@ -109,7 +110,7 @@ class ProfileScreen extends StatelessWidget {
               // Menu Items
               Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: AppColors.whiteColor,
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
@@ -173,7 +174,7 @@ class ProfileScreen extends StatelessWidget {
                 width: double.infinity,
                 height: 56,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: AppColors.whiteColor,
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(color: Colors.red.shade200),
                   boxShadow: [

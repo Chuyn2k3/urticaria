@@ -1,7 +1,7 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:design_system_sl/typography/typography.dart';
 import 'package:flutter/material.dart';
-import 'package:urticaria/utils/colors.dart';
+import '../../constant/color.dart';
 import 'interactive_modal.dart';
 
 class FlushBarInteractiveModal implements InteractiveModal {
@@ -26,17 +26,17 @@ class FlushBarInteractiveModal implements InteractiveModal {
   @override
   Future<dynamic> showFailure(BuildContext context) {
     final flushBarWidget = Flushbar(
-      icon: const Icon(
+      icon: Icon(
         Icons.error,
         size: 32,
-        color: Colors.white,
+        color: AppColors.whiteColor,
       ),
       shouldIconPulse: false,
       message: message,
       messageText: Center(
         child: Text(
           message ?? "",
-          style: PrimaryFont.medium(15).copyWith(color: Colors.white),
+          style: PrimaryFont.medium(15).copyWith(color: AppColors.whiteColor),
           textAlign: TextAlign.center,
           overflow: TextOverflow.ellipsis,
           maxLines: 2,
@@ -62,7 +62,7 @@ class FlushBarInteractiveModal implements InteractiveModal {
     final flushBar = Flushbar(
       icon: const Icon(
         Icons.check_circle,
-        color: Colors.white,
+        color: AppColors.whiteColor,
       ),
       shouldIconPulse: false,
       message: message,
@@ -70,7 +70,7 @@ class FlushBarInteractiveModal implements InteractiveModal {
       messageText: Center(
         child: Text(
           message ?? "",
-          style: PrimaryFont.medium(15).copyWith(color: Colors.white),
+          style: PrimaryFont.medium(15).copyWith(color: AppColors.whiteColor),
           textAlign: TextAlign.center,
           overflow: TextOverflow.ellipsis,
           maxLines: 2,

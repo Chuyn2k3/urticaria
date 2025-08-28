@@ -15,7 +15,11 @@ class MedicalFormCubit extends Cubit<MedicalFormState> {
       final templateRes = await templateRepository.getTemplate(templateId);
       final template = templateRes.data;
       if (template == null) {
-        emit(const MedicalFormError("Không tìm thấy template"));
+        emit(const MedicalFormError(
+          message: "Không tìm thấy template",
+          groups: [],
+          answers: {},
+        ));
         return;
       }
 
@@ -24,13 +28,15 @@ class MedicalFormCubit extends Cubit<MedicalFormState> {
       final results = await Future.wait(futures);
 
       final groups = results.map((res) => res.data!).toList();
-
-      // init empty answers map
       final answers = <int, dynamic>{};
 
       emit(MedicalFormLoaded(groups: groups, answers: answers));
     } catch (e) {
-      emit(MedicalFormError(e.toString()));
+      emit(MedicalFormError(
+        message: e.toString(),
+        groups: [],
+        answers: {},
+      ));
     }
   }
 
@@ -55,7 +61,6 @@ class MedicalFormCubit extends Cubit<MedicalFormState> {
         groups: current.groups, answers: current.answers));
 
     try {
-      // Gom dữ liệu thành request
       final vitalValues = current.groups.expand((group) {
         return group.indicators.map((indicator) {
           final value = current.answers[indicator.id];
@@ -82,7 +87,12 @@ class MedicalFormCubit extends Cubit<MedicalFormState> {
         response: res,
       ));
     } catch (e) {
-      emit(MedicalFormError(e.toString()));
+      // ✨ Giữ lại dữ liệu khi lỗi
+      emit(MedicalFormError(
+        message: e.toString(),
+        groups: current.groups,
+        answers: current.answers,
+      ));
     }
   }
 }

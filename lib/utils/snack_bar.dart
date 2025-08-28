@@ -75,14 +75,14 @@ extension Snackbar on BuildContext {
   //     Flushbar(
   //       icon: const Icon(
   //         Icons.check_circle,
-  //         color: Colors.white,
+  //         color: AppColors.whiteColor,
   //       ),
   //       shouldIconPulse: false,
   //       message: text,
   //       onTap: ontap,
   //       messageText: Text(
   //         text,
-  //         style: textTheme.t16R.copyWith(color: Colors.white),
+  //         style: textTheme.t16R.copyWith(color: AppColors.whiteColor),
   //         textAlign: TextAlign.left,
   //         overflow: TextOverflow.ellipsis,
   //         maxLines: 2,
@@ -104,7 +104,7 @@ extension Snackbar on BuildContext {
   //                 },
   //                 child: Text(
   //                   S.current.view_details,
-  //                   style: textTheme.t14M.copyWith(color: Colors.white),
+  //                   style: textTheme.t14M.copyWith(color: AppColors.whiteColor),
   //                   textAlign: TextAlign.center,
   //                   overflow: TextOverflow.ellipsis,
   //                 ),
@@ -117,7 +117,7 @@ extension Snackbar on BuildContext {
   //           Container(
   //             height: 42,
   //             width: 1,
-  //             color: Colors.white,
+  //             color: AppColors.whiteColor,
   //           ),
   //           const SizedBox(
   //             width: 8,
@@ -129,7 +129,7 @@ extension Snackbar on BuildContext {
   //             child: SvgPicture.asset(
   //               Assets.newAssets.icons.closeAction,
   //               colorFilter: const ColorFilter.mode(
-  //                 Colors.white,
+  //                 AppColors.whiteColor,
   //                 BlendMode.srcIn,
   //               ),
   //             ),

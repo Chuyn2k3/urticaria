@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:urticaria/feature/medical_record/patient/patient_cubit.dart';
+import '../../constant/color.dart';
 import '../../enum/record_type.dart';
 import 'create_record_form_screen.dart';
 
@@ -58,11 +59,11 @@ class _CreateRecordIntroScreenState extends State<CreateRecordIntroScreen> {
     return BlocProvider(
       create: (context) => PatientProfileCubit(),
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.whiteColor,
         appBar: AppBar(
           title: const Text('Tạo bệnh án mới'),
           backgroundColor: themeColor,
-          foregroundColor: Colors.white,
+          foregroundColor: AppColors.whiteColor,
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -115,8 +116,8 @@ class _CreateRecordIntroScreenState extends State<CreateRecordIntroScreen> {
                 borderRadius: BorderRadius.circular(12),
               ),
             ),
-            child:
-                const Text('Tiếp tục', style: TextStyle(color: Colors.white)),
+            child: const Text('Tiếp tục',
+                style: TextStyle(color: AppColors.whiteColor)),
           ),
         )
       ],
@@ -156,8 +157,8 @@ class _CreateRecordIntroScreenState extends State<CreateRecordIntroScreen> {
                 borderRadius: BorderRadius.circular(12),
               ),
             ),
-            child:
-                const Text('Tiếp tục', style: TextStyle(color: Colors.white)),
+            child: const Text('Tiếp tục',
+                style: TextStyle(color: AppColors.whiteColor)),
           ),
         )
       ],

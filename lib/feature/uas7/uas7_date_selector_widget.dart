@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:urticaria/cubit/uas7/uas7_cubit.dart';
 
+import '../../constant/color.dart';
+
 class Uas7DateSelectorWidget extends StatelessWidget {
   const Uas7DateSelectorWidget({super.key});
 
@@ -14,7 +16,7 @@ class Uas7DateSelectorWidget extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 12),
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(12)),
-        color: Colors.white,
+        color: AppColors.whiteColor,
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),

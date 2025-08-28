@@ -3,6 +3,8 @@ import 'package:urticaria/feature/medical_record_v2/screens/medical_record_detai
 import 'package:urticaria/widget/appbar/custom_app_bar.dart';
 import 'package:urticaria/widget/base_scaffold.dart';
 
+import '../../../constant/color.dart';
+
 class MedicalRecordsListScreen extends StatefulWidget {
   const MedicalRecordsListScreen({super.key});
 
@@ -161,7 +163,7 @@ class _MedicalRecordsListScreenState extends State<MedicalRecordsListScreen>
                 borderRadius: BorderRadius.circular(10),
               ),
               indicatorSize: TabBarIndicatorSize.tab,
-              labelColor: Colors.white,
+              labelColor: AppColors.whiteColor,
               unselectedLabelColor: Colors.grey.shade600,
               labelStyle: const TextStyle(
                 fontSize: 13,
@@ -223,7 +225,7 @@ class _MedicalRecordsListScreenState extends State<MedicalRecordsListScreen>
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
@@ -280,7 +282,7 @@ class _MedicalRecordsListScreenState extends State<MedicalRecordsListScreen>
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       child: Material(
-        color: Colors.white,
+        color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(16),
         elevation: 2,
         shadowColor: Colors.black.withOpacity(0.1),
