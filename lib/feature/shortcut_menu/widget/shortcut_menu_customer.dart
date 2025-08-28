@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:urticaria/feature/booking/screens/booking_screen.dart';
 import 'package:urticaria/feature/medical_record/appointment_call_info_screen.dart';
+import 'package:urticaria/feature/medical_record_v2/screens/classification_screen.dart';
+import 'package:urticaria/feature/medical_record_v2/screens/medical_form_screen.dart';
 import 'package:urticaria/feature/medical_record_v2/screens/urticaria_form_selector_screen.dart';
 import 'package:urticaria/feature/uas7/uas7_followup_screen.dart';
 import 'package:urticaria/gen/assets.gen.dart';
@@ -91,7 +93,7 @@ class FirstShortcutCustomer extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => const UrticariaFormSelectorScreen(),
+                  builder: (_) => const ClassificationScreen(),
                 ),
               );
             },

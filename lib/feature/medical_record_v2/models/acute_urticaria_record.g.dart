@@ -22,6 +22,7 @@ AcuteUrticariaRecord _$AcuteUrticariaRecordFromJson(
       ..continuousOutbreak6Weeks = json['continuousOutbreak6Weeks'] as String?
       ..rashOrAngioedema = json['rashOrAngioedema'] as String?
       ..firstOutbreakSinceWeeks = json['firstOutbreakSinceWeeks'] as String?
+      ..outbreakCount = json['outbreakCount'] as String?
       ..outbreak1StartMonth = json['outbreak1StartMonth'] as String?
       ..outbreak1StartYear = json['outbreak1StartYear'] as String?
       ..outbreak1EndMonth = json['outbreak1EndMonth'] as String?
@@ -150,6 +151,7 @@ Map<String, dynamic> _$AcuteUrticariaRecordToJson(
       'continuousOutbreak6Weeks': instance.continuousOutbreak6Weeks,
       'rashOrAngioedema': instance.rashOrAngioedema,
       'firstOutbreakSinceWeeks': instance.firstOutbreakSinceWeeks,
+      'outbreakCount': instance.outbreakCount,
       'outbreak1StartMonth': instance.outbreak1StartMonth,
       'outbreak1StartYear': instance.outbreak1StartYear,
       'outbreak1EndMonth': instance.outbreak1EndMonth,

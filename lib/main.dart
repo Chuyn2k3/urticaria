@@ -12,6 +12,7 @@ import 'package:urticaria/core/theme/app_themes.dart';
 import 'package:urticaria/cubit/Internet/internet_cubit.dart';
 import 'package:urticaria/cubit/auth/auth_cubit.dart';
 import 'package:urticaria/cubit/login/login_cubit.dart';
+import 'package:urticaria/cubit/medical_record/medical_form_cubit.dart';
 import 'package:urticaria/cubit/profile/profile_cubit.dart';
 import 'package:urticaria/di/locator.dart';
 import 'package:urticaria/feature/bottom_nav/bottom_nav_page.dart';
@@ -86,6 +87,9 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider(
           create: (_) => serviceLocator<ProfileUserCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => MedicalFormCubit(),
         ),
       ],
       child: BlocListener<InternetCubit, InternetState>(

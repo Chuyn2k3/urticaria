@@ -79,11 +79,11 @@ class _Uas7DailyInputWidgetState extends State<Uas7DailyInputWidget> {
           children: [
             Text(
               'Chấm điểm ngày ${context.read<Uas7Cubit>().state.selectedDate.toLocal().toIso8601String().substring(0, 10)}',
-              style: theme.textTheme.headline6
+              style: theme.textTheme.bodyMedium
                   ?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 24),
-            Text('Mức độ ngứa (0-3)', style: theme.textTheme.subtitle1),
+            Text('Mức độ ngứa (0-3)', style: theme.textTheme.bodyMedium),
             const SizedBox(height: 8),
             _buildDropdown<int>(
               value: itchLevel,
@@ -97,7 +97,7 @@ class _Uas7DailyInputWidgetState extends State<Uas7DailyInputWidget> {
               onChanged: (val) => setState(() => itchLevel = val ?? 0),
             ),
             const SizedBox(height: 24),
-            Text('Mức độ sẩn phù (0-3)', style: theme.textTheme.subtitle1),
+            Text('Mức độ sẩn phù (0-3)', style: theme.textTheme.labelMedium),
             const SizedBox(height: 8),
             _buildDropdown<int>(
               value: whealLevel,
@@ -123,7 +123,7 @@ class _Uas7DailyInputWidgetState extends State<Uas7DailyInputWidget> {
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
               ),
               maxLines: 3,
-              style: theme.textTheme.bodyText1,
+              style: theme.textTheme.bodyMedium,
             ),
             const SizedBox(height: 30),
             SizedBox(
