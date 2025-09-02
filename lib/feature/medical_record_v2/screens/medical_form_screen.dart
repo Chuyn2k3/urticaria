@@ -653,6 +653,7 @@ import 'package:urticaria/core/services/firebase_service.dart';
 import 'package:urticaria/cubit/medical_record/medical_form_cubit.dart';
 import 'package:urticaria/cubit/medical_record/medical_form_state.dart';
 import 'package:urticaria/feature/bottom_nav/bottom_nav_page.dart';
+import 'package:urticaria/feature/medical_record_v2/widgets/custom_checkbox_group.dart';
 import 'package:urticaria/models/vital_indicator/vital_indicator_model.dart';
 import 'package:urticaria/utils/navigation_service.dart';
 import 'package:urticaria/utils/snack_bar.dart';
@@ -1052,33 +1053,14 @@ class IndicatorField extends StatelessWidget {
       case "multi_selection":
         final options = indicator.valueOptions as List<String>? ?? [];
         final selected = (value as List<String>?) ?? [];
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(indicator.name),
-            Wrap(
-              spacing: 6,
-              children: options.map((opt) {
-                final checked = selected.contains(opt);
-                return FilterChip(
-                  backgroundColor: AppColors.whiteColor,
-                  label: Text(opt),
-                  selected: checked,
-                  selectedColor: AppColors.primaryColor.withOpacity(0.2),
-                  checkmarkColor: AppColors.primaryColor,
-                  onSelected: (sel) {
-                    final updated = List<String>.from(selected);
-                    if (sel) {
-                      updated.add(opt);
-                    } else {
-                      updated.remove(opt);
-                    }
-                    onChanged(updated);
-                  },
-                );
-              }).toList(),
-            ),
-          ],
+
+        return CustomCheckboxGroup(
+          label: indicator.name,
+          selectedValues: selected,
+          options: options,
+          onChanged: (newValues) => onChanged(newValues),
+          // isRequired: indicator.isRequired ?? false,
+          enabled: true,
         );
 
       case "full_date":
@@ -1129,7 +1111,16 @@ class IndicatorField extends StatelessWidget {
         } else {
           groups = [];
         }
-        return buildCustomField(groups, value, onChanged);
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              indicator.name,
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            buildCustomField(groups, value, onChanged),
+          ],
+        );
 
       default:
         return Text("⚠️ Chưa hỗ trợ loại: ${indicator.valueType}");
@@ -1202,36 +1193,48 @@ class IndicatorField extends StatelessWidget {
         case FieldType.multiSelection:
           final selected = (value as List<String>?) ?? [];
           widgets.add(
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(field.label ?? ''),
-                Wrap(
-                  spacing: 6,
-                  children: (field.options ?? []).map((opt) {
-                    final checked = selected.contains(opt);
-                    return FilterChip(
-                      backgroundColor: AppColors.whiteColor,
-                      label: Text(opt),
-                      selected: checked,
-                      selectedColor: AppColors.primaryColor.withOpacity(0.2),
-                      checkmarkColor: AppColors.primaryColor,
-                      onSelected: (sel) {
-                        final updated = List<String>.from(selected);
-                        if (sel) {
-                          updated.add(opt);
-                        } else {
-                          updated.remove(opt);
-                        }
-                        onChanged(updated);
-                      },
-                    );
-                  }).toList(),
-                ),
-              ],
+            CustomCheckboxGroup(
+              label: field.label ?? '',
+              options: field.options ?? [],
+              selectedValues: selected,
+              onChanged: onChanged,
             ),
           );
           break;
+
+        // case FieldType.multiSelection:
+        //   final selected = (value as List<String>?) ?? [];
+        //   widgets.add(
+        //     Column(
+        //       crossAxisAlignment: CrossAxisAlignment.start,
+        //       children: [
+        //         Text(field.label ?? ''),
+        //         Wrap(
+        //           spacing: 6,
+        //           children: (field.options ?? []).map((opt) {
+        //             final checked = selected.contains(opt);
+        //             return FilterChip(
+        //               backgroundColor: AppColors.whiteColor,
+        //               label: Text(opt),
+        //               selected: checked,
+        //               selectedColor: AppColors.primaryColor.withOpacity(0.2),
+        //               checkmarkColor: AppColors.primaryColor,
+        //               onSelected: (sel) {
+        //                 final updated = List<String>.from(selected);
+        //                 if (sel) {
+        //                   updated.add(opt);
+        //                 } else {
+        //                   updated.remove(opt);
+        //                 }
+        //                 onChanged(updated);
+        //               },
+        //             );
+        //           }).toList(),
+        //         ),
+        //       ],
+        //     ),
+        //   );
+        //   break;
         case FieldType.fullYearRange:
           widgets.add(
             InkWell(
