@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
+import 'package:urticaria/utils/shared_preferences_manager.dart';
 
 import '../../core/global_error_handle/global_error_handle.dart';
 import '../../core/repositories/user_repository.dart';
@@ -18,6 +20,9 @@ class ProfileUserCubit extends Cubit<ProfileUserState> {
       final result = await _userRepository.getProfile();
       final data = result.data;
       if (data != null) {
+        final sfm = await GetIt.instance<SharedPreferencesManager>();
+        print(data.id);
+        sfm.putInt("user_id", data.id);
         emit(ProfileUserLoadedState(user: data));
       } else {
         emit(ProfileUserErrorState(error: "Không lấy được dữ liệu cá nhân"));

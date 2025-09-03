@@ -19,7 +19,7 @@ class UserInfoHeader extends StatelessWidget {
         String? avatarUri;
 
         if (state is ProfileUserLoadedState) {
-          userName = state.user.fullname;
+          userName = state.user.fullname ?? "-";
           avatarUri =
               null; // nếu có field avatarUri trong model thì gán tại đây
         }

@@ -647,8 +647,13 @@
 //   //   return SizedBox.shrink();
 //   // }
 // }
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:urticaria/core/services/firebase_service.dart';
 import 'package:urticaria/cubit/medical_record/medical_form_cubit.dart';
 import 'package:urticaria/cubit/medical_record/medical_form_state.dart';
@@ -660,11 +665,15 @@ import 'package:urticaria/utils/snack_bar.dart';
 import '../../../constant/color.dart';
 import '../../../models/vital_group/vital_group.dart';
 import '../../../utils/enum/field_type_enum.dart';
+import '../../../utils/shared_preferences_manager.dart';
 import '../../../widget/appbar/custom_app_bar.dart';
 import '../../../widget/custom_error_screen.dart';
 import '../../../widget/custom_progress_indicator.dart';
 import '../../../widget/text_field/input_text_field.dart';
 import '../widgets/custom_radio_group.dart';
+import 'package:http/http.dart' as http;
+import 'package:camera/camera.dart';
+import 'package:path_provider/path_provider.dart';
 
 class MedicalFormScreen extends StatelessWidget {
   final int templateId;
@@ -886,6 +895,7 @@ class _MedicalFormViewState extends State<MedicalFormView> {
                                                 .updateAnswer(
                                                     indicator.id, val);
                                           },
+                                          templateId: widget.templateId,
                                         ),
                                       );
                                     }).toList(),
@@ -988,12 +998,13 @@ class IndicatorField extends StatelessWidget {
   final VitalIndicator indicator;
   final dynamic value;
   final Function(dynamic) onChanged;
-
+  final int templateId;
   const IndicatorField({
     super.key,
     required this.indicator,
     required this.value,
     required this.onChanged,
+    required this.templateId,
   });
 
   @override
@@ -1138,6 +1149,25 @@ class IndicatorField extends StatelessWidget {
       );
     }
 
+    // if (fieldOrGroup is CustomFieldGroup) {
+    //   final group = fieldOrGroup;
+    //   List<Widget> children = [];
+    //   if (group.label != null) {
+    //     children.add(
+    //       Text(
+    //         group.label!,
+    //         style: TextStyle(fontWeight: FontWeight.bold),
+    //       ),
+    //     );
+    //   }
+    //   for (final f in group.fields) {
+    //     children.add(buildCustomField(f, value, onChanged));
+    //   }
+    //   return Column(
+    //     crossAxisAlignment: CrossAxisAlignment.start,
+    //     children: children,
+    //   );
+    // }
     if (fieldOrGroup is CustomFieldGroup) {
       final group = fieldOrGroup;
       List<Widget> children = [];
@@ -1145,13 +1175,28 @@ class IndicatorField extends StatelessWidget {
         children.add(
           Text(
             group.label!,
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
         );
       }
+
       for (final f in group.fields) {
-        children.add(buildCustomField(f, value, onChanged));
+        // 👇 lấy key duy nhất: group.label + field.label
+        final fieldKey = "${group.label}_${f.label}";
+
+        children.add(
+          buildCustomField(
+            f,
+            value?[fieldKey], // 👈 mỗi field có value riêng
+            (updatedValue) {
+              final newMap = Map<String, dynamic>.from(value ?? {});
+              newMap[fieldKey] = updatedValue;
+              onChanged(newMap); // 👈 cập nhật theo fieldKey
+            },
+          ),
+        );
       }
+
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: children,
@@ -1181,26 +1226,56 @@ class IndicatorField extends StatelessWidget {
           );
           break;
         case FieldType.select:
+          final allValues = (value as Map<String, String?>?) ?? {};
+          final currentOption = allValues[field.label] ?? null;
+
+          final needsImage = (field.requiredFields ?? [])
+              .any((rf) => rf.type == FieldType.image);
+
           widgets.add(
-            CustomRadioGroup(
-              label: field.label ?? '',
-              value: value,
-              options: field.options ?? [],
-              onChanged: onChanged,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomRadioGroup(
+                  label: field.label ?? '',
+                  value: currentOption,
+                  options: field.options ?? [],
+                  onChanged: (opt) {
+                    final updated = Map<String, String?>.from(allValues);
+                    updated[field.label ?? ""] = opt; // lưu theo label
+                    onChanged(updated);
+                  },
+                ),
+                if (needsImage && currentOption != null)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: ImageUploadField(
+                      label: "Ảnh cho $currentOption",
+                      templateId: templateId,
+                      onChanged: (link) {
+                        final updated = Map<String, String?>.from(allValues);
+                        updated["${field.label}_image"] =
+                            link; // tách ảnh riêng
+                        onChanged(updated);
+                      },
+                    ),
+                  ),
+              ],
             ),
           );
           break;
-        case FieldType.multiSelection:
-          final selected = (value as List<String>?) ?? [];
-          widgets.add(
-            CustomCheckboxGroup(
-              label: field.label ?? '',
-              options: field.options ?? [],
-              selectedValues: selected,
-              onChanged: onChanged,
-            ),
-          );
-          break;
+
+        // case FieldType.multiSelection:
+        //   final selected = (value as List<String>?) ?? [];
+        //   widgets.add(
+        //     CustomCheckboxGroup(
+        //       label: field.label ?? '',
+        //       options: field.options ?? [],
+        //       selectedValues: selected,
+        //       onChanged: onChanged,
+        //     ),
+        //   );
+        //   break;
 
         // case FieldType.multiSelection:
         //   final selected = (value as List<String>?) ?? [];
@@ -1255,6 +1330,99 @@ class IndicatorField extends StatelessWidget {
             ),
           );
           break;
+        // case FieldType.select:
+        //   final selected = (value as Map<String, String?>?) ?? {};
+        //   final currentOption =
+        //       selected.keys.isNotEmpty ? selected.keys.first : null;
+        //   final needsImage = (field.requiredFields ?? [])
+        //       .any((rf) => rf.type == FieldType.image);
+        //   widgets.add(
+        //     Column(
+        //       crossAxisAlignment: CrossAxisAlignment.start,
+        //       children: [
+        //         CustomRadioGroup(
+        //           label: field.label ?? '',
+        //           value: currentOption,
+        //           options: field.options ?? [],
+        //           onChanged: (opt) {
+        //             final updated = <String, String?>{};
+        //             if (opt != null) {
+        //               updated[opt] = null;
+        //             }
+        //             onChanged(updated);
+        //           },
+        //         ),
+        //         if (needsImage && currentOption != null)
+        //           Padding(
+        //             padding: const EdgeInsets.only(top: 8),
+        //             child: ImageUploadField(
+        //               label: "Ảnh cho $currentOption",
+        //               templateId: templateId,
+        //               onChanged: (link) {
+        //                 final updated = Map<String, String?>.from(selected);
+        //                 updated[currentOption] = link;
+        //                 onChanged(updated);
+        //               },
+        //             ),
+        //           ),
+        //       ],
+        //     ),
+        //   );
+        //   break;
+
+        case FieldType.multiSelection:
+          final allValues = (value as Map<String, dynamic>?) ?? {};
+          final raw = allValues[field.label] as Map<String, dynamic>? ?? {};
+          final fieldValue = raw.map((k, v) => MapEntry(k, v as String?));
+
+          final needsImage = (field.requiredFields ?? [])
+              .any((rf) => rf.type == FieldType.image);
+
+          widgets.add(
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomCheckboxGroup(
+                  label: field.label ?? '',
+                  selectedValues: fieldValue.keys.toList(),
+                  options: field.options ?? [],
+                  onChanged: (vals) {
+                    final updated = <String, String?>{};
+                    for (var v in vals) {
+                      updated[v] = fieldValue[v]; // giữ ảnh cũ nếu có
+                    }
+
+                    final newAll = Map<String, dynamic>.from(allValues);
+                    newAll[field.label ?? ''] = updated;
+                    onChanged(newAll);
+                  },
+                ),
+                if (needsImage)
+                  ...fieldValue.keys.map((opt) {
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: ImageUploadField(
+                        label: "Ảnh cho $opt",
+                        templateId: templateId,
+                        onChanged: (link) {
+                          final updated = Map<String, String?>.from(fieldValue);
+                          updated[opt] = link;
+
+                          final newAll = Map<String, dynamic>.from(allValues);
+                          newAll[field.label ?? ''] = updated;
+                          onChanged(newAll);
+                        },
+                      ),
+                    );
+                  }),
+              ],
+            ),
+          );
+          break;
+
+          //break;
+
+          break;
         case FieldType.prescription:
           widgets.add(
             InputTextField(
@@ -1283,11 +1451,11 @@ class IndicatorField extends StatelessWidget {
           widgets.add(Text("⚠️ Chưa hỗ trợ type ${field.type}"));
       }
 
-      if (field.requiredFields != null) {
-        for (final rf in field.requiredFields!) {
-          widgets.add(buildCustomField(rf, value, onChanged));
-        }
-      }
+      // if (field.requiredFields != null) {
+      //   for (final rf in field.requiredFields!) {
+      //     widgets.add(buildCustomField(rf, value, onChanged));
+      //   }
+      // }
 
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1303,3 +1471,314 @@ class IndicatorField extends StatelessWidget {
     return SizedBox.shrink();
   }
 }
+
+class ImageUploadField extends StatefulWidget {
+  final String label;
+  final Function(String) onChanged;
+  final int templateId;
+  final String? selectedOption; // <-- truyền option, tự map ra overlay
+
+  const ImageUploadField({
+    super.key,
+    required this.label,
+    required this.onChanged,
+    required this.templateId,
+    this.selectedOption,
+  });
+
+  @override
+  State<ImageUploadField> createState() => _ImageUploadFieldState();
+}
+
+class _ImageUploadFieldState extends State<ImageUploadField> {
+  File? _selectedImage;
+  bool _uploading = false;
+  String? _uploadedUrl;
+
+  final ImagePicker _picker = ImagePicker();
+
+  String? get _overlayAsset => widget.selectedOption != null
+      ? optionToOverlay[widget.selectedOption!]
+      : null;
+
+  Future<void> _uploadFile(File file) async {
+    final sfm = await GetIt.instance<SharedPreferencesManager>();
+    final userId = sfm.getInt("user_id");
+
+    setState(() {
+      _uploading = true;
+    });
+
+    try {
+      print(userId);
+      print(widget.templateId);
+      final uri = Uri.parse(
+        "https://drmayday.ibme.edu.vn/urticaria-collector/api/v1/medical-records/upload"
+        "?user_id=$userId&record_type=${widget.templateId}",
+      );
+
+      final request = http.MultipartRequest("POST", uri);
+      request.files.add(await http.MultipartFile.fromPath("file", file.path));
+
+      final response = await request.send();
+      if (response.statusCode == 201) {
+        final body = await response.stream.bytesToString();
+        //final data = jsonDecode(body);
+        final link = body;
+        //data["data"] as String;
+
+        setState(() {
+          _uploadedUrl = link;
+          _uploading = false;
+        });
+
+        widget.onChanged(link);
+      } else {
+        throw Exception("Upload thất bại: ${response.statusCode}");
+      }
+    } catch (e) {
+      setState(() {
+        _uploading = false;
+      });
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Lỗi upload: $e")),
+        );
+      }
+    }
+  }
+
+  Future<void> _pickFromGallery() async {
+    final XFile? picked = await _picker.pickImage(source: ImageSource.gallery);
+    if (picked == null) return;
+    final file = File(picked.path);
+    setState(() {
+      _selectedImage = file;
+    });
+    await _uploadFile(file);
+  }
+
+  Future<void> _openCamera() async {
+    final cameras = await availableCameras();
+    final firstCamera = cameras.first;
+
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => _CustomCameraScreen(
+          camera: firstCamera,
+          overlayAsset: _overlayAsset,
+          onCapture: (file) async {
+            setState(() {
+              _selectedImage = file;
+            });
+            await _uploadFile(file);
+          },
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(widget.label, style: const TextStyle(fontWeight: FontWeight.bold)),
+        const SizedBox(height: 8),
+        if (_selectedImage != null)
+          Stack(
+            children: [
+              Image.file(
+                _selectedImage!,
+                height: 160,
+                fit: BoxFit.cover,
+                width: double.infinity,
+              ),
+              Positioned(
+                top: 8,
+                right: 8,
+                child: InkWell(
+                  onTap: () {
+                    setState(() {
+                      _selectedImage = null;
+                      _uploadedUrl = null;
+                    });
+                    widget.onChanged(""); // báo ra ngoài đã xóa
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.black54,
+                      shape: BoxShape.circle,
+                    ),
+                    padding: const EdgeInsets.all(6),
+                    child:
+                        const Icon(Icons.close, color: Colors.white, size: 20),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        if (_uploadedUrl != null)
+          Padding(
+            padding: const EdgeInsets.only(top: 4.0),
+            child: Text(
+              "Đã upload: $_uploadedUrl",
+              style: const TextStyle(color: Colors.green),
+            ),
+          ),
+        const SizedBox(height: 8),
+        _uploading
+            ? const CircularProgressIndicator()
+            : Row(
+                children: [
+                  ElevatedButton.icon(
+                    icon: const Icon(Icons.photo),
+                    label: const Text("Chọn ảnh"),
+                    onPressed: _pickFromGallery,
+                  ),
+                  const SizedBox(width: 12),
+                  ElevatedButton.icon(
+                    icon: const Icon(Icons.camera_alt),
+                    label: const Text("Chụp ảnh"),
+                    onPressed: _openCamera,
+                  ),
+                ],
+              ),
+      ],
+    );
+  }
+}
+
+/// Custom Camera với overlay
+class _CustomCameraScreen extends StatefulWidget {
+  final CameraDescription camera;
+  final String? overlayAsset;
+  final Function(File) onCapture;
+
+  const _CustomCameraScreen({
+    required this.camera,
+    this.overlayAsset,
+    required this.onCapture,
+  });
+
+  @override
+  State<_CustomCameraScreen> createState() => _CustomCameraScreenState();
+}
+
+class _CustomCameraScreenState extends State<_CustomCameraScreen> {
+  CameraController? _controller;
+  late Future<void> _initializeControllerFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = CameraController(widget.camera, ResolutionPreset.high);
+    _initializeControllerFuture = _controller!.initialize();
+  }
+
+  @override
+  void dispose() {
+    _controller?.dispose();
+    super.dispose();
+  }
+
+  Future<void> _takePicture() async {
+    try {
+      await _initializeControllerFuture;
+      final image = await _controller!.takePicture();
+
+      final dir = await getTemporaryDirectory();
+      final filePath =
+          '${dir.path}/${DateTime.now().millisecondsSinceEpoch}.jpg';
+      final file = File(filePath);
+      await image.saveTo(filePath);
+
+      widget.onCapture(file);
+      if (mounted) Navigator.pop(context);
+    } catch (e) {
+      debugPrint("Error capturing image: $e");
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        children: [
+          FutureBuilder<void>(
+            future: _initializeControllerFuture,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                return CameraPreview(_controller!);
+              } else {
+                return const Center(child: CircularProgressIndicator());
+              }
+            },
+          ),
+          if (widget.overlayAsset != null)
+            Positioned.fill(
+              child: IgnorePointer(
+                child: Image.asset(
+                  widget.overlayAsset!,
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: FloatingActionButton(
+                onPressed: _takePicture,
+                child: const Icon(Icons.camera_alt),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Map option -> overlay asset
+const Map<String, String> optionToOverlay = {
+  // Trên mặt
+  "Mặt thẳng": "assets/overlays/face_front.png",
+  "Nghiêng trái": "assets/overlays/face_left.png",
+  "Nghiêng phải": "assets/overlays/face_right.png",
+
+  // Miệng
+  "Miệng": "assets/overlays/mouth.png",
+
+  // Thân
+  "Thân trước": "assets/overlays/body_front.png",
+  "Thân sau": "assets/overlays/body_back.png",
+
+  // Bàn tay
+  "Mặt mu": "assets/overlays/hand_back.png",
+  "Mặt lòng (chụp 2 tay)": "assets/overlays/hand_back.png",
+
+  // Cẳng tay
+  "Mặt trong": "assets/overlays/forearm_inner.png",
+  "Mặt ngoài": "assets/overlays/overarm_outer.png",
+
+  // Cánh tay
+  "Cánh tay - Mặt trong": "assets/overlays/upperarm_inner.png",
+  "Cánh tay - Mặt ngoài": "assets/overlays/upperarm_outer.png",
+
+  // Sinh dục
+  "Sinh dục": "assets/overlays/genital.png",
+
+  // Đùi
+  "Đùi - Mặt trong": "assets/overlays/thigh_inner.png",
+  "Đùi - Mặt ngoài": "assets/overlays/thigh_outer.png",
+
+  // Cẳng chân
+  "Cẳng chân - Mặt trong": "assets/overlays/leg_inner.png",
+  "Cẳng chân - Mặt ngoài": "assets/overlays/leg_outer.png",
+
+  // Bàn chân
+  "Bàn chân - Mặt mu": "assets/overlays/foot_top.png",
+  "Bàn chân - Mặt lòng (chụp 2 chân)": "assets/overlays/foot_bottom.png",
+};

@@ -33,7 +33,7 @@ void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await setupLocator();
-  await Firebase.initializeApp();
+  //await Firebase.initializeApp();
   // final prefs = GetIt.instance<SharedPreferencesManager>();
   // final phone = prefs.getString(AppConfig.SL_USERNAME);
   // final password = prefs.getString(AppConfig.SL_PASSWORD);

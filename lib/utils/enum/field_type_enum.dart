@@ -6,6 +6,7 @@ enum FieldType {
   fullYearRange,
   custom, // nested group
   prescription,
+  image,
   unknown,
 }
 
@@ -25,6 +26,8 @@ FieldType parseFieldType(String? type) {
       return FieldType.custom;
     case "prescription":
       return FieldType.prescription;
+    case "image":
+      return FieldType.image;
     default:
       return FieldType.unknown;
   }
