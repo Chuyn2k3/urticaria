@@ -11,50 +11,7 @@ import '../../../cubit/appointment/appointment_cubit.dart';
 import '../../../utils/validator.dart';
 import '../../../widget/appbar/custom_app_bar.dart';
 import '../../../widget/button/primary_button.dart';
-import '../../../widget/custom_progress_indicator.dart';
 import '../../../widget/text_field/input_text_field.dart';
-
-/// Lưu câu trả lời 3 câu hỏi
-class ClassificationAnswers {
-  bool? hasExamBefore; // Đã từng khám?
-  bool? hasContinuousEpisode; // Có đợt liên tục >= 6 tuần?
-  bool? isFirstContinuousEpisode; // Đây có phải lần đầu đợt liên tục?
-
-  ClassificationAnswers({
-    this.hasExamBefore,
-    this.hasContinuousEpisode,
-    this.isFirstContinuousEpisode,
-  });
-
-  bool get isCompleted =>
-      hasExamBefore != null &&
-      hasContinuousEpisode != null &&
-      isFirstContinuousEpisode != null;
-}
-
-/// Hàm xác định templateId dựa trên câu trả lời
-int classifyTemplateId(ClassificationAnswers answers) {
-  if (!answers.hasExamBefore! && !answers.hasContinuousEpisode!) {
-    return 16; // Cấp tính
-  }
-  if (!answers.hasExamBefore! && answers.hasContinuousEpisode!) {
-    return 17; // Mạn tính lần 1
-  }
-  if (answers.hasExamBefore! && !answers.hasContinuousEpisode!) {
-    return 16; // Cấp tính
-  }
-  if (answers.hasExamBefore! &&
-      answers.hasContinuousEpisode! &&
-      answers.isFirstContinuousEpisode!) {
-    return 17; // Mạn tính lần 1
-  }
-  if (answers.hasExamBefore! &&
-      answers.hasContinuousEpisode! &&
-      !answers.isFirstContinuousEpisode!) {
-    return 18; // Mạn tính tái khám
-  }
-  return 16;
-}
 
 class ClassificationScreen extends StatelessWidget {
   const ClassificationScreen({super.key});
@@ -93,29 +50,32 @@ class _ClassificationViewState extends State<ClassificationView> {
     super.dispose();
   }
 
+  /// Xác định templateId dựa trên câu trả lời
   int classifyTemplateId() {
     if (everVisited == false && hasContinuousAttack == false) return 16;
-    if ((everVisited == false && hasContinuousAttack == true) ||
-        (everVisited == true &&
-            hasContinuousAttack == true &&
-            isFirstTimeOver6Weeks == true)) {
-      return 17;
-    }
-    if (everVisited == true &&
-        hasContinuousAttack == true &&
-        isFirstTimeOver6Weeks == false) {
-      return 18;
+    if (everVisited == false && hasContinuousAttack == true) return 17;
+    if (everVisited == true && hasContinuousAttack == false) return 16;
+    if (everVisited == true && hasContinuousAttack == true) {
+      if (isFirstTimeOver6Weeks == true) return 17;
+      if (isFirstTimeOver6Weeks == false) return 18;
     }
     return 16;
   }
 
   void _submit(BuildContext context) {
     if (!_formKey.currentState!.validate()) return;
-    if (everVisited == null ||
-        hasContinuousAttack == null ||
-        isFirstTimeOver6Weeks == null) {
+
+    // Kiểm tra các câu hỏi
+    if (everVisited == null || hasContinuousAttack == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Vui lòng trả lời đầy đủ 3 câu hỏi")),
+        const SnackBar(content: Text("Vui lòng trả lời đầy đủ các câu hỏi")),
+      );
+      return;
+    }
+
+    if (everVisited == true && isFirstTimeOver6Weeks == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Vui lòng trả lời đầy đủ các câu hỏi")),
       );
       return;
     }
@@ -130,7 +90,8 @@ class _ClassificationViewState extends State<ClassificationView> {
       customInfo: {
         "everVisited": everVisited,
         "hasContinuousAttack": hasContinuousAttack,
-        "isFirstTimeOver6Weeks": isFirstTimeOver6Weeks,
+        "isFirstTimeOver6Weeks":
+            everVisited == true ? isFirstTimeOver6Weeks : null,
       },
     );
 
@@ -208,7 +169,7 @@ class _ClassificationViewState extends State<ClassificationView> {
       },
       builder: (context, state) {
         final isLoading = state is AppointmentLoading;
-        // return CustomProgressIndicator();
+
         return Scaffold(
           backgroundColor: Colors.grey[50],
           appBar: CustomAppbar.basic(
@@ -219,8 +180,6 @@ class _ClassificationViewState extends State<ClassificationView> {
                   color: AppColors.whiteColor, fontWeight: FontWeight.bold),
             ),
             backgroundColor: AppColors.primaryColor,
-            // elevation: 0,
-            // iconTheme: const IconThemeData(color: AppColors.whiteColor),
           ),
           body: SingleChildScrollView(
             padding: const EdgeInsets.all(16),
@@ -247,13 +206,14 @@ class _ClassificationViewState extends State<ClassificationView> {
                     onChanged: (val) =>
                         setState(() => hasContinuousAttack = val),
                   ),
-                  _buildQuestion(
-                    title:
-                        "3. Đây có phải lần đầu bạn bị liên tục > 6 tuần không?",
-                    groupValue: isFirstTimeOver6Weeks,
-                    onChanged: (val) =>
-                        setState(() => isFirstTimeOver6Weeks = val),
-                  ),
+                  if (everVisited == true)
+                    _buildQuestion(
+                      title:
+                          "3. Đây có phải lần đầu bạn bị liên tục > 6 tuần không?",
+                      groupValue: isFirstTimeOver6Weeks,
+                      onChanged: (val) =>
+                          setState(() => isFirstTimeOver6Weeks = val),
+                    ),
                   const SizedBox(height: 16),
                   const Divider(),
                   const Text("Thông tin đặt lịch",

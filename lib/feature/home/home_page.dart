@@ -5,6 +5,7 @@ import 'package:urticaria/feature/emergency/widgets/sos_button.dart';
 import 'package:urticaria/feature/home/widget/header/app_bar_home_page_widget.dart';
 import 'package:urticaria/feature/home/widget/section_health_new/section_health_new.dart';
 import 'package:urticaria/feature/medical_record/create_record_intro_screen.dart';
+import 'package:urticaria/feature/medical_record_v2/screens/classification_screen.dart';
 import 'package:urticaria/feature/medical_record_v2/screens/urticaria_form_selector_screen.dart';
 
 import '../../constant/color.dart';
@@ -164,7 +165,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const UrticariaFormSelectorScreen(),
+                      builder: (_) => const ClassificationScreen(),
                     ),
                   ),
                 ),

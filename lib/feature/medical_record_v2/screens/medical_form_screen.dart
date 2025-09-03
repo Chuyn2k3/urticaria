@@ -1075,11 +1075,15 @@ class IndicatorField extends StatelessWidget {
         );
 
       case "full_date":
+        final dateValue = value is String && value.isNotEmpty
+            ? DateTime.tryParse(value)
+            : null;
+
         return InkWell(
           onTap: () async {
             final picked = await showDatePicker(
               context: context,
-              initialDate: DateTime.now(),
+              initialDate: dateValue ?? DateTime.now(),
               firstDate: DateTime(1970),
               lastDate: DateTime(2100),
             );
@@ -1087,10 +1091,19 @@ class IndicatorField extends StatelessWidget {
               onChanged(picked.toIso8601String());
             }
           },
-          child: InputTextField(
-            label: indicator.name,
-            enabled: false,
-            prefixIcon: const Icon(Icons.calendar_today),
+          child: IgnorePointer(
+            child: InputTextField(
+              label: indicator.name,
+              enabled: false,
+              prefixIcon: const Icon(Icons.calendar_today),
+              textController: TextEditingController(
+                text: dateValue != null
+                    ? "${dateValue.day.toString().padLeft(2, '0')}/"
+                        "${dateValue.month.toString().padLeft(2, '0')}/"
+                        "${dateValue.year}"
+                    : '',
+              ),
+            ),
           ),
         );
 
@@ -1311,24 +1324,37 @@ class IndicatorField extends StatelessWidget {
         //   );
         //   break;
         case FieldType.fullYearRange:
-          widgets.add(
-            InkWell(
-              onTap: () async {
-                final picked = await showDatePicker(
-                  context: getContext,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime(1970),
-                  lastDate: DateTime(2100),
-                );
-                if (picked != null) onChanged(picked.toIso8601String());
-              },
+          final dateValue = value is String && value.isNotEmpty
+              ? DateTime.tryParse(value)
+              : null;
+
+          widgets.add(InkWell(
+            onTap: () async {
+              final picked = await showDatePicker(
+                context: getContext,
+                initialDate: dateValue ?? DateTime.now(),
+                firstDate: DateTime(1970),
+                lastDate: DateTime(2100),
+              );
+              if (picked != null) {
+                onChanged(picked.toIso8601String());
+              }
+            },
+            child: IgnorePointer(
               child: InputTextField(
-                label: field.label ?? "Khoảng năm",
+                label: indicator.name,
                 enabled: false,
                 prefixIcon: const Icon(Icons.calendar_today),
+                textController: TextEditingController(
+                  text: dateValue != null
+                      ? "${dateValue.day.toString().padLeft(2, '0')}/"
+                          "${dateValue.month.toString().padLeft(2, '0')}/"
+                          "${dateValue.year}"
+                      : '',
+                ),
               ),
             ),
-          );
+          ));
           break;
         // case FieldType.select:
         //   final selected = (value as Map<String, String?>?) ?? {};
