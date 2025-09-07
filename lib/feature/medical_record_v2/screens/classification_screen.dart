@@ -51,21 +51,36 @@ class _ClassificationViewState extends State<ClassificationView> {
   }
 
   /// Xác định templateId dựa trên câu trả lời
+  /// Xác định templateId dựa trên câu trả lời
+  /// Cấp tính = 16, Mạn tính lần 1 = 17, Mạn tính tái khám = 18
   int classifyTemplateId() {
-    if (everVisited == false && hasContinuousAttack == false) return 16;
-    if (everVisited == false && hasContinuousAttack == true) return 17;
-    if (everVisited == true && hasContinuousAttack == false) return 16;
-    if (everVisited == true && hasContinuousAttack == true) {
-      if (isFirstTimeOver6Weeks == true) return 17;
-      if (isFirstTimeOver6Weeks == false) return 18;
+    // Câu 2: Không -> Cấp tính
+    if (hasContinuousAttack == false) {
+      return 16;
     }
+
+    // Câu 2: Có
+    if (hasContinuousAttack == true) {
+      // Câu 1: Không -> Mạn tính lần 1
+      if (everVisited == false) {
+        return 17;
+      }
+
+      // Câu 1: Có -> phải xét câu 3
+      if (everVisited == true) {
+        if (isFirstTimeOver6Weeks == true) return 17; // Mạn tính lần 1
+        if (isFirstTimeOver6Weeks == false) return 18; // Mạn tính tái khám
+      }
+    }
+
+    // Mặc định (phòng lỗi)
     return 16;
   }
 
   void _submit(BuildContext context) {
     if (!_formKey.currentState!.validate()) return;
 
-    // Kiểm tra các câu hỏi
+    // Bắt buộc Câu 1 và Câu 2
     if (everVisited == null || hasContinuousAttack == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Vui lòng trả lời đầy đủ các câu hỏi")),
@@ -73,7 +88,10 @@ class _ClassificationViewState extends State<ClassificationView> {
       return;
     }
 
-    if (everVisited == true && isFirstTimeOver6Weeks == null) {
+    // Nếu Câu 2 = Có và Câu 1 = Có thì mới cần Câu 3
+    if (hasContinuousAttack == true &&
+        everVisited == true &&
+        isFirstTimeOver6Weeks == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Vui lòng trả lời đầy đủ các câu hỏi")),
       );
@@ -91,7 +109,9 @@ class _ClassificationViewState extends State<ClassificationView> {
         "everVisited": everVisited,
         "hasContinuousAttack": hasContinuousAttack,
         "isFirstTimeOver6Weeks":
-            everVisited == true ? isFirstTimeOver6Weeks : null,
+            (everVisited == true && hasContinuousAttack == true)
+                ? isFirstTimeOver6Weeks
+                : null,
       },
     );
 
@@ -206,7 +226,7 @@ class _ClassificationViewState extends State<ClassificationView> {
                     onChanged: (val) =>
                         setState(() => hasContinuousAttack = val),
                   ),
-                  if (everVisited == true)
+                  if (everVisited == true && hasContinuousAttack == true)
                     _buildQuestion(
                       title:
                           "3. Đây có phải lần đầu bạn bị liên tục > 6 tuần không?",
@@ -214,6 +234,7 @@ class _ClassificationViewState extends State<ClassificationView> {
                       onChanged: (val) =>
                           setState(() => isFirstTimeOver6Weeks = val),
                     ),
+
                   const SizedBox(height: 16),
                   const Divider(),
                   const Text("Thông tin đặt lịch",
