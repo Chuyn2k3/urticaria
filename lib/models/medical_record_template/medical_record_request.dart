@@ -26,7 +26,7 @@ class VitalValueRequest {
   final int groupId;
 
   /// API yêu cầu value là object { "value": ... }
-  final Map<String, dynamic> value;
+  final dynamic value;
 
   final String? note;
 

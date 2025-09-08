@@ -28,7 +28,7 @@ VitalValueRequest _$VitalValueRequestFromJson(Map<String, dynamic> json) =>
     VitalValueRequest(
       vitalIndicatorId: (json['vitalIndicatorId'] as num).toInt(),
       groupId: (json['groupId'] as num).toInt(),
-      value: json['value'] as Map<String, dynamic>,
+      value: json['value'],
       note: json['note'] as String?,
     );
 

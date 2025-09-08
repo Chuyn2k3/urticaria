@@ -14,6 +14,7 @@ class AppointmentCubit extends Cubit<AppointmentState> {
   Future<void> createAppointment(AppointmentRequest request) async {
     try {
       emit(AppointmentLoading());
+      print(request.toJson());
       final result = await repository.createAppointment(request);
       emit(AppointmentSuccess(result.data!));
     } catch (e) {

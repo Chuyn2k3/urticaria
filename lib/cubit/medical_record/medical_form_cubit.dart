@@ -10,11 +10,13 @@ class MedicalFormCubit extends Cubit<MedicalFormState> {
   MedicalFormCubit() : super(MedicalFormInitial());
 
   Future<void> loadMedicalForm(int templateId) async {
+    print("[MedicalFormCubit] 🔄 Loading templateId: $templateId");
     emit(MedicalFormLoading());
     try {
       final templateRes = await templateRepository.getTemplate(templateId);
       final template = templateRes.data;
       if (template == null) {
+        print("[MedicalFormCubit] ❌ Không tìm thấy templateId: $templateId");
         emit(const MedicalFormError(
           message: "Không tìm thấy template",
           groups: [],
@@ -30,8 +32,10 @@ class MedicalFormCubit extends Cubit<MedicalFormState> {
       final groups = results.map((res) => res.data!).toList();
       final answers = <int, dynamic>{};
 
+      print("[MedicalFormCubit] ✅ Load thành công, groups: ${groups.length}");
       emit(MedicalFormLoaded(groups: groups, answers: answers));
     } catch (e) {
+      print("[MedicalFormCubit] ❌ Lỗi loadMedicalForm: $e");
       emit(MedicalFormError(
         message: e.toString(),
         groups: [],
@@ -45,8 +49,14 @@ class MedicalFormCubit extends Cubit<MedicalFormState> {
     if (state is MedicalFormLoaded) {
       final current = state as MedicalFormLoaded;
       final updated = Map<int, dynamic>.from(current.answers);
+
+      print(
+          "[MedicalFormCubit] ✏️ Update answer: indicatorId=$indicatorId | oldValue=${updated[indicatorId]} -> newValue=$value");
+
       updated[indicatorId] = value;
       emit(current.copyWith(answers: updated));
+
+      print("[MedicalFormCubit] 📊 Current answers: $updated");
     }
   }
 
@@ -57,17 +67,26 @@ class MedicalFormCubit extends Cubit<MedicalFormState> {
     if (state is! MedicalFormLoaded) return;
     final current = state as MedicalFormLoaded;
 
+    print(
+        "[MedicalFormCubit] 🚀 Submitting record | templateId=$templateId | appointmentId=$appointmentId");
+    print("[MedicalFormCubit] 📋 Current answers: ${current.answers}");
+
     emit(MedicalFormSubmitting(
         groups: current.groups, answers: current.answers));
 
     try {
       final vitalValues = current.groups.expand((group) {
-        return group.indicators.map((indicator) {
+        return group.indicators.where((indicator) {
           final value = current.answers[indicator.id];
+          return value != null; // chỉ giữ những cái có value
+        }).map((indicator) {
+          final value = current.answers[indicator.id];
+          print(
+              "[MedicalFormCubit] -> indicatorId=${indicator.id}, groupId=${group.id}, value=$value");
           return VitalValueRequest(
             vitalIndicatorId: indicator.id,
             groupId: group.id,
-            value: {"value": value},
+            value: value,
             note: null,
           );
         });
@@ -79,7 +98,11 @@ class MedicalFormCubit extends Cubit<MedicalFormState> {
         vitalValues: vitalValues,
       );
 
+      print("[MedicalFormCubit] 📤 Request gửi đi: $request");
+
       final res = await templateRepository.createMedicalRecord(request);
+
+      print("[MedicalFormCubit] ✅ Submit thành công: $res");
 
       emit(MedicalFormSubmittedSuccess(
         groups: current.groups,
@@ -87,7 +110,7 @@ class MedicalFormCubit extends Cubit<MedicalFormState> {
         response: res,
       ));
     } catch (e) {
-      // ✨ Giữ lại dữ liệu khi lỗi
+      print("[MedicalFormCubit] ❌ Submit lỗi: $e");
       emit(MedicalFormError(
         message: e.toString(),
         groups: current.groups,

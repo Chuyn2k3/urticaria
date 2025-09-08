@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:intl/intl.dart';
 
 extension CheckNullValue on int? {
@@ -366,5 +368,37 @@ extension DateTimeString on DateTime {
 
   bool isSameDay(DateTime date2) {
     return year == date2.year && month == date2.month && day == date2.day;
+  }
+}
+
+extension PrettyLog on Object? {
+  String toPrettyJson() {
+    try {
+      if (this == null) return "null";
+
+      final encoder = const JsonEncoder.withIndent('  ');
+
+      // Nếu có toJson thì dùng
+      final dynamic self = this;
+      if (self is dynamic && self.toJson is Function) {
+        return encoder.convert(self.toJson());
+      }
+
+      // Nếu là Map hoặc List
+      if (this is Map || this is List) {
+        return encoder.convert(this);
+      }
+
+      // Fallback: toString()
+      return toString();
+    } catch (e) {
+      return "❌ Error converting to JSON: $e | value=$this";
+    }
+  }
+
+  void logJson([String tag = ""]) {
+    final prefix = tag.isNotEmpty ? "[$tag] " : "";
+    // ignore: avoid_print
+    print("$prefix${toPrettyJson()}");
   }
 }
