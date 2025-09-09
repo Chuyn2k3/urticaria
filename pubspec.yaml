@@ -69,6 +69,7 @@ dependencies:
   http:
   camera: ^0.11.0+2
   path_provider:
+  dotted_border: ^2.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter  

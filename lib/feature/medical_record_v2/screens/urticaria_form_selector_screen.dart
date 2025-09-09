@@ -38,11 +38,7 @@ class _UrticariaFormSelectorScreenState
 
     switch (_formType) {
       case 'acute':
-        targetScreen = const AcuteUrticariaFormScreen();
-        break;
       case 'chronic_initial':
-        targetScreen = const ChronicUrticariaInitialFormScreen();
-        break;
       case 'chronic_followup':
         targetScreen = const ChronicUrticariaFollowupFormScreen();
         break;

@@ -67,14 +67,11 @@ class LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   }
 
   void checkAutoLogin() async {
-    final isTokenExpired = await context.read<AuthCubit>().isTokenExpired();
-    if (isTokenExpired) {
-      final sp = GetIt.instance.get<SharedPreferencesManager>();
-      final user = sp.getString(AppConfig.SL_USERNAME);
-      final pass = sp.getString(AppConfig.SL_PASSWORD);
-      if (user != null && pass != null) {
-        _cubitLogin.handleLogin(phone: user, password: pass);
-      }
+    final sp = GetIt.instance.get<SharedPreferencesManager>();
+    final user = sp.getString(AppConfig.SL_USERNAME);
+    final pass = sp.getString(AppConfig.SL_PASSWORD);
+    if (user != null && pass != null) {
+      _cubitLogin.handleLogin(phone: user, password: pass);
     }
   }
 
