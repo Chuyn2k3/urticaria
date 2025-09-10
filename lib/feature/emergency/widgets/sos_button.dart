@@ -135,24 +135,24 @@ class _SOSButtonState extends State<SOSButton> with TickerProviderStateMixin {
               'Liên hệ trực tiếp với bệnh viện',
               Colors.blue,
               () =>
-                  context.read<EmergencyCubit>().makeEmergencyCall('1900-xxxx'),
+                  context.read<EmergencyCubit>().makeEmergencyCall('19006951'),
             ),
-            _buildEmergencyOption(
-              context,
-              Icons.report_problem,
-              'Báo cáo triệu chứng',
-              'Mô tả tình trạng khẩn cấp',
-              Colors.orange,
-              () {
-                Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const EmergencyScreen(),
-                  ),
-                );
-              },
-            ),
+            // _buildEmergencyOption(
+            //   context,
+            //   Icons.report_problem,
+            //   'Báo cáo triệu chứng',
+            //   'Mô tả tình trạng khẩn cấp',
+            //   Colors.orange,
+            //   () {
+            //     Navigator.pop(context);
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(
+            //         builder: (context) => const EmergencyScreen(),
+            //       ),
+            //     );
+            //   },
+            // ),
             const SizedBox(height: 20),
           ],
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:urticaria/core/services/firebase_service.dart';
 import 'package:urticaria/feature/booking/screens/booking_screen.dart';
 import 'package:urticaria/feature/chatbot/widgets/chatbot_widget.dart';
 import 'package:urticaria/feature/emergency/widgets/sos_button.dart';
@@ -7,6 +8,7 @@ import 'package:urticaria/feature/home/widget/section_health_new/section_health_
 import 'package:urticaria/feature/medical_record/create_record_intro_screen.dart';
 import 'package:urticaria/feature/medical_record_v2/screens/classification_screen.dart';
 import 'package:urticaria/feature/medical_record_v2/screens/urticaria_form_selector_screen.dart';
+import 'package:urticaria/utils/snack_bar.dart';
 
 import '../../constant/color.dart';
 import '../shortcut_menu/widget/shortcut_menu.dart';
@@ -173,17 +175,22 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               const SizedBox(width: 12),
               Expanded(
                 child: _buildQuickActionCard(
-                  'Đặt lịch khám',
-                  'Đặt lịch hẹn với bác sĩ',
-                  Icons.calendar_today_outlined,
-                  Colors.green,
-                  () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const BookingScreen(),
+                    'Đặt lịch khám',
+                    'Đặt lịch hẹn với bác sĩ',
+                    Icons.calendar_today_outlined,
+                    Colors.green, () {
+                  context.showSnackBarSuccess(
+                    text: "Chức năng đang phát triển",
+                    positionTop: true,
+                  );
+                }
+                    // => Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => const BookingScreen(),
+                    //   ),
+                    // ),
                     ),
-                  ),
-                ),
               ),
             ],
           ),
