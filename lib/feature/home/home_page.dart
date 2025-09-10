@@ -161,18 +161,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           Row(
             children: [
               Expanded(
-                child: GestureDetector(
-                  onTap: () {
-                    GoRouter.of(context).push(GoRouterName.live.routePath);
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.yellow,
-                        borderRadius: BorderRadius.circular(16)),
-                    width: 100,
-                    height: 50,
-                    child: Center(child: const Text("Live Stream")),
-                  ),
+                child: _buildQuickActionCard(
+                  'Xem livestream',
+                  'Xem livestream hỗ trợ từ bác sĩ',
+                  Icons.live_tv_sharp,
+                  themeColor,
+                  () => GoRouter.of(context).push(GoRouterName.live.routePath),
                 ),
               ),
               Expanded(
