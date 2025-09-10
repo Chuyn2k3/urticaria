@@ -56,10 +56,12 @@ class RegisterScreenState extends State<RegisterScreen> {
                   ...List.generate(items.length,
                       (index) => items[index].widgetItem(context)),
                   BlocConsumer<RegisterAccountCubit, RegisterAccountState>(
-                    listener: (context, state) {
+                    listener: (context, state) async {
                       if (state is RegisterAccountSuccessState) {
+                        context.showSnackBarSuccess(
+                            text: "Đăng ký thành công", positionTop: true);
+                        await Future.delayed(Duration(milliseconds: 1500));
                         GoRouter.of(context).push(GoRouterName.login.routePath);
-                        context.showSnackBarSuccess(text: "Đăng ký thành công");
                       } else if (state is RegisterAccountErrorState) {
                         context.showSnackBarFail(text: state.error);
                       }

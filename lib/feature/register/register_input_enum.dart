@@ -84,7 +84,7 @@ extension ProfileInput on RegisternputEnum {
       case RegisternputEnum.email:
         return (item) => (item == null || item.isEmpty)
             ? null
-            : Validator.validateEmail(item);
+            : Validator.validateEmail(item.trim());
       case RegisternputEnum.password:
         return (item) => Validator.validatePassword(password: item ?? '');
       case RegisternputEnum.birthday:
@@ -120,21 +120,22 @@ class RegisternputEnumConfig {
   Map<String, dynamic> get requestValue {
     switch (type) {
       case RegisternputEnum.fullName:
-        return {'fullname': controller?.text ?? ''};
+        return {'fullname': controller?.text.trim() ?? ''};
       case RegisternputEnum.phone:
-        return {'phone': controller?.text ?? ''};
+        return {'phone': controller?.text.trim() ?? ''};
       case RegisternputEnum.email:
         return {
-          'email': controller?.text.isEmpty == true ? null : controller?.text
+          'email':
+              controller?.text.isEmpty == true ? null : controller?.text.trim()
         };
       case RegisternputEnum.password:
-        return {'password': controller?.text ?? ''};
+        return {'password': controller?.text.trim() ?? ''};
       case RegisternputEnum.birthday:
         return {'birthday': birthdayValue?.toIso8601String() ?? ''};
       case RegisternputEnum.gender:
         return {'gender': genderValue ?? ''};
       case RegisternputEnum.address:
-        return {'address': controller?.text ?? ''};
+        return {'address': controller?.text.trim() ?? ''};
     }
   }
 
@@ -172,52 +173,57 @@ class RegisternputEnumConfig {
   }
 
   Widget _buildBirthdayPicker(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            type.text,
-            style: textTheme.t14B.copyWith(color: colorApp.labelPrimary),
-          ),
-          const SizedBox(height: 4),
-          InkWell(
-            onTap: () async {
-              final date = await showDatePicker(
-                context: context,
-                initialDate: DateTime(2000),
-                firstDate: DateTime(1900),
-                lastDate: DateTime.now(),
-              );
-              if (date != null) {
-                birthdayValue = date;
-              }
-            },
-            child: InputDecorator(
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: AppColors.whiteColor,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide.none,
-                ),
-                suffixIcon:
-                    const Icon(Icons.calendar_today, color: Colors.blue),
+    return StatefulBuilder(
+      builder: (context, setState) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                type.text,
+                style: textTheme.t14B.copyWith(color: colorApp.labelPrimary),
               ),
-              child: Text(
-                birthdayValue == null
-                    ? type.hintText
-                    : "${birthdayValue!.year}-${birthdayValue!.month.toString().padLeft(2, '0')}-${birthdayValue!.day.toString().padLeft(2, '0')}",
-                style: textTheme.t14R.copyWith(
-                  color: birthdayValue == null ? Colors.grey : Colors.black,
+              const SizedBox(height: 4),
+              InkWell(
+                onTap: () async {
+                  final date = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime(2000),
+                    firstDate: DateTime(1900),
+                    lastDate: DateTime.now(),
+                  );
+                  if (date != null) {
+                    setState(() => birthdayValue = date);
+                  }
+                  print(birthdayValue);
+                },
+                child: InputDecorator(
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: AppColors.whiteColor,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide.none,
+                    ),
+                    suffixIcon:
+                        const Icon(Icons.calendar_today, color: Colors.blue),
+                  ),
+                  child: Text(
+                    birthdayValue == null
+                        ? type.hintText
+                        : "${birthdayValue!.year}-${birthdayValue!.month.toString().padLeft(2, '0')}-${birthdayValue!.day.toString().padLeft(2, '0')}",
+                    style: textTheme.t14R.copyWith(
+                      color: birthdayValue == null ? Colors.grey : Colors.black,
+                    ),
+                  ),
                 ),
               ),
-            ),
+              const SizedBox(height: 16),
+            ],
           ),
-          const SizedBox(height: 16),
-        ],
-      ),
+        );
+      },
     );
   }
 

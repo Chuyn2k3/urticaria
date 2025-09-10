@@ -69,6 +69,36 @@ class _SchedulePageState extends State<SchedulePage>
 
 class ScheduleUpcomingPage extends StatelessWidget {
   const ScheduleUpcomingPage({super.key});
+  Widget _buildEmptyState({
+    required IconData icon,
+    required String title,
+    String? subtitle,
+  }) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, size: 64, color: Colors.grey[400]),
+          const SizedBox(height: 16),
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              color: Color(0xFF374151),
+            ),
+          ),
+          if (subtitle != null) ...[
+            const SizedBox(height: 8),
+            Text(
+              subtitle,
+              style: TextStyle(fontSize: 14, color: Colors.grey[500]),
+            ),
+          ]
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +118,11 @@ class ScheduleUpcomingPage extends StatelessWidget {
         'location': 'Phòng 105',
       },
     ];
-
+    return _buildEmptyState(
+      icon: Icons.event_busy,
+      title: "Chưa có lịch hẹn",
+      subtitle: "Bạn chưa đặt lịch khám nào",
+    );
     return ListView.builder(
       padding: const EdgeInsets.all(16),
       itemCount: upcomingAppointments.length,
@@ -248,6 +282,36 @@ class ScheduleUpcomingPage extends StatelessWidget {
 
 class ScheduleCompletedPage extends StatelessWidget {
   const ScheduleCompletedPage({super.key});
+  Widget _buildEmptyState({
+    required IconData icon,
+    required String title,
+    String? subtitle,
+  }) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, size: 64, color: Colors.grey[400]),
+          const SizedBox(height: 16),
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              color: Color(0xFF374151),
+            ),
+          ),
+          if (subtitle != null) ...[
+            const SizedBox(height: 8),
+            Text(
+              subtitle,
+              style: TextStyle(fontSize: 14, color: Colors.grey[500]),
+            ),
+          ]
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -269,7 +333,11 @@ class ScheduleCompletedPage extends StatelessWidget {
         'result': 'Cần tái khám sau 2 tuần',
       },
     ];
-
+    return _buildEmptyState(
+      icon: Icons.event_busy,
+      title: "Chưa có lịch hẹn",
+      subtitle: "Bạn chưa đặt lịch khám nào",
+    );
     return ListView.builder(
       padding: const EdgeInsets.all(16),
       itemCount: completedAppointments.length,

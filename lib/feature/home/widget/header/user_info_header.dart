@@ -69,12 +69,12 @@ class UserInfoHeader extends StatelessWidget {
                       const SizedBox(width: 16),
                       GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => NotificationScreen(),
-                            ),
-                          );
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (context) => NotificationScreen(),
+                          //   ),
+                          // );
                         },
                         child: SvgPicture.asset(
                           TabIcon.notificationActive,
