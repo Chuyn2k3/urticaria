@@ -159,15 +159,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           Row(
             children: [
               Expanded(
-
                 child: GestureDetector(
                   onTap: () {
                     GoRouter.of(context).push(GoRouterName.live.routePath);
                   },
                   child: Container(
-                    width: 200,
-                    height: 100,
-                    color: Colors.blue,
+                    decoration: BoxDecoration(
+                        color: Colors.yellow,
+                        borderRadius: BorderRadius.circular(16)),
+                    width: 100,
+                    height: 50,
                     child: Center(child: const Text("Live Stream")),
                   ),
                 ),

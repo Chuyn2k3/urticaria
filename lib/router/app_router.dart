@@ -9,6 +9,9 @@ import 'package:get_it/get_it.dart';
 import 'package:urticaria/cubit/auth/auth_cubit.dart';
 import 'package:urticaria/cubit/register_account/register_account_cubit.dart';
 import 'package:urticaria/feature/bottom_nav/bottom_nav_page.dart';
+import 'package:urticaria/feature/live/agora_config.dart';
+import 'package:urticaria/feature/live/live_detail_page.dart';
+import 'package:urticaria/feature/live/live_page.dart';
 import 'package:urticaria/feature/register/register_screen.dart';
 import 'package:urticaria/router/go_router_name_enum.dart';
 import 'package:urticaria/screens/login_page.dart';
@@ -18,7 +21,9 @@ import 'package:urticaria/utils/navigation_service.dart';
 
 class AppRouter {
   final AuthCubit authCubit;
+
   AppRouter(this.authCubit);
+
   late final GoRouter router = GoRouter(
     navigatorKey: GetIt.instance<NavigationService>().navigatorKey,
     routerNeglect: true,
@@ -31,6 +36,20 @@ class AppRouter {
         name: GoRouterName.login.routeName,
         pageBuilder: (context, state) => const NoTransitionPage<void>(
           child: LoginPage(),
+        ),
+      ),
+      GoRoute(
+        path: GoRouterName.live.routePath,
+        name: GoRouterName.live.routeName,
+        pageBuilder: (context, state) => const NoTransitionPage<void>(
+          child: LivePage(),
+        ),
+      ),
+      GoRoute(
+        path: GoRouterName.liveDetail.routePath,
+        name: GoRouterName.liveDetail.routeName,
+        pageBuilder: (context, state) => NoTransitionPage<void>(
+          child: LiveDetailPage(config: state.extra as AgoraConfig),
         ),
       ),
       GoRoute(

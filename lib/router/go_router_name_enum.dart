@@ -1,4 +1,4 @@
-enum GoRouterName { login, register, home }
+enum GoRouterName { login, register, home, live, liveDetail }
 
 extension GoRouterNameX on GoRouterName {
   String get routeName => name;
@@ -11,6 +11,10 @@ extension GoRouterNameX on GoRouterName {
         return "/register";
       case GoRouterName.home:
         return "/home";
+      case GoRouterName.live:
+        return "/live";
+      case GoRouterName.liveDetail:
+        return "/live-detail";
     }
   }
 }
