@@ -7,6 +7,8 @@ import 'package:urticaria/di/locator.dart';
 import 'package:urticaria/models/user/credential_model.dart';
 import 'package:urticaria/utils/validator.dart';
 
+import '../../feature/live/live_cubit.dart';
+
 part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginAppState> {
@@ -34,6 +36,7 @@ class LoginCubit extends Cubit<LoginAppState> {
       final result = await _userRepository.login(phone, password);
       emit(
           LoggedInState(credential: result.data ?? CredentialModel(token: "")));
+      token = result.data?.token ?? '';
     } catch (e) {
       final message = GlobalErrorHandle(e).errorMessage();
       final errorCode = GlobalErrorHandle(e).errorCode;

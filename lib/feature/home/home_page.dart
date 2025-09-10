@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:urticaria/feature/booking/screens/booking_screen.dart';
 import 'package:urticaria/feature/chatbot/widgets/chatbot_widget.dart';
 import 'package:urticaria/feature/emergency/widgets/sos_button.dart';
@@ -9,6 +10,7 @@ import 'package:urticaria/feature/medical_record_v2/screens/classification_scree
 import 'package:urticaria/feature/medical_record_v2/screens/urticaria_form_selector_screen.dart';
 
 import '../../constant/color.dart';
+import '../../router/go_router_name_enum.dart';
 import '../shortcut_menu/widget/shortcut_menu.dart';
 import '../../utils/constants.dart';
 
@@ -156,6 +158,20 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           const SizedBox(height: 16),
           Row(
             children: [
+              Expanded(
+
+                child: GestureDetector(
+                  onTap: () {
+                    GoRouter.of(context).push(GoRouterName.live.routePath);
+                  },
+                  child: Container(
+                    width: 200,
+                    height: 100,
+                    color: Colors.blue,
+                    child: Center(child: const Text("Live Stream")),
+                  ),
+                ),
+              ),
               Expanded(
                 child: _buildQuickActionCard(
                   'Tạo bệnh án',

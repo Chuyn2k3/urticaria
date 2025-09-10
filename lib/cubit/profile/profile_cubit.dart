@@ -10,6 +10,8 @@ import '../../feature/profile/model/user_info_model.dart';
 
 part 'profile_state.dart';
 
+var userId = 1;
+
 class ProfileUserCubit extends Cubit<ProfileUserState> {
   ProfileUserCubit() : super(ProfileUserInitialState());
   final UserRepository _userRepository = serviceLocator();
@@ -19,6 +21,7 @@ class ProfileUserCubit extends Cubit<ProfileUserState> {
       emit(ProfileUserLoadingState());
       final result = await _userRepository.getProfile();
       final data = result.data;
+      userId = data?.id ?? 1;
       if (data != null) {
         final sfm = await GetIt.instance<SharedPreferencesManager>();
         print(data.id);
