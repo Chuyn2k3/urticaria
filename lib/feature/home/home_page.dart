@@ -188,22 +188,25 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               const SizedBox(width: 12),
               Expanded(
                 child: _buildQuickActionCard(
-                    'Đặt lịch khám',
-                    'Đặt lịch hẹn với bác sĩ',
-                    Icons.calendar_today_outlined,
-                    Colors.green, () {
-                  context.showSnackBarSuccess(
-                    text: "Chức năng đang phát triển",
-                    positionTop: true,
-                  );
-                }
-                    // => Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => const BookingScreen(),
-                    //   ),
-                    // ),
+                  'Đặt lịch khám',
+                  'Đặt lịch hẹn với bác sĩ',
+                  Icons.calendar_today_outlined,
+                  Colors.green,
+                  ()
+                      // {
+                      //               context.showSnackBarSuccess(
+                      //                 text: "Chức năng đang phát triển",
+                      //                 positionTop: true,
+                      //               );
+                      //             }
+                      =>
+                      Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const BookingScreen(),
                     ),
+                  ),
+                ),
               ),
             ],
           ),

@@ -103,8 +103,10 @@ class LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                 sharedPreferences.putString(
                     AppConfig.SL_USERNAME, _phoneController.text);
                 sharedPreferences.putString(
-                    AppConfig.SL_USERNAME, _phoneController.text);
-                context.read<AuthCubit>().login();
+                    AppConfig.SL_PASSWORD, _passwordController.text);
+                context.read<AuthCubit>().login(
+                    username: _phoneController.text,
+                    password: _passwordController.text);
                 context.read<ProfileUserCubit>().getProfile();
               } else if (state is LoginErrorState) {
                 context.showSnackBarFail(text: state.error);

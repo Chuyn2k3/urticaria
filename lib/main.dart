@@ -29,9 +29,13 @@ import 'package:urticaria/utils/navigation_service.dart';
 import 'package:urticaria/utils/shared_preferences_manager.dart';
 import 'package:urticaria/utils/snack_bar.dart';
 
+import 'core/services/firebase_service/remote_config_service.dart';
+
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  await Firebase.initializeApp();
+  await FireBaseRemoteConfigService.getConfig();
   await setupLocator();
   //await Firebase.initializeApp();
   // final prefs = GetIt.instance<SharedPreferencesManager>();

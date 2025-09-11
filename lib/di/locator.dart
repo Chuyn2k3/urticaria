@@ -20,6 +20,8 @@ import 'package:urticaria/utils/http_services.dart';
 import 'package:urticaria/utils/navigation_service.dart';
 import 'package:urticaria/utils/shared_preferences_manager.dart';
 
+import '../core/services/firebase_service/remote_config_service.dart';
+
 GetIt serviceLocator = GetIt.instance;
 
 Future<void> setupLocator() async {
@@ -30,8 +32,9 @@ Future<void> setupLocator() async {
   serviceLocator.registerLazySingleton(
       () => SharedPreferencesManager(sharedPreferences: sharedPreferences));
 
-  final Dio dio =
-      await setupDio(baseUrl: "https://hospital.huyit.lat", isHaveToken: true);
+  final url = await FireBaseRemoteConfigService.getSavedUrl();
+  final Dio dio = await setupDio(
+      baseUrl: url ?? "https://hospital.huyit.lat", isHaveToken: true);
 
   serviceLocator.registerLazySingleton(() => AuthCubit());
   serviceLocator.registerLazySingleton(() => LoginCubit());

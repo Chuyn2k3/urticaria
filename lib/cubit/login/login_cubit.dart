@@ -36,7 +36,7 @@ class LoginCubit extends Cubit<LoginAppState> {
       final result = await _userRepository.login(phone, password);
       emit(
           LoggedInState(credential: result.data ?? CredentialModel(token: "")));
-      token = result.data?.token ?? '';
+      //token = result.data?.token ?? '';
     } catch (e) {
       final message = GlobalErrorHandle(e).errorMessage();
       final errorCode = GlobalErrorHandle(e).errorCode;
