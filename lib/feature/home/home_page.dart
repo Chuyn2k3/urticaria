@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:urticaria/core/services/firebase_service.dart';
+import 'package:urticaria/cubit/profile/profile_cubit.dart';
 import 'package:urticaria/feature/booking/screens/booking_screen.dart';
 import 'package:urticaria/feature/chatbot/widgets/chatbot_widget.dart';
 import 'package:urticaria/feature/emergency/widgets/sos_button.dart';
@@ -30,6 +31,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    ProfileUserCubit().getProfile();
     _animationController = AnimationController(
       duration: const Duration(milliseconds: 1000),
       vsync: this,

@@ -28,7 +28,7 @@ class ProfileUserCubit extends Cubit<ProfileUserState> {
         sfm.putInt("user_id", data.id);
         emit(ProfileUserLoadedState(user: data));
       } else {
-        emit(ProfileUserErrorState(error: "Không lấy được dữ liệu cá nhân"));
+        emit(const ProfileUserErrorState(error: "Không lấy được dữ liệu cá nhân"));
       }
     } catch (e) {
       final message = GlobalErrorHandle(e).errorMessage();

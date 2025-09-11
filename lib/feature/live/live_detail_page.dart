@@ -75,7 +75,7 @@ class _LiveDetailPageState extends State<LiveDetailPage> {
     await _engine.joinChannel(
       token: widget.config.rtcToken ?? "",
       channelId: widget.config.channelName ?? "",
-      uid: 6, // viewer để 0
+      uid: userId, // viewer để 0
       options: const ChannelMediaOptions(
         clientRoleType: ClientRoleType.clientRoleAudience,
         autoSubscribeAudio: true,
