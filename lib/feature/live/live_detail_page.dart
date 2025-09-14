@@ -280,7 +280,7 @@ class _LiveDetailPageState extends State<LiveDetailPage>
 
   final ValueNotifier<int?> _remoteUid = ValueNotifier(null);
   final ValueNotifier<bool> _joined = ValueNotifier(false);
-  final ValueNotifier<bool> _chatExpanded = ValueNotifier(true);
+  final ValueNotifier<bool> _chatExpanded = ValueNotifier(false);
   Timer? _sendMessageDebounce;
   Timer? _snackBarDebounce;
 
@@ -303,11 +303,11 @@ class _LiveDetailPageState extends State<LiveDetailPage>
     _initAgora();
   }
 
-  void initSocket() {
+  void initSocket() async {
     final profileCubit = serviceLocator<ProfileUserCubit>();
     final user = profileCubit.inforUser();
     final userId = user?.id ?? 6; // Default patient ID
-    chatSocket.initSocket();
+    await chatSocket.initSocket();
     chatSocket.socket?.off('connect');
     chatSocket.socket?.off('disconnect');
     chatSocket.socket?.off('reconnect');
@@ -464,28 +464,13 @@ class _LiveDetailPageState extends State<LiveDetailPage>
       final userId = user?.id ?? 6;
       print("userId $userId");
       final text = _controller.text.trim();
-      chatSocket.socket?.emitWithAck("comment", {
+
+      chatSocket.socket?.emit("comment", {
         'channelName': widget.config.channelName!,
         'message': text,
         "userId": userId,
         "userType": "patient",
-      }, ack: (data) {
-        // Log kết quả từ server
-        if (data != null && data['status'] == 'success') {
-          debugPrint(
-              "SendMessage: Server xác nhận tin nhắn gửi thành công: $data");
-          _showSnackBar("Tin nhắn đã được gửi!");
-        } else {
-          debugPrint("SendMessage: Lỗi khi gửi tin nhắn: $data");
-          _showSnackBar("Lỗi gửi tin nhắn, vui lòng thử lại.");
-        }
       });
-      // chatSocket.socket?.emit("comment", {
-      //   'channelName': widget.config.channelName!,
-      //   'message': text,
-      //   "userId": userId,
-      //   "userType": "patient",
-      // });
       _controller.clear();
     });
   }

@@ -14,7 +14,7 @@ class VitalIndicator {
   /// dynamic: có thể List<String>, Map<String, dynamic>, hoặc null
   @JsonKey(fromJson: _fromDynamic, toJson: _toDynamic)
   final dynamic valueOptions;
-
+  final List<String>? visibility;
   final String? minValue;
   final String? maxValue;
   final bool isActive;
@@ -31,6 +31,7 @@ class VitalIndicator {
     this.description,
     required this.valueType,
     this.valueOptions,
+    this.visibility,
     this.minValue,
     this.maxValue,
     required this.isActive,

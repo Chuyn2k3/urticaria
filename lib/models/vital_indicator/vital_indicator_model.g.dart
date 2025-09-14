@@ -15,6 +15,9 @@ VitalIndicator _$VitalIndicatorFromJson(Map<String, dynamic> json) =>
       description: json['description'] as String?,
       valueType: json['valueType'] as String,
       valueOptions: VitalIndicator._fromDynamic(json['valueOptions']),
+      visibility: (json['visibility'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
       minValue: json['minValue'] as String?,
       maxValue: json['maxValue'] as String?,
       isActive: json['isActive'] as bool,
@@ -35,6 +38,7 @@ Map<String, dynamic> _$VitalIndicatorToJson(VitalIndicator instance) =>
       'description': instance.description,
       'valueType': instance.valueType,
       'valueOptions': VitalIndicator._toDynamic(instance.valueOptions),
+      'visibility': instance.visibility,
       'minValue': instance.minValue,
       'maxValue': instance.maxValue,
       'isActive': instance.isActive,

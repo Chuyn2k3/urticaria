@@ -1,11 +1,13 @@
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:urticaria/core/services/firebase_service/remote_config_service.dart';
 
 class ChatSocket {
   IO.Socket? socket;
 
-  void initSocket() {
+  Future<void> initSocket() async {
+    final url = await FireBaseRemoteConfigService.getSavedUrl();
     socket = IO.io(
-      'https://hospital.huyit.lat/live', // namespace
+      '${url ?? 'https://hospital.huyit.lat'}/live', // namespace
       IO.OptionBuilder()
           .setTransports(['websocket'])
           .setPath('/socket.io') // path mặc định
@@ -29,7 +31,7 @@ class ChatSocket {
     socket?.on("message", (data) {
       print("📩 Message: $data");
     });
-    
+
     socket?.onError((err) {
       print("❌ error: $err");
     });
