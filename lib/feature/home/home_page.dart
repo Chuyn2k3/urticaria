@@ -162,15 +162,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           const SizedBox(height: 16),
           Row(
             children: [
-              Expanded(
-                child: _buildQuickActionCard(
-                  'Xem livestream',
-                  'Xem livestream hỗ trợ từ bác sĩ',
-                  Icons.live_tv_sharp,
-                  themeColor,
-                  () => GoRouter.of(context).push(GoRouterName.live.routePath),
-                ),
-              ),
+              // Expanded(
+              //   child: _buildQuickActionCard(
+              //     'Xem livestream',
+              //     'Xem livestream hỗ trợ từ bác sĩ',
+              //     Icons.live_tv_sharp,
+              //     themeColor,
+              //     () => GoRouter.of(context).push(GoRouterName.live.routePath),
+              //   ),
+              // ),
               Expanded(
                 child: _buildQuickActionCard(
                   'Tạo bệnh án',
@@ -188,25 +188,23 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               const SizedBox(width: 12),
               Expanded(
                 child: _buildQuickActionCard(
-                  'Đặt lịch khám',
-                  'Đặt lịch hẹn với bác sĩ',
-                  Icons.calendar_today_outlined,
-                  Colors.green,
-                  ()
-                      // {
-                      //               context.showSnackBarSuccess(
-                      //                 text: "Chức năng đang phát triển",
-                      //                 positionTop: true,
-                      //               );
-                      //             }
-                      =>
-                      Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const BookingScreen(),
+                    'Đặt lịch khám',
+                    'Đặt lịch hẹn với bác sĩ',
+                    Icons.calendar_today_outlined,
+                    Colors.green, () {
+                  context.showSnackBarSuccess(
+                    text: "Chức năng đang phát triển",
+                    positionTop: true,
+                  );
+                }
+                    //     =>
+                    //     Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => const BookingScreen(),
+                    //   ),
+                    // ),
                     ),
-                  ),
-                ),
               ),
             ],
           ),

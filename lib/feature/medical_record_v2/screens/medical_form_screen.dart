@@ -274,6 +274,7 @@ class _MedicalFormViewState extends State<MedicalFormView> {
                     ),
                   ),
                 ),
+
                 body: Column(
                   children: [
                     Container(
@@ -342,11 +343,52 @@ class _MedicalFormViewState extends State<MedicalFormView> {
                         itemBuilder: (context, index) {
                           final group = groups[index];
 
-                          // Lọc các indicator có visibility chứa "patient"
-                          final visibleIndicators = group.indicators
-                              .where(
-                                  (indicator) => indicator.isVisibleToPatient)
-                              .toList();
+                          // Check if the group is visible
+                          final controlledGroupIds = {12, 18, 27, 28};
+                          final isVisibleGroup = state is MedicalFormLoaded
+                              ? (state as MedicalFormLoaded)
+                                      .visibleGroupIds
+                                      .contains(group.id) ||
+                                  !controlledGroupIds.contains(group.id)
+                              : true;
+
+                          if (!isVisibleGroup) {
+                            print(
+                                "[MedicalFormView] 🚫 Skipping group ${group.id} (not visible)");
+                            return const Center(
+                              child: const Text(
+                                  "Không có câu hỏi, chuyển sang câu tiếp"),
+                            ); // Skip invisible groups
+                          }
+
+                          // Filter indicators based on group-specific visibility
+                          final visibleIndicators =
+                              group.indicators.where((indicator) {
+                            if (group.id == 12) {
+                              return (state is MedicalFormLoaded &&
+                                  (state as MedicalFormLoaded)
+                                      .visibleIndicatorsInGroup12
+                                      .contains(indicator.id));
+                            } else if (group.id == 27) {
+                              return (state is MedicalFormLoaded &&
+                                  (state as MedicalFormLoaded)
+                                      .visibleIndicatorsInGroup27
+                                      .contains(indicator.id));
+                            }
+                            //return
+                            //true;
+                            return (indicator as VitalIndicator)
+                                .isVisibleToPatient;
+                          }).toList();
+                          if (visibleIndicators.isEmpty) {
+                            print(
+                                "[MedicalFormView] 🚫 Skipping group ${group.id} (no visible indicators)");
+                            return Center(
+                              child: const Text(
+                                  "Không có câu hỏi, chuyển sang câu tiếp"),
+                            ); // Skip groups with no visible indicators
+                          }
+
                           return SingleChildScrollView(
                             padding: const EdgeInsets.all(20),
                             child: Container(
@@ -422,7 +464,7 @@ class _MedicalFormViewState extends State<MedicalFormView> {
                                       ),
                                     ),
                                     const SizedBox(height: 24),
-                                    visibleIndicators.map((indicator) {
+                                    ...visibleIndicators.map((indicator) {
                                       return Padding(
                                         padding:
                                             const EdgeInsets.only(bottom: 16),
@@ -579,6 +621,311 @@ class _MedicalFormViewState extends State<MedicalFormView> {
                     ),
                   ],
                 ),
+                // Column(
+                //   children: [
+                //     Container(
+                //       padding: const EdgeInsets.all(20),
+                //       decoration: const BoxDecoration(
+                //         color: AppColors.whiteColor,
+                //         borderRadius: BorderRadius.only(
+                //           bottomLeft: Radius.circular(24),
+                //           bottomRight: Radius.circular(24),
+                //         ),
+                //       ),
+                //       child: Column(
+                //         children: [
+                //           Row(
+                //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //             children: [
+                //               Text(
+                //                 'Tiến độ',
+                //                 style: TextStyle(
+                //                   fontSize: 14,
+                //                   fontWeight: FontWeight.w600,
+                //                   color: AppColors.textSecondary,
+                //                 ),
+                //               ),
+                //               Text(
+                //                 '${((currentStep + 1) / groups.length * 100).round()}%',
+                //                 style: const TextStyle(
+                //                   fontSize: 14,
+                //                   fontWeight: FontWeight.w700,
+                //                   color: AppColors.primaryColor,
+                //                 ),
+                //               ),
+                //             ],
+                //           ),
+                //           const SizedBox(height: 12),
+                //           Container(
+                //             height: 8,
+                //             decoration: BoxDecoration(
+                //               color: AppColors.borderColor.withOpacity(0.3),
+                //               borderRadius: BorderRadius.circular(4),
+                //             ),
+                //             child: ClipRRect(
+                //               borderRadius: BorderRadius.circular(4),
+                //               child: LinearProgressIndicator(
+                //                 value: (currentStep + 1) / groups.length,
+                //                 backgroundColor: Colors.transparent,
+                //                 valueColor: AlwaysStoppedAnimation<Color>(
+                //                   AppColors.primaryColor,
+                //                 ),
+                //                 minHeight: 8,
+                //               ),
+                //             ),
+                //           ),
+                //         ],
+                //       ),
+                //     ),
+                //     Expanded(
+                //       child: PageView.builder(
+                //         controller: pageController,
+                //         onPageChanged: (index) {
+                //           setState(() {
+                //             currentStep = index;
+                //           });
+                //         },
+                //         itemCount: groups.length,
+                //         itemBuilder: (context, index) {
+                //           final group = groups[index];
+                //
+                //           // Lọc các indicator có visibility chứa "patient"
+                //           final visibleIndicators = group.indicators
+                //               .where(
+                //                   (indicator) => indicator.isVisibleToPatient)
+                //               .toList();
+                //           return SingleChildScrollView(
+                //             padding: const EdgeInsets.all(20),
+                //             child: Container(
+                //               decoration: BoxDecoration(
+                //                 color: AppColors.whiteColor,
+                //                 borderRadius: BorderRadius.circular(24),
+                //                 boxShadow: [
+                //                   BoxShadow(
+                //                     color: AppColors.primaryColor
+                //                         .withOpacity(0.08),
+                //                     blurRadius: 20,
+                //                     offset: const Offset(0, 8),
+                //                   ),
+                //                 ],
+                //               ),
+                //               child: Padding(
+                //                 padding: const EdgeInsets.all(24),
+                //                 child: Column(
+                //                   crossAxisAlignment: CrossAxisAlignment.start,
+                //                   children: [
+                //                     Container(
+                //                       padding: const EdgeInsets.symmetric(
+                //                           vertical: 16, horizontal: 20),
+                //                       decoration: BoxDecoration(
+                //                         gradient: LinearGradient(
+                //                           colors: [
+                //                             AppColors.primaryColor
+                //                                 .withOpacity(0.1),
+                //                             AppColors.primaryColor
+                //                                 .withOpacity(0.05),
+                //                           ],
+                //                           begin: Alignment.topLeft,
+                //                           end: Alignment.bottomRight,
+                //                         ),
+                //                         borderRadius: BorderRadius.circular(16),
+                //                         border: Border.all(
+                //                           color: AppColors.primaryColor
+                //                               .withOpacity(0.2),
+                //                           width: 1,
+                //                         ),
+                //                       ),
+                //                       child: Row(
+                //                         children: [
+                //                           Container(
+                //                             padding: const EdgeInsets.all(8),
+                //                             decoration: BoxDecoration(
+                //                               color: AppColors.primaryColor,
+                //                               borderRadius:
+                //                                   BorderRadius.circular(8),
+                //                             ),
+                //                             child: Text(
+                //                               '${index + 1}',
+                //                               style: const TextStyle(
+                //                                 color: AppColors.whiteColor,
+                //                                 fontWeight: FontWeight.bold,
+                //                                 fontSize: 16,
+                //                               ),
+                //                             ),
+                //                           ),
+                //                           const SizedBox(width: 16),
+                //                           Expanded(
+                //                             child: Text(
+                //                               group.name,
+                //                               style: const TextStyle(
+                //                                 fontSize: 20,
+                //                                 fontWeight: FontWeight.bold,
+                //                                 color: AppColors.primaryColor,
+                //                                 letterSpacing: 0.3,
+                //                               ),
+                //                             ),
+                //                           ),
+                //                         ],
+                //                       ),
+                //                     ),
+                //                     const SizedBox(height: 24),
+                //                     visibleIndicators.map((indicator) {
+                //                       return Padding(
+                //                         padding:
+                //                             const EdgeInsets.only(bottom: 16),
+                //                         child: IndicatorField(
+                //                           indicator: indicator,
+                //                           value: answers[indicator.id],
+                //                           onChanged: (val) {
+                //                             context
+                //                                 .read<MedicalFormCubit>()
+                //                                 .updateAnswer(
+                //                                     indicator.id, val);
+                //                           },
+                //                           templateId: widget.templateId,
+                //                         ),
+                //                       );
+                //                     }).toList(),
+                //                   ],
+                //                 ),
+                //               ),
+                //             ),
+                //           );
+                //         },
+                //       ),
+                //     ),
+                //     Container(
+                //       padding: const EdgeInsets.all(20),
+                //       decoration: BoxDecoration(
+                //         color: AppColors.whiteColor,
+                //         borderRadius: const BorderRadius.only(
+                //           topLeft: Radius.circular(24),
+                //           topRight: Radius.circular(24),
+                //         ),
+                //         boxShadow: [
+                //           BoxShadow(
+                //             color: Colors.black.withOpacity(0.1),
+                //             blurRadius: 20,
+                //             offset: const Offset(0, -4),
+                //           ),
+                //         ],
+                //       ),
+                //       child: SafeArea(
+                //         child: Row(
+                //           children: [
+                //             if (currentStep > 0)
+                //               Expanded(
+                //                 child: Container(
+                //                   decoration: BoxDecoration(
+                //                     borderRadius: BorderRadius.circular(16),
+                //                     border: Border.all(
+                //                       color: AppColors.primaryColor,
+                //                       width: 2,
+                //                     ),
+                //                   ),
+                //                   child: OutlinedButton.icon(
+                //                     onPressed: previousStep,
+                //                     icon: const Icon(
+                //                       Icons.arrow_back_ios_new,
+                //                       size: 18,
+                //                     ),
+                //                     label: const Text(
+                //                       'Quay lại',
+                //                       style: TextStyle(
+                //                         fontWeight: FontWeight.w600,
+                //                         fontSize: 16,
+                //                       ),
+                //                     ),
+                //                     style: OutlinedButton.styleFrom(
+                //                       foregroundColor: AppColors.primaryColor,
+                //                       backgroundColor: Colors.transparent,
+                //                       side: BorderSide.none,
+                //                       padding: const EdgeInsets.symmetric(
+                //                           vertical: 16),
+                //                       shape: RoundedRectangleBorder(
+                //                         borderRadius: BorderRadius.circular(16),
+                //                       ),
+                //                     ),
+                //                   ),
+                //                 ),
+                //               ),
+                //             if (currentStep > 0) const SizedBox(width: 16),
+                //             Expanded(
+                //               child: Container(
+                //                 decoration: BoxDecoration(
+                //                   borderRadius: BorderRadius.circular(16),
+                //                   gradient: LinearGradient(
+                //                     colors: [
+                //                       currentStep == groups.length - 1
+                //                           ? AppColors.successColor
+                //                           : AppColors.primaryColor,
+                //                       currentStep == groups.length - 1
+                //                           ? AppColors.successColor
+                //                               .withOpacity(0.8)
+                //                           : AppColors.primaryColor
+                //                               .withOpacity(0.8),
+                //                     ],
+                //                     begin: Alignment.topLeft,
+                //                     end: Alignment.bottomRight,
+                //                   ),
+                //                   boxShadow: [
+                //                     BoxShadow(
+                //                       color: (currentStep == groups.length - 1
+                //                               ? AppColors.successColor
+                //                               : AppColors.primaryColor)
+                //                           .withOpacity(0.3),
+                //                       blurRadius: 12,
+                //                       offset: const Offset(0, 4),
+                //                     ),
+                //                   ],
+                //                 ),
+                //                 child: ElevatedButton.icon(
+                //                   onPressed: currentStep == groups.length - 1
+                //                       ? () {
+                //                           context
+                //                               .read<MedicalFormCubit>()
+                //                               .submitMedicalRecord(
+                //                                 templateId: widget.templateId,
+                //                                 appointmentId:
+                //                                     widget.appointmentId,
+                //                               );
+                //                         }
+                //                       : () => nextStep(groups.length),
+                //                   icon: Icon(
+                //                     currentStep == groups.length - 1
+                //                         ? Icons.check_circle_rounded
+                //                         : Icons.arrow_forward_ios,
+                //                     size: 20,
+                //                   ),
+                //                   label: Text(
+                //                     currentStep == groups.length - 1
+                //                         ? 'Hoàn thành'
+                //                         : 'Tiếp theo',
+                //                     style: const TextStyle(
+                //                       fontWeight: FontWeight.w700,
+                //                       fontSize: 16,
+                //                       letterSpacing: 0.5,
+                //                     ),
+                //                   ),
+                //                   style: ElevatedButton.styleFrom(
+                //                     backgroundColor: Colors.transparent,
+                //                     foregroundColor: AppColors.whiteColor,
+                //                     shadowColor: Colors.transparent,
+                //                     padding: const EdgeInsets.symmetric(
+                //                         vertical: 16),
+                //                     shape: RoundedRectangleBorder(
+                //                       borderRadius: BorderRadius.circular(16),
+                //                     ),
+                //                   ),
+                //                 ),
+                //               ),
+                //             ),
+                //           ],
+                //         ),
+                //       ),
+                //     ),
+                //   ],
+                // ),
               ),
               if (state is MedicalFormSubmitting)
                 Container(
@@ -749,6 +1096,27 @@ class IndicatorField extends StatelessWidget {
           ],
         );
 
+      // case "custom":
+      //   final groupJson = indicator.valueOptions['group'];
+      //   List<CustomFieldGroup> groups = [];
+      //
+      //   if (groupJson is List) {
+      //     groups = groupJson.map((g) => CustomFieldGroup.fromJson(g)).toList();
+      //   } else if (groupJson is Map<String, dynamic>) {
+      //     groups = [CustomFieldGroup.fromJson(groupJson)];
+      //   } else {
+      //     groups = [];
+      //   }
+      //   return Column(
+      //     crossAxisAlignment: CrossAxisAlignment.start,
+      //     children: [
+      //       Text(
+      //         indicator.name,
+      //         style: TextStyle(fontWeight: FontWeight.bold),
+      //       ),
+      //       buildCustomField(groups, value, onChanged),
+      //     ],
+      //   );
       case "custom":
         final groupJson = indicator.valueOptions['group'];
         List<CustomFieldGroup> groups = [];
@@ -760,17 +1128,84 @@ class IndicatorField extends StatelessWidget {
         } else {
           groups = [];
         }
+
+        // For indicators 64 and 175, add a dropdown to select number of episodes
+        if (indicator.id == 64 || indicator.id == 175) {
+          final allValues = (value as Map<String, dynamic>?) ?? {};
+          final episodeCountKey = "${indicator.name}_episode_count";
+          final episodeCount =
+              allValues[episodeCountKey] ?? 1; // Default to 1 episode
+
+          // Filter groups based on episode count
+          final filteredGroups = groups.take(episodeCount).toList();
+
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                indicator.name,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8),
+              DropdownButton<int>(
+                value: episodeCount,
+                isExpanded: true,
+                hint: const Text("Chọn số đợt"),
+                items: const [
+                  DropdownMenuItem(value: 1, child: Text("1 đợt")),
+                  DropdownMenuItem(value: 2, child: Text("2 đợt")),
+                  DropdownMenuItem(value: 3, child: Text("3 đợt")),
+                  DropdownMenuItem(value: 4, child: Text("4 đợt")),
+                ],
+                onChanged: (newCount) {
+                  if (newCount != null) {
+                    final updatedValues = Map<String, dynamic>.from(allValues);
+                    updatedValues[episodeCountKey] = newCount;
+
+                    // Remove answers for groups that are no longer visible
+                    for (int i = newCount; i < groups.length; i++) {
+                      final group = groups[i];
+                      final groupLabel = group.label?.trim() ?? '';
+                      for (final field in group.fields) {
+                        final fieldLabel = field.label?.trim() ?? '';
+                        final fieldKey = groupLabel.isNotEmpty
+                            ? '$groupLabel.$fieldLabel'
+                            : fieldLabel;
+                        updatedValues.remove(fieldKey);
+                        updatedValues.remove(
+                            "${fieldKey}_image"); // Remove image keys if any
+                      }
+                    }
+
+                    print(
+                        '[IndicatorField] Updated episode count for "${indicator.name}": $newCount (updated map: $updatedValues)');
+                    onChanged(updatedValues);
+                  }
+                },
+                style: const TextStyle(
+                  color: AppColors.textPrimary,
+                  fontSize: 16,
+                ),
+                dropdownColor: AppColors.whiteColor,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              const SizedBox(height: 16),
+              // Render only the filtered groups
+              buildCustomField(filteredGroups, value, onChanged),
+            ],
+          );
+        }
+
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               indicator.name,
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             buildCustomField(groups, value, onChanged),
           ],
         );
-
       default:
         return Text("⚠️ Chưa hỗ trợ loại: ${indicator.valueType}");
     }

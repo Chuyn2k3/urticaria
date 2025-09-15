@@ -38,20 +38,20 @@ class AppRouter {
           child: LoginPage(),
         ),
       ),
-      GoRoute(
-        path: GoRouterName.live.routePath,
-        name: GoRouterName.live.routeName,
-        pageBuilder: (context, state) => const NoTransitionPage<void>(
-          child: LivePage(),
-        ),
-      ),
-      GoRoute(
-        path: GoRouterName.liveDetail.routePath,
-        name: GoRouterName.liveDetail.routeName,
-        pageBuilder: (context, state) => NoTransitionPage<void>(
-          child: LiveDetailPage(config: state.extra as AgoraConfig),
-        ),
-      ),
+      // GoRoute(
+      //   path: GoRouterName.live.routePath,
+      //   name: GoRouterName.live.routeName,
+      //   pageBuilder: (context, state) => const NoTransitionPage<void>(
+      //     child: LivePage(),
+      //   ),
+      // ),
+      // GoRoute(
+      //   path: GoRouterName.liveDetail.routePath,
+      //   name: GoRouterName.liveDetail.routeName,
+      //   pageBuilder: (context, state) => NoTransitionPage<void>(
+      //     child: LiveDetailPage(config: state.extra as AgoraConfig),
+      //   ),
+      // ),
       GoRoute(
         path: GoRouterName.register.routePath,
         name: GoRouterName.register.routeName,

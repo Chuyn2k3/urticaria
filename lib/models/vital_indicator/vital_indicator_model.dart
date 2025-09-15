@@ -40,7 +40,9 @@ class VitalIndicator {
     required this.createdAt,
     required this.updatedAt,
   });
-
+  bool get isVisibleToPatient => visibility != null
+      ? (visibility!.contains('patient') || visibility!.isEmpty)
+      : true;
   factory VitalIndicator.fromJson(Map<String, dynamic> json) =>
       _$VitalIndicatorFromJson(json);
 

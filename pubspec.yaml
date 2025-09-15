@@ -43,15 +43,12 @@ dependencies:
   animated_text_kit: ^4.2.2
   carousel_slider: ^5.0.0
   intl: ^0.18.1
-  webview_flutter: ^4.8.0
   freezed: ^2.2.0
   flutter_launcher_icons: ^0.13.1
   flutter_native_splash: ^2.3.10
-  pin_code_fields: ^8.0.1
   flutter_bloc: ^9.1.1
   url_launcher: ^6.2.1
   mask_text_input_formatter: ^2.9.0
-  table_calendar: ^3.0.9
   image_picker: ^1.0.4
   json_annotation: ^4.8.1
   logger: ^2.5.0
@@ -70,8 +67,8 @@ dependencies:
   camera: ^0.11.0+2
   path_provider:
   dotted_border: ^2.0.0
-  agora_rtc_engine: ^6.5.2
-  socket_io_client: ^3.0.0
+#  agora_rtc_engine: ^6.5.2
+#  socket_io_client: ^3.0.0
   firebase_remote_config:
 dev_dependencies:
   flutter_test:
