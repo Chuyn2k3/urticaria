@@ -1579,29 +1579,63 @@ class IndicatorField extends StatelessWidget {
         }
 
         // New visibility logic for "Chi tiết thức ăn" and "Chi tiết thuốc"
+        // if (fieldLabel == "Chi tiết thức ăn" ||
+        //     fieldLabel == "Chi tiết thuốc") {
+        //   final multiSelectionKey = groupLabel.isNotEmpty
+        //       ? '$groupLabel.'
+        //       : ''; // Empty label for multi_selection field
+        //   final multiSelectionValue = allValues[multiSelectionKey] is Map
+        //       ? allValues[multiSelectionKey] as Map<String, dynamic>
+        //       : {};
+        //   shouldShowField = false;
+        //   if (multiSelectionValue.containsKey('')) {
+        //     // Handle nested map from multi_selection
+        //     final nestedValue =
+        //         multiSelectionValue[''] as Map<String, dynamic>? ?? {};
+        //     if (fieldLabel == "Chi tiết thức ăn") {
+        //       shouldShowField = nestedValue.containsKey("Thức ăn");
+        //     } else if (fieldLabel == "Chi tiết thuốc") {
+        //       shouldShowField = nestedValue.containsKey("Chống viêm, giảm đau");
+        //     }
+        //   }
+        //   print(
+        //       '🔍 Checking visibility for "$fieldLabel": multiSelectionKey="$multiSelectionKey", multiSelectionValue="$multiSelectionValue", shouldShow=$shouldShowField, allValues=$allValues');
+        // }
+// ✅ SỬA: Logic visibility an toàn
         if (fieldLabel == "Chi tiết thức ăn" ||
             fieldLabel == "Chi tiết thuốc") {
-          final multiSelectionKey = groupLabel.isNotEmpty
-              ? '$groupLabel.'
-              : ''; // Empty label for multi_selection field
+          // Lấy multiSelectionKey an toàn
+          String multiSelectionKey = '';
+          final groupData = indicator.valueOptions?['group'];
+          if (groupData is List && groupData.isNotEmpty) {
+            final firstGroup = groupData[0];
+            if (firstGroup is Map<String, dynamic> &&
+                firstGroup.containsKey('label')) {
+              final groupLabel = (firstGroup['label'] as String?)?.trim() ?? '';
+              if (groupLabel.isNotEmpty) {
+                multiSelectionKey = '$groupLabel.';
+              }
+            }
+          }
+
           final multiSelectionValue = allValues[multiSelectionKey] is Map
               ? allValues[multiSelectionKey] as Map<String, dynamic>
               : {};
           shouldShowField = false;
-          if (multiSelectionValue.containsKey('')) {
-            // Handle nested map from multi_selection
-            final nestedValue =
-                multiSelectionValue[''] as Map<String, dynamic>? ?? {};
+
+          // Kiểm tra selection chứa option tương ứng
+          if (multiSelectionValue.isNotEmpty) {
             if (fieldLabel == "Chi tiết thức ăn") {
-              shouldShowField = nestedValue.containsKey("Thức ăn");
+              shouldShowField = multiSelectionValue.containsKey("Thức ăn");
             } else if (fieldLabel == "Chi tiết thuốc") {
-              shouldShowField = nestedValue.containsKey("Chống viêm, giảm đau");
+              shouldShowField =
+                  multiSelectionValue.containsKey("Chống viêm, giảm đau");
             }
           }
-          print(
-              '🔍 Checking visibility for "$fieldLabel": multiSelectionKey="$multiSelectionKey", multiSelectionValue="$multiSelectionValue", shouldShow=$shouldShowField, allValues=$allValues');
-        }
 
+          print(
+              '🔍 Visibility "$fieldLabel": key="$multiSelectionKey", value="$multiSelectionValue", show=$shouldShowField');
+        }
         if (shouldShowField) {
           final fieldValue = allValues[fieldKey];
 
@@ -1750,6 +1784,92 @@ class IndicatorField extends StatelessWidget {
           );
           break;
 
+        // case FieldType.multiSelection:
+        //   final allValues = (value as Map<String, dynamic>?) ?? {};
+        //   final fieldKey = field.label ??
+        //       indicator.name ??
+        //       'multi_selection_${indicator.id}';
+        //   final fieldValue =
+        //       (allValues[fieldKey] as Map<String, dynamic>?) ?? {};
+        //   final selectedValues = fieldValue.keys.toList();
+        //   final needsImage = (field.requiredFields ?? [])
+        //       .any((rf) => rf.type == FieldType.image);
+        //
+        //   widgets.add(
+        //     Column(
+        //       crossAxisAlignment: CrossAxisAlignment.start,
+        //       children: [
+        //         CustomCheckboxGroup(
+        //           label: field.label ?? indicator.name ?? 'Chọn tùy chọn',
+        //           selectedValues: selectedValues,
+        //           options: field.options ?? [],
+        //           onChanged: (vals) {
+        //             final updated = <String, dynamic>{};
+        //             for (var v in vals) {
+        //               if (_isValueNotEmpty(v)) {
+        //                 updated[v] = fieldValue[v] as String?;
+        //               }
+        //             }
+        //             final newAll = Map<String, dynamic>.from(allValues);
+        //             if (updated.isNotEmpty) {
+        //               newAll[fieldKey] = updated;
+        //             } else {
+        //               newAll.remove(fieldKey);
+        //             }
+        //
+        //             // Clear dependent fields when options are deselected
+        //             final groupLabel =
+        //                 indicator.valueOptions['group'][0]['label']?.trim() ??
+        //                     '';
+        //             final foodDetailKey = groupLabel.isNotEmpty
+        //                 ? '$groupLabel.Chi tiết thức ăn'
+        //                 : 'Chi tiết thức ăn';
+        //             final drugDetailKey = groupLabel.isNotEmpty
+        //                 ? '$groupLabel.Chi tiết thuốc'
+        //                 : 'Chi tiết thuốc';
+        //             if (!vals.contains("Thức ăn")) {
+        //               newAll.remove(foodDetailKey);
+        //               print(
+        //                   '[buildCustomField] Removed "$foodDetailKey" because "Thức ăn" is not selected');
+        //             }
+        //             if (!vals.contains("Chống viêm, giảm đau")) {
+        //               newAll.remove(drugDetailKey);
+        //               print(
+        //                   '[buildCustomField] Removed "$drugDetailKey" because "Chống viêm, giảm đau" is not selected');
+        //             }
+        //             print(
+        //                 'Multi-selection changed for key "$fieldKey": $vals (updated map: $newAll)');
+        //             onChanged(newAll);
+        //           },
+        //         ),
+        //         if (needsImage)
+        //           ...selectedValues.map((opt) {
+        //             return Padding(
+        //               padding: const EdgeInsets.only(top: 8),
+        //               child: ImageUploadField(
+        //                 label: "Ảnh cho $opt",
+        //                 templateId: templateId,
+        //                 onChanged: (link) {
+        //                   final updated = Map<String, dynamic>.from(fieldValue);
+        //                   if (_isValueNotEmpty(link)) {
+        //                     updated[opt] = link;
+        //                   } else {
+        //                     updated.remove(opt);
+        //                   }
+        //                   final newAll = Map<String, dynamic>.from(allValues);
+        //                   newAll[fieldKey] = updated;
+        //                   print(
+        //                       'Image for multi "$opt" in "$fieldKey": $link (updated map: $newAll)');
+        //                   onChanged(newAll);
+        //                 },
+        //                 selectedOption: opt,
+        //               ),
+        //             );
+        //           }),
+        //       ],
+        //     ),
+        //   );
+        //   break;
         case FieldType.multiSelection:
           final allValues = (value as Map<String, dynamic>?) ?? {};
           final fieldKey = field.label ??
@@ -1760,6 +1880,17 @@ class IndicatorField extends StatelessWidget {
           final selectedValues = fieldValue.keys.toList();
           final needsImage = (field.requiredFields ?? [])
               .any((rf) => rf.type == FieldType.image);
+
+          // ✅ SỬA: Lấy groupLabel an toàn với null check
+          String groupLabel = '';
+          final groupData = indicator.valueOptions?['group'];
+          if (groupData is List && groupData.isNotEmpty) {
+            final firstGroup = groupData[0];
+            if (firstGroup is Map<String, dynamic> &&
+                firstGroup.containsKey('label')) {
+              groupLabel = (firstGroup['label'] as String?)?.trim() ?? '';
+            }
+          }
 
           widgets.add(
             Column(
@@ -1783,28 +1914,29 @@ class IndicatorField extends StatelessWidget {
                       newAll.remove(fieldKey);
                     }
 
-                    // Clear dependent fields when options are deselected
-                    final groupLabel =
-                        indicator.valueOptions['group'][0]['label']?.trim() ??
-                            '';
-                    final foodDetailKey = groupLabel.isNotEmpty
-                        ? '$groupLabel.Chi tiết thức ăn'
-                        : 'Chi tiết thức ăn';
-                    final drugDetailKey = groupLabel.isNotEmpty
-                        ? '$groupLabel.Chi tiết thuốc'
-                        : 'Chi tiết thuốc';
-                    if (!vals.contains("Thức ăn")) {
-                      newAll.remove(foodDetailKey);
-                      print(
-                          '[buildCustomField] Removed "$foodDetailKey" because "Thức ăn" is not selected');
+                    // ✅ SỬA: Chỉ xóa dependent fields khi có groupLabel
+                    if (groupLabel.isNotEmpty) {
+                      final foodDetailKey = '$groupLabel.Chi tiết thức ăn';
+                      final drugDetailKey = '$groupLabel.Chi tiết thuốc';
+                      if (!vals.contains("Thức ăn")) {
+                        newAll.remove(foodDetailKey);
+                        print('[buildCustomField] Removed "$foodDetailKey"');
+                      }
+                      if (!vals.contains("Chống viêm, giảm đau")) {
+                        newAll.remove(drugDetailKey);
+                        print('[buildCustomField] Removed "$drugDetailKey"');
+                      }
+                    } else {
+                      // Fallback cho trường hợp không có groupLabel
+                      if (!vals.contains("Thức ăn")) {
+                        newAll.remove('Chi tiết thức ăn');
+                      }
+                      if (!vals.contains("Chống viêm, giảm đau")) {
+                        newAll.remove('Chi tiết thuốc');
+                      }
                     }
-                    if (!vals.contains("Chống viêm, giảm đau")) {
-                      newAll.remove(drugDetailKey);
-                      print(
-                          '[buildCustomField] Removed "$drugDetailKey" because "Chống viêm, giảm đau" is not selected');
-                    }
-                    print(
-                        'Multi-selection changed for key "$fieldKey": $vals (updated map: $newAll)');
+
+                    print('Multi-selection changed: $vals');
                     onChanged(newAll);
                   },
                 ),
@@ -1824,8 +1956,6 @@ class IndicatorField extends StatelessWidget {
                           }
                           final newAll = Map<String, dynamic>.from(allValues);
                           newAll[fieldKey] = updated;
-                          print(
-                              'Image for multi "$opt" in "$fieldKey": $link (updated map: $newAll)');
                           onChanged(newAll);
                         },
                         selectedOption: opt,
@@ -1836,7 +1966,6 @@ class IndicatorField extends StatelessWidget {
             ),
           );
           break;
-
         case FieldType.fullYearRange:
           final dateValue = value is String && value.isNotEmpty
               ? DateTime.tryParse(value)
